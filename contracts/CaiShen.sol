@@ -2,11 +2,12 @@ pragma solidity ^0.4.17;
 
 contract CaiShen {
     // State data
+    address owner;
+
     mapping (address => uint) public balanceOf;
     uint public totalFunds;
     uint numTotalPayers;
     uint numActivePayers;
-    address owner;
 
     // Constructor
     function CaiShen() public payable {
@@ -29,7 +30,9 @@ contract CaiShen {
         uint amount = msg.value;
 
         // Make sure amount is above 0
-        assert(amount > 0);
+        if (amount == 0) {
+            revert();
+        }
 
         // Update balance mapping
         balanceOf[msg.sender] += amount;
@@ -70,22 +73,23 @@ contract CaiShen {
         // Get the caller's balance in the mapping
         uint amount = balanceOf[msg.sender];
 
-        if (amount > 0 && totalFunds >= amount){
-
-            // Update mapping
-            balanceOf[msg.sender] = 0;
-
-            // Update state vars
-            totalFunds -= amount;
-            numActivePayers -= 1;
-            
-            // Make the transfer
-            msg.sender.transfer(amount);
-
-            // Log event
-            Withdrew(msg.sender, amount);
+        if (amount == 0 || totalFunds < amount) {
+            revert();
         }
 
+        // Update mapping
+        balanceOf[msg.sender] = 0;
+
+        // Update state vars
+        totalFunds -= amount;
+        numTotalPayers -= 1;
+        numActivePayers -= 1;
+        
+        // Make the transfer
+        msg.sender.transfer(amount);
+
+        // Log event
+        Withdrew(msg.sender, amount);
         return amount;
     }
 }
