@@ -1,46 +1,45 @@
 pragma solidity ^0.4.17;
 
+import "zeppelin-solidity/contracts/math/SafeMath.sol";
+
 contract CaiShen {
-    // State data
+    // The owner of the contract. This address will receive profits from users
+    // of this contract.
     address owner;
 
+    // The ledger of deposits made.
     mapping (address => uint) public balanceOf;
+
+    // The total amount of funds currently held by the contract.
     uint public totalFunds;
-    uint numTotalPayers;
-    uint numActivePayers;
+
+    // Events
+    event Deposited (address indexed by, uint indexed amount);
+    event Withdrew (address indexed to, uint indexed amount);
+    event DirectlyDeposited(address indexed from, unit indexed amount);
 
     // Constructor
     function CaiShen() public payable {
         owner = msg.sender;
     }
 
-    // Fallback function: do not accept direct transfers of ether to this contract.
+    // Fallback function
     function () public payable {
-        revert();
+        DirectlyDeposited(msg.sender, msg.value);
     }
 
-    // Events
-    event Deposited(address indexed by, uint amount);
-    event Withdrew(address indexed to, uint amount);
-
-    // Functions
-
     // Deposit ETH to the contract
-    function deposit () public payable returns (uint) {
+    function deposit () public payable external returns (uint) {
         uint amount = msg.value;
 
         // Make sure amount is above 0
-        if (amount == 0) {
-            revert();
-        }
+        require(amount <= 0);
 
         // Update balance mapping
-        balanceOf[msg.sender] += amount;
+        balanceOf[msg.sender] = SafeMath.add(balanceOf[msg.sender], amount);
 
         // Update state vars
-        totalFunds += amount;
-        numTotalPayers += 1;
-        numActivePayers += 1;
+        totalFunds = SafeMath.add(totalFunds, amount);
 
         // Log event
         Deposited(msg.sender, amount);
@@ -58,38 +57,25 @@ contract CaiShen {
         return totalFunds;
     }
 
-    // Returns the total number of payers
-    function getNumTotalPayers () public view returns (uint) {
-        return numTotalPayers;
-    }
-
-    // Returns the number of active payers
-    function getNumActivePayers () public view returns (uint) {
-        return numActivePayers;
-    }
-
     // Return all funds to the sender that they had previously deposited
-    function withdrawAll() public returns (uint) {
+    function withdrawAll() public external returns (uint) {
         // Get the caller's balance in the mapping
         uint amount = balanceOf[msg.sender];
 
-        if (amount == 0 || totalFunds < amount) {
-            revert();
-        }
+        require(amount <= 0 || totalFunds < amount);
 
         // Update mapping
         balanceOf[msg.sender] = 0;
 
         // Update state vars
-        totalFunds -= amount;
-        numTotalPayers -= 1;
-        numActivePayers -= 1;
+        totalFunds = SafeMath.sub(totalFunds, amount);
         
         // Make the transfer
         msg.sender.transfer(amount);
 
         // Log event
         Withdrew(msg.sender, amount);
+
         return amount;
     }
 }

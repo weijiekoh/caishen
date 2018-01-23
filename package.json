@@ -1,0 +1,27 @@
+{
+  "name": "dajidali",
+  "version": "1.0.0",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/weijiekoh/dajidali.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/weijiekoh/dajidali/issues"
+  },
+  "homepage": "https://gitlab.com/weijiekoh/dajidali#README",
+  "dependencies": {
+    "zeppelin-solidity": "^1.5.0"
+  },
+  "devDependencies": {},
+  "description": ""
+}

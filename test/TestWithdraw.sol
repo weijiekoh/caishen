@@ -6,17 +6,18 @@ import "../contracts/CaiShen.sol";
 
 contract TestWithdraw {
     uint public initialBalance = 10 ether;
-    CaiShen hb = new CaiShen();
+    CaiShen cs = new CaiShen();
 
     function () public payable {
     }
 
     function beforeAll () public {
-        hb.deposit.value(1 ether)();
+        cs.deposit.value(1 ether)();
     }
 
     function testWithdraw () public {
-        uint amtWithdrawn = hb.withdrawAll();
-        Assert.equal(amtWithdrawn, 1 ether, "Expected withdrawal of 1 ether");
+        cs.withdrawAll();
+        uint amtWithdrawn = this.balance;
+        Assert.equal(amtWithdrawn, 10 ether, "Expected withdrawal of 1 ether");
     }
 }
