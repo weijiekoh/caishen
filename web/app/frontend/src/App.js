@@ -2,6 +2,7 @@ import { h, Component } from 'preact'
 import { Router, route } from "preact-router"; 
 
 import Home from "./routes/home.js";
+import { Web3 } from "web3";
 
 export default class App extends Component {
   constructor(props){
