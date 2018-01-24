@@ -11,6 +11,13 @@ var config = {
     extractText: {
       allChunks: true,
       filename: "app.css"
+    },
+    rules: {
+      fonts: {
+        options: {
+          name: "[name].[ext]"
+        }
+      }
     }
   }
 }

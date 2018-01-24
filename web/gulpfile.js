@@ -22,6 +22,7 @@ gulp.task('build-prod', shell.task([
   'mkdir -p ./app/frontend/images ./app/frontend/favicons',
   'cp -r ./app/frontend/images ./project/static/images',
   'cp -r ./app/frontend/favicons ./project/static/favicons',
+  'cp -r ./app/frontend/fonts ./project/static/fonts',
 ],
   {
     env: {

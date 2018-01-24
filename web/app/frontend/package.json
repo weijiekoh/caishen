@@ -21,6 +21,7 @@
     }
   },
   "dependencies": {
+    "@ibm/type": "^0.5.3",
     "preact": "^8.2.7",
     "preact-compat": "^3.18.0"
   },

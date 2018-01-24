@@ -1,6 +1,7 @@
-import './index.css'
+import "./styles/index.less";
+import "./styles/index.less";
 
-import {h, render} from 'preact'
+import { h, render } from 'preact'
 
 if (process.env.NODE_ENV === 'development') {
   // Enable use of React Developer Tools

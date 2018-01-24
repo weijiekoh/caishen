@@ -1,9 +1,20 @@
-import {h, Component} from 'preact'
+import { h, Component } from 'preact'
 import { Router, route } from "preact-router"; 
-import "preact/devtools";
-import "./styles/index.less";
+
+import Home from "./routes/home.js";
 
 export default class App extends Component {
+  constructor(props){
+    super(props);
+    if (typeof web3 === 'undefined') {
+      this.web3 = null;
+    } 
+    else {
+      this.web3 = new Web3(web3.currentProvider);
+    }
+  }
+
+
 	/** Gets fired when the route changes.
    *	@param {Object} event	"change" event from 
    *	[preact-router](http://git.io/preact-router)
@@ -14,7 +25,8 @@ export default class App extends Component {
 
     // Update Google Analytics
     if (typeof window !== "undefined"){
-      if (window.ga !== null){
+      if (Object.keys(window).indexOf("ga") > -1 &&
+          window.ga !== null){
         ga("set", "page", e.url);
         ga("send", "pageview");
       }
@@ -22,11 +34,36 @@ export default class App extends Component {
 	};
 
 
-  render() {
+  renderNoWeb3 = () => {
     return (
-      <div>
-        <p>Hello, world</p>
+      <p>Please install MetaMask.</p>
+    );
+  }
+
+
+  render() {
+    if (this.web3 == null){
+      return (this.renderNoWeb3());
+    }
+
+    const router = (
+      <Router onChange={this.handleRoute}>
+        <Home path="/" />
+      </Router>
+    );
+
+    return (
+      <div class="pure-g">
+        <div class="pure-u-1">
+          {this.web3 == null ?
+              this.renderNoWeb3()
+              :
+              router
+          }
+        </div>
       </div>
     );
   }
 }
+
+

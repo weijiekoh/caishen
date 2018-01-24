@@ -2,6 +2,35 @@
 @import (once, css) "pure/forms-min.css";
 @import (once, css) "pure/buttons-min.css";
 @import (once, css) "pure/grids-responsive.css";
-p {
-    font-weight:bold;
+@import (once, css) "ibm-type.css";
+@import (once, less) "colours.less";
+@import (once, less) "constants.less";
+
+#app{
+    text-align:center;
+    margin:0;
+    width:100%;
+    max-width:100%;
+}
+
+.pure-g {
+    text-align:left;
+    display: inline-block;
+    width: 768px;
+    /*float:left;*/
+	/*padding-right: 15px;*/
+	/*padding-left: 15px;*/
+	/*margin-right: auto;*/
+	/*margin-left: auto;*/
+}
+
+@media (max-width: 767px) {
+	.pure-g {
+		width: 568px;
+		padding-right: 0px;
+		padding-left: 0px;
+		margin-left:2%;
+		margin-right:2%;
+		width:96% !important;
+	}
 }
