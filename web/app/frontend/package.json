@@ -1,0 +1,37 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Describe frontend here",
+  "private": true,
+  "scripts": {
+    "build": "nwb build-preact-app",
+    "clean": "nwb clean-app",
+    "start": "nwb serve-preact-app",
+    "test": "nwb test-preact",
+    "test:coverage": "nwb test-preact --coverage",
+    "test:watch": "nwb test-preact --server"
+  },
+  "eslintConfig": {
+    "extends": "standard-preact",
+    "rules": {
+      "jsx-quotes": [
+        "error",
+        "prefer-double"
+      ]
+    }
+  },
+  "dependencies": {
+    "preact": "^8.2.7",
+    "preact-compat": "^3.18.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-standard-preact": "^1.1.6",
+    "nwb": "0.21.x",
+    "nwb-less": "^0.6.1",
+    "preact-router": "^2.6.0"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": ""
+}

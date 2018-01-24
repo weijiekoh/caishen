@@ -20,6 +20,8 @@
   },
   "homepage": "https://gitlab.com/weijiekoh/dajidali#README",
   "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-shell": "^0.6.5",
     "zeppelin-solidity": "^1.5.0"
   },
   "devDependencies": {},

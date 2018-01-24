@@ -1,12 +1,9 @@
 pragma solidity ^0.4.17;
 
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
+import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 
-contract CaiShen {
-    // The owner of the contract. This address will receive profits from users
-    // of this contract.
-    address owner;
-
+contract CaiShen is Ownable {
     // The ledger of deposits made.
     mapping (address => uint) public balanceOf;
 
@@ -16,11 +13,10 @@ contract CaiShen {
     // Events
     event Deposited (address indexed by, uint indexed amount);
     event Withdrew (address indexed to, uint indexed amount);
-    event DirectlyDeposited(address indexed from, unit indexed amount);
+    event DirectlyDeposited(address indexed from, uint indexed amount);
 
     // Constructor
     function CaiShen() public payable {
-        owner = msg.sender;
     }
 
     // Fallback function
@@ -29,7 +25,7 @@ contract CaiShen {
     }
 
     // Deposit ETH to the contract
-    function deposit () public payable external returns (uint) {
+    function deposit () public payable returns (uint) {
         uint amount = msg.value;
 
         // Make sure amount is above 0
@@ -58,7 +54,7 @@ contract CaiShen {
     }
 
     // Return all funds to the sender that they had previously deposited
-    function withdrawAll() public external returns (uint) {
+    function withdrawAll() public returns (uint) {
         // Get the caller's balance in the mapping
         uint amount = balanceOf[msg.sender];
 
