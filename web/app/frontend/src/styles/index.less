@@ -6,6 +6,19 @@
 @import (once, less) "colours.less";
 @import (once, less) "constants.less";
 
+.pure-g {
+    text-align:left;
+    display: inline-block;
+    width: 768px;
+    @media (max-width: 767px) {
+        width:96% !important;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left:2%;
+        margin-right:2%;
+    }
+}
+
 #app{
     text-align:center;
     margin:0;
@@ -13,24 +26,34 @@
     max-width:100%;
 }
 
-.pure-g {
-    text-align:left;
-    display: inline-block;
-    width: 768px;
-    /*float:left;*/
-	/*padding-right: 15px;*/
-	/*padding-left: 15px;*/
-	/*margin-right: auto;*/
-	/*margin-left: auto;*/
+.login{
+    text-align:center;
+    margin-top:100px;
 }
 
-@media (max-width: 767px) {
-	.pure-g {
-		width: 568px;
-		padding-right: 0px;
-		padding-left: 0px;
-		margin-left:2%;
-		margin-right:2%;
-		width:96% !important;
-	}
+.noweb3{
+    text-align:center;
+}
+
+.nav{
+    @nav_height:75px;
+    nav{
+        height:@nav_height;
+        display:flex;
+        a {
+            vertical-align:baseline;
+            line-height:@nav_height;
+            height:100%;
+            display:block;
+            text-decoration:none;
+            margin:0 1em;
+            font-size:1.25em;
+            &:first-of-type{
+                margin-left:0;
+            }
+            &:last-of-type{
+                margin-right:0;
+            }
+        }
+    }
 }

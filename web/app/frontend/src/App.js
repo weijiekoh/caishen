@@ -2,6 +2,9 @@ import { h, Component } from 'preact'
 import { Router, route } from "preact-router"; 
 
 import Home from "./routes/home.js";
+import Deposit from "./routes/deposit.js";
+import Nav from "./components/Nav.js";
+
 var Web3 = require("web3");
 
 
@@ -13,6 +16,11 @@ export default class App extends Component {
     } 
     else {
       this.web3 = new Web3(web3.currentProvider);
+      console.log(web3.eth.coinbase);
+    }
+
+    this.state = {
+      web3: this.web3
     }
   }
 
@@ -38,31 +46,33 @@ export default class App extends Component {
 
   renderNoWeb3 = () => {
     return (
-      <p>Please install MetaMask.</p>
+      <div class="noweb3 pure-u-2-6">
+        <p>To run this dApp, <a href="https://metamask.io/">install the MetaMask 
+            extension</a> or visit this site in any web3-enabled browser.
+        </p>
+      </div>
+    );
+  }
+
+
+  renderLockedWeb3 = () => {
+    return (
+      <div class="noweb3 pure-u-2-6">
+        <p>Please unlock MetaMask to continue.</p>
+      </div>
     );
   }
 
 
   render() {
-    if (this.web3 == null){
-      return (this.renderNoWeb3());
-    }
-
-    const router = (
-      <Router onChange={this.handleRoute}>
-        <Home path="/" />
-      </Router>
-    );
-
     return (
       <div class="pure-g">
-        <div class="pure-u-1">
-          {this.web3 == null ?
-              this.renderNoWeb3()
-              :
-              router
-          }
-        </div>
+        <Nav />
+
+        <Router onChange={this.handleRoute}>
+          <Home path="/" />
+          <Deposit path="deposit/" />
+        </Router>
       </div>
     );
   }
