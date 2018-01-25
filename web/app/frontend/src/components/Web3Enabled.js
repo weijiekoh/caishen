@@ -28,7 +28,7 @@ export default class Web3Enabled extends Component{
 
 
   render() {
-    if (web3 == null){
+    if (typeof web3 === "undefined" || web3 == null){
       return this.renderNoWeb3();
     }
     else if (web3.eth.accounts.length === 0){
