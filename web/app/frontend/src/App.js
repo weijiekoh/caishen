@@ -7,25 +7,18 @@ import Redeem from "./routes/redeem.js";
 import About from "./routes/about.js";
 import Nav from "./components/Nav.js";
 
-var Web3 = require("web3");
-
 
 export default class App extends Component {
-  constructor(props){
-    super(props);
-    if (typeof web3 === 'undefined') {
-      this.web3 = null;
-    } 
-    else {
-      this.web3 = new Web3(web3.currentProvider);
-      console.log(web3.eth.coinbase);
-    }
+  componentWillMount = () => {
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider);
 
-    this.state = {
-      web3: this.web3
+      if (web3.eth.accounts.length === 0){
+        web3 = new Web3(web3.currentProvider);
+        console.log(web3);
+      }
     }
   }
-
 
 	/** Gets fired when the route changes.
    *	@param {Object} event	"change" event from 
@@ -44,26 +37,6 @@ export default class App extends Component {
       }
     }
 	};
-
-
-  renderNoWeb3 = () => {
-    return (
-      <div class="noweb3 pure-u-2-6">
-        <p>To run this dApp, <a href="https://metamask.io/">install the MetaMask 
-            extension</a> or visit this site in any web3-enabled browser.
-        </p>
-      </div>
-    );
-  }
-
-
-  renderLockedWeb3 = () => {
-    return (
-      <div class="noweb3 pure-u-2-6">
-        <p>Please unlock MetaMask to continue.</p>
-      </div>
-    );
-  }
 
 
   render() {
