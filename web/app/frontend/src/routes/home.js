@@ -29,7 +29,7 @@ export default class Home extends Component{
   render() {
     return (
       <div class="pure-u-1">
-        <p>这个农历新年，与下一代共享未来。</p>
+        <p>这个农历新年，与下一代分享财务的未来。</p>
         <p>使用此分布式应用创建带时间锁的智能红包。 
           收金人只能在时间到期后才能收到款项。
         </p>
@@ -42,7 +42,8 @@ export default class Home extends Component{
         <hr />
 
         <p>
-          This Lunar New Year, share the future with the next generation.
+          This Lunar New Year, share the future of finance with the next
+          generation.
         </p>
         <p>
           Use this dApp to create a smart red packet with a time-lock.
