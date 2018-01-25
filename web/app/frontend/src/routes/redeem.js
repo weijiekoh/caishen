@@ -68,7 +68,7 @@ export default class Redeem extends Web3Enabled{
   renderUnlockedWeb3() {
     return (
       <div class="redeem pure-form pure-form-stacked">
-        <h2>Redeem funds</h2>
+        <h1>Redeem funds</h1>
         <fieldset>
           <label for="address">Enter your ETH address.</label>
           <input 
