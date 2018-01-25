@@ -26,10 +26,10 @@ SECRET_KEY = "jncsdrl5txrnm59rmb7wa7f7=a9sj(5-_r-6v&(aq-36#v%mo#"
 LOGIN_REDIRECT_URL = '/'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-if "DEV" in os.environ:
-    DEBUG = os.environ["DEV"].lower() == "true"
+# if "DEV" in os.environ:
+    # DEBUG = os.environ["DEV"].lower() == "true"
 
 # Application definition
 
