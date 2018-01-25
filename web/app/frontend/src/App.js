@@ -3,6 +3,8 @@ import { Router, route } from "preact-router";
 
 import Home from "./routes/home.js";
 import Deposit from "./routes/deposit.js";
+import Redeem from "./routes/redeem.js";
+import About from "./routes/about.js";
 import Nav from "./components/Nav.js";
 
 var Web3 = require("web3");
@@ -72,6 +74,8 @@ export default class App extends Component {
         <Router onChange={this.handleRoute}>
           <Home path="/" />
           <Deposit path="deposit/" />
+          <Redeem path="redeem/" />
+          <About path="about/" />
         </Router>
       </div>
     );

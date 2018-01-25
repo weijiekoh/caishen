@@ -27,20 +27,24 @@
                         {% if user.is_authenticated %}
                             <p>Your account doesn't have access to this page.</p>
                         {% else %}
-                            <h1>Please log in to see this page.</h1>
+                            <h2>Please log in to see this page.</h2>
                         {% endif %}
                     {% endif %}
 
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="password"
-                        required
-                        id="id_password" />
-
-                    <input class="pure-button pure-button-primary button-large" 
-                       id="submit_btn"
-                        type="submit" value="Login" />
+                    <div class="pure-u-1 password">
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="password"
+                            autofocus
+                            required />
+                    </div>
+                    
+                    <div class="pure-u-1">
+                        <input class="pure-button pure-button-primary button-large" 
+                           id="submit_btn"
+                           type="submit" value="Login" />
+                    </div>
                 </form>
             </div>
         </div>

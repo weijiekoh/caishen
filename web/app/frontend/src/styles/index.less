@@ -5,6 +5,9 @@
 @import (once, css) "ibm-type.css";
 @import (once, less) "colours.less";
 @import (once, less) "constants.less";
+@import (once, less) "nav.less";
+@import (once, less) "login.less";
+@import (once, less) "home.less";
 
 .pure-g {
     text-align:left;
@@ -26,34 +29,11 @@
     max-width:100%;
 }
 
-.login{
-    text-align:center;
-    margin-top:100px;
-}
-
 .noweb3{
     text-align:center;
 }
 
-.nav{
-    @nav_height:75px;
-    nav{
-        height:@nav_height;
-        display:flex;
-        a {
-            vertical-align:baseline;
-            line-height:@nav_height;
-            height:100%;
-            display:block;
-            text-decoration:none;
-            margin:0 1em;
-            font-size:1.25em;
-            &:first-of-type{
-                margin-left:0;
-            }
-            &:last-of-type{
-                margin-right:0;
-            }
-        }
-    }
+.button-success{
+    background: @support-02;
+    color:white;
 }
