@@ -7,7 +7,7 @@ export default class Home extends Component{
       return (
         <div class="get_started">
           <button 
-            onClick={() => { route("/deposit") }}
+            onClick={() => { route("/give") }}
             class="pure-button button-success">
             {t}
           </button>
