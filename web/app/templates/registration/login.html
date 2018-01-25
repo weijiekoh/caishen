@@ -23,13 +23,7 @@
                         <p>Your password is incorrect. Please try again.</p>
                     {% endif %}
 
-                    {% if next %}
-                        {% if user.is_authenticated %}
-                            <p>Your account doesn't have access to this page.</p>
-                        {% else %}
-                            <h2>Please log in to see this page.</h2>
-                        {% endif %}
-                    {% endif %}
+                    <h2>Please log in.</h2>
 
                     <div class="pure-u-1 password">
                         <input
