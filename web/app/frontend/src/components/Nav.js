@@ -6,15 +6,15 @@ export default class Nav extends Component{
       <div class="nav pure-u-1">
         <nav>
           <a href="/">
-            <div class="logo">
+            <div class="logo pure-u-1">
               <div class="en">CaiShen - Smart Red Packet</div>
               <div class="zh">财神 - 智能红包</div>
             </div>
           </a>
-          <div class="links">
-            <a href="/deposit">Deposit</a>
-            <a href="/redeem">Redeem</a>
-            <a href="/about">About</a>
+          <div class="links pure-u-1">
+            <a href="/deposit">Deposit 赠送</a>
+            <a href="/redeem">Redeem 赎回</a>
+            <a href="/about">About 信息</a>
           </div>
         </nav>
       </div>

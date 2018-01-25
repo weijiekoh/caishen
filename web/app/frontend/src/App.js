@@ -71,6 +71,8 @@ export default class App extends Component {
       <div class="pure-g">
         <Nav />
 
+        <hr />
+
         <Router onChange={this.handleRoute}>
           <Home path="/" />
           <Deposit path="deposit/" />

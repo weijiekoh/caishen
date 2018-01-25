@@ -9,6 +9,12 @@
 @import (once, less) "login.less";
 @import (once, less) "home.less";
 
+* {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 .pure-g {
     text-align:left;
     display: inline-block;
@@ -31,6 +37,33 @@
 
 .noweb3{
     text-align:center;
+}
+
+hr{
+    color: @brand-01;
+    border-color: @brand-01;
+    background-color: @brand-01;
+    height:0.3rem;
+    width:5rem;
+    margin:2em;
+    margin-left:0;
+}
+
+a{
+    color:@brand-01;
+    &:hover{
+        color: @brand-02;
+    }
+}
+
+
+button{
+    user-select:none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .button-success{
