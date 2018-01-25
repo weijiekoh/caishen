@@ -6,25 +6,25 @@ export default class About extends Component{
       <div class="about">
         <h1>About CaiShen</h1>
         <p>
-          CaiShen is a smart contract on the Ethereum blockchain. You can use
-          it to give Ether to someone else such that they can only recieve it
-          after a specified date.
+          CaiShen is a smart contract on the Ethereum blockchain. With this
+          dApp, you can give Ether to someone else in a way that they can only
+          recieve it after a specified date.
         </p>
         <p>
-          This is just like giving a red packet. Since the funds are
+          This is just like placing money in a trust fund. Since the funds are
           time-locked, your smart red packet is an investment into someone's
           future.
         </p>
         <p>
-          The recipient must remain in control of their wallet's private key.
-          If they are too young to do so, you may choose to keep it in cold
-          storage for them.
+          To receive the funds after the expiry date, the recipient must remain
+          in control of their wallet's private key. If they are too young or
+          unable to do so, you may choose to keep it in cold storage for them.
         </p>
         <p>
-          The recipient (or whomever has the recipient's private key) may
-          change the redemption address to a different one. In turn, the
-          private key of that address must be kept safe at least until
-          the funds are redeemed.
+          The recipient, or whomever has the recipient's private key, may
+          change the redemption address to a new one. In turn, the
+          private key of that new address must be kept safe, at least until the
+          funds are redeemed.
         </p>
         <p>
           Since the smart contract lives on the Ethereum blockchain, the
