@@ -66,6 +66,7 @@ export default class Redeem extends Component{
   render() {
     return (
       <div class="redeem pure-form pure-form-stacked">
+        <h2>Redeem funds</h2>
         <fieldset>
           <label for="address">Enter your ETH address.</label>
           <input 
@@ -86,6 +87,40 @@ export default class Redeem extends Component{
               Redeem funds
             </button>
           }
+        </fieldset>
+
+        <hr />
+
+        <h3>Change redemption address (advanced)</h3>
+        <p>If someone gave a smart hong bao to your address X, and you want to change
+          the recipient to Y, your MetaMask must be logged in to address X.</p>
+        <fieldset>
+          <label for="change_address">
+            Enter the ETH address of the new recipient and click "Change recipient".
+          </label>
+          <input 
+            name="change_address" type="text" />
+          <button 
+            class="pure-button button-primary">
+            Change recipient
+          </button>
+        </fieldset>
+
+        <hr />
+
+        <h3>Return funds (advanced)</h3>
+        <p>If someone gave a smart hong bao to your address X, and you want to return the funds
+          to them, your MetaMask must be logged in to address X.</p>
+        <fieldset>
+          <label for="return_address">
+            To confirm this, enter your ETH address and click "Return funds".
+          </label>
+          <input 
+            name="return_address" type="text" />
+          <button 
+            class="pure-button button-primary">
+            Return funds
+          </button>
         </fieldset>
       </div>
     )
