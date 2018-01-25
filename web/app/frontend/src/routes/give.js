@@ -2,7 +2,7 @@ import { h, Component } from 'preact'
 import Web3Enabled from "../components/Web3Enabled.js";
 var Web3 = require("web3");
 
-export default class Deposit extends Web3Enabled{
+export default class Give extends Web3Enabled{
   constructor(props){
     super(props);
 
@@ -94,9 +94,10 @@ export default class Deposit extends Web3Enabled{
 
   renderUnlockedWeb3() {
     return (
-      <div class="deposit pure-form pure-form-stacked">
+      <div class="give pure-form pure-form-stacked">
+        <h1>Give a smart red packet</h1>
         <fieldset>
-          <label for="amount">Enter the amount of to give (ETH).</label>
+          <label for="amount">Enter the amount of ETH to give.</label>
           <input
             onChange={this.handleAmountChange}
             onKeyUp={this.handleAmountChange}
@@ -104,7 +105,8 @@ export default class Deposit extends Web3Enabled{
 
           <label for="expiry">
             Enter the earliest date for the recipient to claim the funds
-            (dd/mm/yyyy). The timezone will be set in UTC+8.
+            (dd/mm/yyyy).
+            Timezone: {"UTC+" + (new Date().getTimezoneOffset() / 60 * -1).toString()}.
           </label>
           <input 
             onChange={this.handleExpiryChange}

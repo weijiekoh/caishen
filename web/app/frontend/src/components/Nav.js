@@ -12,9 +12,9 @@ export default class Nav extends Component{
             </div>
           </a>
           <div class="links pure-u-1">
-            <a href="/deposit">Deposit 赠送</a>
+            <a href="/give">Give 赠送</a>
             <a href="/redeem">Redeem 赎回</a>
-            <a href="/about">About 了解</a>
+            <a href="/about">Learn more 了解</a>
           </div>
         </nav>
       </div>

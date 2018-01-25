@@ -2,7 +2,7 @@ import { h, Component } from 'preact'
 import { Router, route } from "preact-router"; 
 
 import Home from "./routes/home.js";
-import Deposit from "./routes/deposit.js";
+import Give from "./routes/give.js";
 import Redeem from "./routes/redeem.js";
 import About from "./routes/about.js";
 import Nav from "./components/Nav.js";
@@ -15,7 +15,6 @@ export default class App extends Component {
 
       if (web3.eth.accounts.length === 0){
         web3 = new Web3(web3.currentProvider);
-        console.log(web3);
       }
     }
   }
@@ -48,8 +47,8 @@ export default class App extends Component {
 
         <Router onChange={this.handleRoute}>
           <Home path="/" />
-          <Deposit path="deposit/" />
-          <Redeem path="redeem/" />
+          <Give path="give" />
+          <Redeem path="redeem" />
           <About path="about/" />
         </Router>
       </div>

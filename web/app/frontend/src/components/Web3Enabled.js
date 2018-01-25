@@ -6,9 +6,6 @@ export default class Web3Enabled extends Component{
     super(props);
   }
 
-  componentWillMount = () => {
-  }
-
 
   renderNoWeb3 = () => {
     return (
@@ -24,10 +21,11 @@ export default class Web3Enabled extends Component{
   renderLockedWeb3 = () => {
     return (
       <div>
-        <p>Please unlock MetaMask to continue.</p>
+        <p>Please unlock MetaMask and refresh this page.</p>
       </div>
     );
   }
+
 
   render() {
     if (web3 == null){

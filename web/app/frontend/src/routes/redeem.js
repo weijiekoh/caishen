@@ -1,4 +1,6 @@
 import { h, Component } from 'preact'
+import Web3Enabled from "../components/Web3Enabled.js";
+var Web3 = require("web3");
 //const checkAddressChecksum = function (address) {
     //// Check each case
     //address = address.replace(/^0x/i,'');
@@ -29,7 +31,7 @@ import { h, Component } from 'preact'
 //};
 
 
-export default class Redeem extends Component{
+export default class Redeem extends Web3Enabled{
   constructor(props){
     super(props);
     this.state = {
@@ -63,7 +65,7 @@ export default class Redeem extends Component{
   }
 
 
-  render() {
+  renderUnlockedWeb3() {
     return (
       <div class="redeem pure-form pure-form-stacked">
         <h2>Redeem funds</h2>
@@ -92,8 +94,11 @@ export default class Redeem extends Component{
         <hr />
 
         <h3>Change redemption address (advanced)</h3>
-        <p>If someone gave a smart hong bao to your address X, and you want to change
-          the recipient to Y, your MetaMask must be logged in to address X.</p>
+        <p>
+          If your address is the recipient of a smart red packet, and you want
+          to change the recipient to a different address, your MetaMask must be
+          logged in to the original address.
+        </p>
         <fieldset>
           <label for="change_address">
             Enter the ETH address of the new recipient and click "Change recipient".
@@ -101,6 +106,7 @@ export default class Redeem extends Component{
           <input 
             name="change_address" type="text" />
           <button 
+            disabled
             class="pure-button button-primary">
             Change recipient
           </button>
@@ -109,8 +115,8 @@ export default class Redeem extends Component{
         <hr />
 
         <h3>Return funds (advanced)</h3>
-        <p>If someone gave a smart hong bao to your address X, and you want to return the funds
-          to them, your MetaMask must be logged in to address X.</p>
+        <p>If someone gave a smart hong bao to your address, and you want to return the funds
+          to them, your MetaMask must be logged into address the address they specified.</p>
         <fieldset>
           <label for="return_address">
             To confirm this, enter your ETH address and click "Return funds".
@@ -118,6 +124,7 @@ export default class Redeem extends Component{
           <input 
             name="return_address" type="text" />
           <button 
+            disabled
             class="pure-button button-primary">
             Return funds
           </button>
