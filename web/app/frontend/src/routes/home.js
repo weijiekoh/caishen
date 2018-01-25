@@ -37,7 +37,7 @@ export default class Home extends Component{
           上是安全的。 只有收金人可以获得这些以太基金。</p>
 
         {this.renderGiftBtn(false)}
-        <p>或者<a href="/about">了解更多</a>关于这个分布式应用。</p>
+        <p><a href="/about">了解更多</a>关于这个分布式应用。</p>
 
         <hr />
 
@@ -55,7 +55,7 @@ export default class Home extends Component{
           the recipient may access the Ether funds.
         </p>
         {this.renderGiftBtn(true)}
-        <p>or <a href="/about">learn more</a> about this dApp.</p>
+        <p><a href="/about">Learn more</a> about this dApp.</p>
       </div>
     );
   }
