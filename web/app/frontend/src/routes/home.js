@@ -30,7 +30,7 @@ export default class Home extends Component{
     return (
       <div class="pure-u-1">
         <p>这个农历新年，与下一代分享财务的未来。</p>
-        <p>使用此分布式应用创建带时间锁的智能红包。 
+        <p>这是一个此分布式应用创建带时间锁的智能红包。
           收金人只能在时间到期后才能收到款项。
         </p>
         <p>您的资金在<a target="_blank" href="https://www.ethereum.org/">以太坊区块链</a>
