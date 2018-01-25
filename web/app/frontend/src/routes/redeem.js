@@ -115,7 +115,7 @@ export default class Redeem extends Web3Enabled{
         <hr />
 
         <h3>Return funds (advanced)</h3>
-        <p>If someone gave a smart hong bao to your address, and you want to return the funds
+        <p>If someone gave a smart red packet to your address, and you want to return the funds
           to them, your MetaMask must be logged into address the address they specified.</p>
         <fieldset>
           <label for="return_address">
