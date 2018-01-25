@@ -14,7 +14,7 @@ export default class Nav extends Component{
           <div class="links pure-u-1">
             <a href="/deposit">Deposit 赠送</a>
             <a href="/redeem">Redeem 赎回</a>
-            <a href="/about">About 信息</a>
+            <a href="/about">About 了解</a>
           </div>
         </nav>
       </div>
