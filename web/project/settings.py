@@ -62,6 +62,10 @@ MIDDLEWARE = [
 
 HTML_MINIFY = True
 
+CSRF_TRUSTED_ORIGINS = [
+    'cs.kohweijie.com'
+]
+
 ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
