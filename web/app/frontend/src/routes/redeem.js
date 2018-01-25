@@ -115,8 +115,9 @@ export default class Redeem extends Web3Enabled{
         <hr />
 
         <h3>Return funds (advanced)</h3>
-        <p>If someone gave a smart red packet to your address, and you want to return the funds
-          to them, your MetaMask must be logged into address the address they specified.</p>
+        <p>If someone gave a smart red packet to your address, and you want to
+          return the funds to them, your MetaMask must be logged into the
+          recipient address they specified.</p>
         <fieldset>
           <label for="return_address">
             To confirm this, enter your ETH address and click "Return funds".
