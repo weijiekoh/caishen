@@ -33,8 +33,8 @@ export default class Home extends Component{
         <p>使用此分布式应用创建带时间锁的智能红包。 
           收金人只能在时间到期后才能收到款项。
         </p>
-        <p>这些资金在<a target="_blank" href="https://www.ethereum.org/">以太坊区块链</a>
-          上是安全的。 只有收金人可以获得以太资金。</p>
+        <p>您的资金在<a target="_blank" href="https://www.ethereum.org/">以太坊区块链</a>
+          上是安全的。 只有收金人可以获得这些以太基金。</p>
 
         {this.renderGiftBtn(false)}
         <p>或者<a href="/about">了解更多</a>关于这个分布式应用。</p>
@@ -50,7 +50,7 @@ export default class Home extends Component{
           The recipient can only receive the funds after the time-lock expires.
         </p>
         <p>
-          The funds are secure on
+          Your funds are secure on
           the <a target="_blank" href="https://www.ethereum.org/">Ethereum</a> blockchain. Only 
           the recipient may access the Ether funds.
         </p>
