@@ -23,6 +23,7 @@ export default class Give extends Web3Enabled{
     this.setAccountDataInterval = setInterval(this.setAccountData, 1000);
   }
 
+
   setAccountData = () => {
     if (typeof web3 !== "undefined" && web3 != null){
       web3.eth.getAccounts((error, accounts) => {
@@ -52,6 +53,7 @@ export default class Give extends Web3Enabled{
       return false;
     }
   }
+
 
   validateExpiry = expiry => {
     try{
