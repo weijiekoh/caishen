@@ -1,9 +1,17 @@
 import { h, Component } from 'preact'
+import { Web3Provider } from 'react-web3';
 var Web3 = require("web3");
+
 
 export default class Web3Enabled extends Component{
   constructor(props){
     super(props);
+    //if (typeof web3 !== 'undefined') {
+        //web3 = new Web3(web3.currentProvider);
+    //}
+    //else {
+      //web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    //}
   }
 
 
@@ -28,14 +36,14 @@ export default class Web3Enabled extends Component{
 
 
   render() {
-    if (typeof web3 === "undefined" || web3 == null){
-      return this.renderNoWeb3();
-    }
-    else if (web3.eth.accounts.length === 0){
-      return this.renderLockedWeb3();
-    }
-    else{
-      return this.renderUnlockedWeb3();
-    }
+    return (
+      <Web3Provider
+        web3UnavailableScreen={this.renderNoWeb3}
+        accountUnavailableScreen={this.renderLockedWeb3}>
+
+        {this.renderUnlockedWeb3()}
+
+      </Web3Provider>
+    );
   }
 }

@@ -5,13 +5,37 @@ var Web3 = require("web3");
 export default class Give extends Web3Enabled{
   constructor(props){
     super(props);
+    let address;
 
     this.state = {
       amount: "",
       expiry: "",
       valid: false,
+      address: null,
+      balance: null,
+    }
+
+  }
+
+
+  componentWillMount = () => {
+    this.setAccountData();
+    this.setAccountDataInterval = setInterval(this.setAccountData, 1000);
+  }
+
+  setAccountData = () => {
+    if (typeof web3 !== "undefined" && web3 != null){
+      web3.eth.getAccounts((error, accounts) => {
+        const address = accounts[0];
+
+        web3.eth.getBalance(address, (error, balance) => {
+          this.setState({ address, balance });
+        });
+
+      });
     }
   }
+
 
   validateInputs = () => {
     const valid = this.validateAmount(this.state.amount) &&
@@ -93,42 +117,50 @@ export default class Give extends Web3Enabled{
 
 
   renderUnlockedWeb3() {
-    return (
-      <div class="give pure-form pure-form-stacked">
-        <h1>Give a smart red packet</h1>
-        <fieldset>
-          <label for="amount">Enter the amount of ETH to give.</label>
-          <input
-            onChange={this.handleAmountChange}
-            onKeyUp={this.handleAmountChange}
-            value={this.state.amount} name="amount" type="text" min="0" />
+    if (this.state.balance == null){
+      return this.renderLockedWeb3();
+    }
+    else{
+      const balance = web3.fromWei(this.state.balance, "ether").toString();
+      return (
+        <div class="give pure-form pure-form-stacked">
+          <h1>Give a smart red packet</h1>
+          <p>Your address: {this.state.address}</p>
+          <p>Your balance: {balance}</p>
+          <fieldset>
+            <label for="amount">Enter the amount of ETH to give.</label>
+            <input
+              onChange={this.handleAmountChange}
+              onKeyUp={this.handleAmountChange}
+              value={this.state.amount} name="amount" type="text" min="0" />
 
-          <label for="expiry">
-            Enter the earliest date for the recipient to claim the funds
-            (dd/mm/yyyy).
-            Timezone: {"UTC+" + (new Date().getTimezoneOffset() / 60 * -1).toString()}.
-          </label>
-          <input 
-            onChange={this.handleExpiryChange}
-            onKeyUp={this.handleExpiryChange}
-            value={this.state.expiry} name="expiry" type="text" placehodler="dd/mm/yyyy" />
+            <label for="expiry">
+              Enter the earliest date for the recipient to claim the funds
+              (dd/mm/yyyy).
+              Timezone: {"UTC+" + (new Date().getTimezoneOffset() / 60 * -1).toString()}.
+            </label>
+            <input 
+              onChange={this.handleExpiryChange}
+              onKeyUp={this.handleExpiryChange}
+              value={this.state.expiry} name="expiry" type="text" placehodler="dd/mm/yyyy" />
 
-          {this.state.valid ?
-            <button 
-              onClick={this.handleGiveBtnClick}
-              class="pure-button button-success">
-              Give
-            </button>
-              :
-            <button 
-              disabled
-              onClick={this.handleGiveBtnClick}
-              class="pure-button button-success">
-              Give
-            </button>
-          }
-        </fieldset>
-      </div>
-    )
+            {this.state.valid ?
+              <button 
+                onClick={this.handleGiveBtnClick}
+                class="pure-button button-success">
+                Give
+              </button>
+                :
+              <button 
+                disabled
+                onClick={this.handleGiveBtnClick}
+                class="pure-button button-success">
+                Give
+              </button>
+            }
+          </fieldset>
+        </div>
+      )
+    }
   }
 }

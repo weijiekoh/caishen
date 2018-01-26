@@ -9,16 +9,6 @@ import Nav from "./components/Nav.js";
 
 
 export default class App extends Component {
-  componentWillMount = () => {
-    if (typeof web3 !== 'undefined') {
-      web3 = new Web3(web3.currentProvider);
-
-      if (web3.eth.accounts.length === 0){
-        web3 = new Web3(web3.currentProvider);
-      }
-    }
-  }
-
 	/** Gets fired when the route changes.
    *	@param {Object} event	"change" event from 
    *	[preact-router](http://git.io/preact-router)
