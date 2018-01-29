@@ -1,5 +1,5 @@
 const CaiShen = artifacts.require("./CaiShen.sol");
-const increaseTime = require("./increaseTime.js");
+const expectThrow = require("./expectThrow.js");
 
 contract('CaiShen', accounts => {
   const creator = accounts[0];
@@ -8,6 +8,18 @@ contract('CaiShen', accounts => {
   const amount = web3.toWei(4, "ether");
   const fee = web3.toWei(0.004, "ether");
   const gasPrice = web3.toBigNumber(10000000000);
+
+  it("should not collect if called by a non-owner", async () => {
+    cs = await CaiShen.new();
+
+    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
+
+    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
+    let result = await expectThrow(cs.collectAllFees({from: recipient}));
+
+    assert.equal(result, true, "collectAllFees() should throw an error because it was called by a different account");
+  });
+
 
   it("should collect the correct fees", async () => {
     let cs = await CaiShen.new();

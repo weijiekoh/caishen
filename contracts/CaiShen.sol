@@ -42,6 +42,7 @@ contract CaiShen is Ownable {
     event Redeemed (uint indexed giftId, address indexed giver, address indexed recipient, uint amount);
     event ChangedRecipient (uint indexed giftId, address indexed originalRecipient, address indexed newRecipient);
     event DirectlyDeposited(address indexed from, uint indexed amount);
+    event ReturnedFundsToGivers(uint indexed amount);
 
     // Constructor
     function CaiShen() public payable {
@@ -187,10 +188,35 @@ contract CaiShen is Ownable {
         }
     }
 
-    function collectAllFees () public {
+    // Transfer the fees collected thus far to the contract owner.
+    function collectAllFees () onlyOwner public {
+        // Store the fee amount in a temporary variable
         uint amount = feesCollected;
+
+        // Set the feesCollected state variable to 0
         feesCollected = 0;
+
+        // Make the transfer
         owner.transfer(amount);
+    }
+
+
+    function returnFundsToGivers () onlyOwner public {
+        uint i = 0;
+        uint total = 0;
+        while(true){
+            if (i >= nextGiftId){
+                break;
+            }
+            else if (giftIdToGift[i].exists && giftIdToGift[i].redeemed == false){
+                SafeMath.add(total, giftIdToGift[i].amount);
+                giftIdToGift[i].giver.transfer(giftIdToGift[i].amount);
+
+            }
+            i = SafeMath.add(i, 1);
+        }
+
+        ReturnedFundsToGivers(total);
     }
 
     /********
