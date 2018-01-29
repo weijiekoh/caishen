@@ -1,9 +1,9 @@
 pragma solidity ^0.4.17;
 
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
-//import "zeppelin-solidity/contracts/ownership/Ownable.sol";
+import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 
-contract CaiShen {
+contract CaiShen is Ownable {
 
     //// Data types
 
@@ -187,12 +187,17 @@ contract CaiShen {
         }
     }
 
+    function collectAllFees () public {
+        uint amount = feesCollected;
+        feesCollected = 0;
+        owner.transfer(amount);
+    }
+
     /********
     TODO:
 
     function changeRecipient (address newRecipient, giftId) public {}
     function returnToGiver (giftId) public {}
-    function collectFees
     function selfDestruct / returnAllFunds
     ********/
 }
