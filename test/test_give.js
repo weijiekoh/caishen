@@ -1,19 +1,38 @@
 const CaiShen = artifacts.require("./CaiShen.sol");
+const expectThrow = require("./expectThrow.js");
 
 contract('CaiShen', accounts => {
   let cs;
   const creator = accounts[0];
   const recipient = accounts[1];
-  const expiry = Date.now() + 3600;
   const amount = web3.toWei(1, "ether");
   const fee = web3.toWei(0.001, "ether");
 
-  beforeEach(async () => {
-    cs = await CaiShen.new();
-    await cs.give(recipient, expiry, {from: creator, value: amount});
+  it("give() should fail because the expiry is in the past", async () => {
+    let cs = await CaiShen.new();
+    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp - 10000;
+    const result = await expectThrow(cs.give(recipient, expiry, {from: creator, value: amount}));
+    assert.isTrue(result, "give() should fail");
+  });
+
+  it("give() should fail because the amount is 0", async () => {
+    let cs = await CaiShen.new();
+    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
+    const result = await expectThrow(cs.give(creator, expiry, {from: creator, value: 0}));
+    assert.isTrue(result, "give() should fail");
+  });
+
+  it("give() should fail because the recipient is the same as the giver", async () => {
+    let cs = await CaiShen.new();
+    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
+    const result = await expectThrow(cs.give(creator, expiry, {from: creator, value: amount}));
+    assert.isTrue(result, "give() should fail");
   });
 
   it("Gift attributes from giftIdToGift()", async () => {
+    let cs = await CaiShen.new();
+    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
+    await cs.give(recipient, expiry, {from: creator, value: amount});
     let giftId = 0;
     const gift = await cs.giftIdToGift(giftId);
     const existsRes = gift[0];
@@ -38,6 +57,9 @@ contract('CaiShen', accounts => {
 
 
   it("Gift attributes from getGiftIdsByRecipient()", async () => {
+    let cs = await CaiShen.new();
+    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
+    await cs.give(recipient, expiry, {from: creator, value: amount});
     const giftIds = await cs.getGiftIdsByRecipient(recipient);
     const existsRes = await cs.doesGiftExist(giftIds[0].valueOf());
     const giverRes = await cs.getGiftGiver(giftIds[0].valueOf());

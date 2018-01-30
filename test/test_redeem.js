@@ -10,6 +10,45 @@ contract('CaiShen', accounts => {
   const amount = web3.toWei(5, "ether");
   const fee = web3.toWei(0.005, "ether");
 
+  it("should fail when trying to redeem a gift that doesn't belong to the sender", async () => {
+    cs = await CaiShen.new();
+    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
+
+    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
+    await(increaseTime(20000));
+    const result = await expectThrow(cs.redeem(0, {from: accounts[3]}));
+    assert.isTrue(result, "redeem() should throw an error because the gift does not belong to the sender");
+  });
+
+  it("should fail when trying to redeem a gift that has already been returned", async () => {
+    cs = await CaiShen.new();
+    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
+
+    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
+    await cs.returnToGiver(0, {from: recipient});
+
+    const result = await expectThrow(cs.redeem(0, {from: recipient}));
+    assert.isTrue(result, "redeem() should throw an error because the gift has already been redeemed");
+  });
+
+  it("should fail when trying to redeem a gift that has already been redeemed", async () => {
+    cs = await CaiShen.new();
+    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
+
+    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
+    await(increaseTime(20000));
+    await cs.redeem(0, {from: recipient});
+
+    const result = await expectThrow(cs.redeem(0, {from: recipient}));
+    assert.isTrue(result, "redeem() should throw an error because the gift has already been redeemed");
+  });
+
+  it("should fail when trying to redeem a gift that doesn't exist", async () => {
+    cs = await CaiShen.new();
+    let result = await expectThrow(cs.redeem(0, {from: recipient}));
+    assert.isTrue(result, "redeem() should throw an error because of an invalid giftId");
+  });
+
   it("should fail when trying to redeem gift before expiry time", async () => {
     cs = await CaiShen.new();
     const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;

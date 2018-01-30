@@ -28,7 +28,7 @@ contract('CaiShen', accounts => {
     await cs.give(recipient, expiry, {to: cs.address, from: giver, value: amount});
 
     // Check if feesCollected is correct
-    const feesCollected = await cs.feesCollected();
+    const feesCollected = await cs.getFeesCollected({from: creator});
     assert.equal(feesCollected.equals(fee), true, "Total fees collected should be correct");
 
     const a = await cs.feesCollected();
