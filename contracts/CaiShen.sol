@@ -4,7 +4,6 @@ import "zeppelin-solidity/contracts/math/SafeMath.sol";
 import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 
 contract CaiShen is Ownable {
-
     //// Data types
 
     // A Gift represent a time-locked red packet.
@@ -45,10 +44,12 @@ contract CaiShen is Ownable {
     event Constructed (address indexed by, uint indexed amount);
     event Gave (uint indexed giftId, address indexed giver, address indexed recipient, uint amount, uint expiry);
     event Redeemed (uint indexed giftId, address indexed giver, address indexed recipient, uint amount);
+    event ReturnedToGiver (uint indexed giftId);
     event ChangedRecipient (uint indexed giftId, address indexed originalRecipient, address indexed newRecipient);
     event DirectlyDeposited(address indexed from, uint indexed amount);
-    event ReturnFundsStarted(address indexed caller);
-    event ReturnedFundsToGivers(uint indexed amount);
+    event AllowRefunds();
+    event DisallowRefunds();
+    event Refunded(uint indexed giftId);
 
     // Constructor
     function CaiShen() public payable {
@@ -224,35 +225,6 @@ contract CaiShen is Ownable {
         owner.transfer(amount);
     }
 
-
-    //// Return all funds to the givers. Only the contract owner can call this.
-    //// Not recommended because it might take up a lot of gas.
-    //function returnFundsToGivers () onlyOwner public {
-        //ReturnFundsStarted(msg.sender);
-        //uint total = 0; // Keep track of the total amount refunded
-        //uint i = 0; // Loop counter
-
-        //while(true){
-            //if (i >= nextGiftId){
-                //// Exit the loop when all the gift IDs are exhausted
-                //break;
-            //}
-
-            //// Do the refuld if the gift exists and has not been redeemed
-            //else if (giftIdToGift[i].exists && giftIdToGift[i].redeemed == false){
-                //// Update the total
-                //SafeMath.add(total, giftIdToGift[i].amount);
-                //// Update the loop counter
-                //// Make the transfer.
-                //giftIdToGift[i].giver.transfer(giftIdToGift[i].amount);
-            //}
-            //i = SafeMath.add(i, 1);
-        //}
-
-        //// Log the event
-        //ReturnedFundsToGivers(total);
-    //}
-
     // A recipient may change the recipient address of a Gift
     function changeRecipient (address newRecipient, uint giftId) public {
         // Validate the giftId
@@ -271,6 +243,9 @@ contract CaiShen is Ownable {
 
         // Update the gift
         giftIdToGift[giftId].recipient = newRecipient;
+    
+        // Log the event
+        ChangedRecipient(giftId, msg.sender, newRecipient);
     }
 
     // A recipient may choose to return the funds to the giver
@@ -290,19 +265,25 @@ contract CaiShen is Ownable {
 
         // Make the transfer
         giftIdToGift[giftId].giver.transfer(giftIdToGift[giftId].amount);
+
+        // Log the event
+        ReturnedToGiver(giftId);
     }
 
     // Only call this in the event that givers should be allowed to get their funds back
     function allowRefunds () onlyOwner public {
         refundsAllowed = true;
+        AllowRefunds(); // Log the event
     }
 
     // Reverse allowRefunds()
     function disallowRefunds () onlyOwner public {
         refundsAllowed = false;
+        DisallowRefunds(); // Log the event
     }
 
-    // Let a giver get their funds back
+    // Let a giver get their funds back before the expiry date
+    // allowRefunds() must have been invoked first
     function claimRefund (uint giftId) public {
         // only work if refundsAllowed == true
         require (refundsAllowed == true);
@@ -323,6 +304,8 @@ contract CaiShen is Ownable {
 
         // Make the transfer
         giftIdToGift[giftId].giver.transfer(giftIdToGift[giftId].amount);
-    }
 
+        // Log this event
+        Refunded(giftId);
+    }
 }
