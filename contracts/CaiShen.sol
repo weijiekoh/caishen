@@ -29,6 +29,11 @@ contract CaiShen is Ownable {
     // nextGiftId by 1.
     uint public nextGiftId;
 
+
+    // Whether refunds are allowed. Set this to true using allowRefunds() only in an emergency.
+    // If refundsAllowed is true, then claimRefund() will allow a refund to go through.
+    bool refundsAllowed;
+
     // recipientToGiftIds maps each recipient address to a list of giftIDs of
     // Gifts they have received.
     mapping (address => uint[]) public recipientToGiftIds;
@@ -42,10 +47,12 @@ contract CaiShen is Ownable {
     event Redeemed (uint indexed giftId, address indexed giver, address indexed recipient, uint amount);
     event ChangedRecipient (uint indexed giftId, address indexed originalRecipient, address indexed newRecipient);
     event DirectlyDeposited(address indexed from, uint indexed amount);
+    event ReturnFundsStarted(address indexed caller);
     event ReturnedFundsToGivers(uint indexed amount);
 
     // Constructor
     function CaiShen() public payable {
+        refundsAllowed = false;
         Constructed(msg.sender, msg.value);
     }
 
@@ -89,6 +96,9 @@ contract CaiShen is Ownable {
     // Call this function while sending ether to give a gift.
     // @recipient: the recipient's address
     // @expiry: the Unix timestamp of the expiry datetime.
+    // It is fine to use the block timestamp in this contract because the
+    // possible drift due to a malicious miner is only 12 minutes. See:
+    // https://consensys.github.io/smart-contract-best-practices/recommendations/#timestamp-dependence
     function give (address recipient, uint expiry) public payable returns (uint) {
         // The giver is the address which calls this contract
         address giver = msg.sender;
@@ -102,6 +112,9 @@ contract CaiShen is Ownable {
         // The giver and the recipient must be different addresses
         require(giver != recipient);
 
+        // The recipient must be a valid address
+        require(recipient != 0);
+
         // Make sure nextGiftId is 0 or positive, or this contract is buggy
         assert(nextGiftId >= 0);
 
@@ -114,17 +127,23 @@ contract CaiShen is Ownable {
         // Increment feesCollected
         feesCollected = SafeMath.add(feesCollected, feeTaken);
 
+        // Shave off the fee
         uint amtGiven = SafeMath.sub(msg.value, feeTaken);
+
         // Update the giftIdToGift mapping with the new gift
         giftIdToGift[nextGiftId] = 
             Gift(true, nextGiftId, giver, recipient, expiry, amtGiven, false);
 
+        // Make sure that the exists property is true
         assert(giftIdToGift[nextGiftId].exists == true);
 
-        // Increment nextGiftId
+        // Make sure that the redeemed property is false
+        assert(giftIdToGift[nextGiftId].redeemed == false);
 
+        // Store nextGiftId in a temp variable
         uint giftId = nextGiftId;
 
+        // Increment nextGiftId
         nextGiftId = SafeMath.add(giftId, 1);
 
         // Return the giftId of the new gift
@@ -174,6 +193,8 @@ contract CaiShen is Ownable {
     }
 
     function fee (uint amount) public pure returns (uint) {
+        require(amount >= 0);
+
         if (amount < 0.01 ether){
             return 0;
         }
@@ -193,6 +214,9 @@ contract CaiShen is Ownable {
         // Store the fee amount in a temporary variable
         uint amount = feesCollected;
 
+        // Make sure that the amount is positive
+        require(amount > 0);
+
         // Set the feesCollected state variable to 0
         feesCollected = 0;
 
@@ -201,29 +225,104 @@ contract CaiShen is Ownable {
     }
 
 
-    function returnFundsToGivers () onlyOwner public {
-        uint i = 0;
-        uint total = 0;
-        while(true){
-            if (i >= nextGiftId){
-                break;
-            }
-            else if (giftIdToGift[i].exists && giftIdToGift[i].redeemed == false){
-                SafeMath.add(total, giftIdToGift[i].amount);
-                giftIdToGift[i].giver.transfer(giftIdToGift[i].amount);
+    //// Return all funds to the givers. Only the contract owner can call this.
+    //// Not recommended because it might take up a lot of gas.
+    //function returnFundsToGivers () onlyOwner public {
+        //ReturnFundsStarted(msg.sender);
+        //uint total = 0; // Keep track of the total amount refunded
+        //uint i = 0; // Loop counter
 
-            }
-            i = SafeMath.add(i, 1);
-        }
+        //while(true){
+            //if (i >= nextGiftId){
+                //// Exit the loop when all the gift IDs are exhausted
+                //break;
+            //}
 
-        ReturnedFundsToGivers(total);
+            //// Do the refuld if the gift exists and has not been redeemed
+            //else if (giftIdToGift[i].exists && giftIdToGift[i].redeemed == false){
+                //// Update the total
+                //SafeMath.add(total, giftIdToGift[i].amount);
+                //// Update the loop counter
+                //// Make the transfer.
+                //giftIdToGift[i].giver.transfer(giftIdToGift[i].amount);
+            //}
+            //i = SafeMath.add(i, 1);
+        //}
+
+        //// Log the event
+        //ReturnedFundsToGivers(total);
+    //}
+
+    // A recipient may change the recipient address of a Gift
+    function changeRecipient (address newRecipient, uint giftId) public {
+        // Validate the giftId
+        require (giftId >= 0);
+
+        // Validate the new recipient address
+        require (newRecipient != 0);
+
+        // The gift must exist and be unredeemed
+        require(giftIdToGift[giftId].exists == true);
+        require(giftIdToGift[giftId].redeemed == false);
+        
+        // Only allow an existing recipient of the gift with giftId to change
+        // the recipient
+        require(msg.sender == giftIdToGift[giftId].recipient);
+
+        // Update the gift
+        giftIdToGift[giftId].recipient = newRecipient;
     }
 
-    /********
-    TODO:
+    // A recipient may choose to return the funds to the giver
+    function returnToGiver (uint giftId) public {
+        // Validate the giftId
+        require (giftId >= 0);
 
-    function changeRecipient (address newRecipient, giftId) public {}
-    function returnToGiver (giftId) public {}
-    function selfDestruct / returnAllFunds
-    ********/
+        // The gift must exist and be unredeemed
+        require (giftIdToGift[giftId].exists == true);
+        require (giftIdToGift[giftId].redeemed == false);
+
+        // Only the recipient can return funds to the giver
+        require (giftIdToGift[giftId].recipient == msg.sender);
+
+        // Only allow a positive fund transfer
+        require (giftIdToGift[giftId].amount > 0);
+
+        // Make the transfer
+        giftIdToGift[giftId].giver.transfer(giftIdToGift[giftId].amount);
+    }
+
+    // Only call this in the event that givers should be allowed to get their funds back
+    function allowRefunds () onlyOwner public {
+        refundsAllowed = true;
+    }
+
+    // Reverse allowRefunds()
+    function disallowRefunds () onlyOwner public {
+        refundsAllowed = false;
+    }
+
+    // Let a giver get their funds back
+    function claimRefund (uint giftId) public {
+        // only work if refundsAllowed == true
+        require (refundsAllowed == true);
+
+        // Validate the gift
+        require (giftIdToGift[giftId].exists == true);
+        require (giftIdToGift[giftId].redeemed == false);
+
+        // Only a giver can call this function
+        require (giftIdToGift[giftId].giver == msg.sender);
+        require (giftIdToGift[giftId].recipient != msg.sender);
+
+        // Only transfer positive amounts
+        require (giftIdToGift[giftId].amount > 0);
+
+        // Only allow refunds before the expiry
+        require (giftIdToGift[giftId].expiry > now);
+
+        // Make the transfer
+        giftIdToGift[giftId].giver.transfer(giftIdToGift[giftId].amount);
+    }
+
 }
