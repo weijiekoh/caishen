@@ -1,3 +1,12 @@
+// IS CODE LAW? WHAT WOULD LESSIG SAY? OR PANINI?
+
+// THIS CONTRACT IS UNSAFE because I added two major bugs to make it more
+// exciting to audit ;)
+
+// One bug is easy to spot, and the other is more subtle. The more subtle bug
+// may or may not be dangerous; I don't know yet. But the other is definitely
+// bad. Hint: don't even trust the comments ;)
+
 pragma solidity 0.4.18;
 
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
@@ -130,7 +139,7 @@ contract CaiShen is Ownable {
         address giver = msg.sender;
 
         // Validate the giver address
-        assert(giver != address(0));
+        assert(giver != 0);
 
         // The gift must be a positive amount of ether
         uint amount = msg.value;
@@ -146,7 +155,7 @@ contract CaiShen is Ownable {
         require(giver != recipient);
 
         // The recipient must be a valid address
-        require(recipient != address(0));
+        require(recipient != 0);
 
         // Make sure nextGiftId is 0 or positive, or this contract is buggy
         assert(nextGiftId >= 0);
@@ -192,7 +201,7 @@ contract CaiShen is Ownable {
 
     // Call this function to redeem a gift of ether.
     // Tested in test/test_redeem.js
-    function redeem (uint giftId) public {
+    function redeem (uint giftId, uint amount) public {
         // The giftID should be 0 or positive
         require(giftId >= 0);
 
@@ -213,7 +222,6 @@ contract CaiShen is Ownable {
         //// buggy.
 
         // The amount must be positive because this was required in give()
-        uint amount = giftIdToGift[giftId].amount;
         assert(amount > 0);
 
         // The giver must not be the recipient because this was required in give()
@@ -271,7 +279,7 @@ contract CaiShen is Ownable {
         require(giftId >= 0);
 
         // Validate the new recipient address
-        require(newRecipient != address(0));
+        require(newRecipient != 0);
 
         // The gift must exist and must not have already been redeemed, returned, or refunded
         require(isValidGift(giftIdToGift[giftId]));
@@ -302,18 +310,13 @@ contract CaiShen is Ownable {
             recipientToGiftIds[msg.sender].length--;
             success = true; // success indicator
         } else {
-        // Otherwise, find its index (i), replace it with the last element, and
-        // then delete the last element
-            // Loop through the array to find a match
+        // Otherwise, find its index (i) and replace it with the last element
             for (uint i=0; i < len-1; i++) {
+                // Loop through the array to find a match
                 if (recipientToGiftIds[msg.sender][i] == giftId) {
                     // Replace with the last element
                     uint lastGiftId = recipientToGiftIds[msg.sender][len-1];
                     recipientToGiftIds[msg.sender][i] = lastGiftId;
-
-                    // Delete the last element
-                    delete recipientToGiftIds[msg.sender][len-1];
-                    recipientToGiftIds[msg.sender].length--;
                     success = true; // success indicator
                     break;
                 }

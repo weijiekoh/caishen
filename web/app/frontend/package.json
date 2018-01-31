@@ -25,6 +25,7 @@
     "preact": "^8.2.7",
     "preact-compat": "^3.18.0",
     "react-web3": "^0.4.4",
+    "truffle-contract": "^3.0.2",
     "web3": "^0.20.4"
   },
   "devDependencies": {

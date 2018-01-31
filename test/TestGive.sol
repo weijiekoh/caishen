@@ -9,7 +9,7 @@ contract TestGive {
     //CaiShen cs = CaiShen(DeployedAddresses.CaiShen());
     CaiShen cs = new CaiShen();
     address recipient = 0x4e86D7E70cf98E599CACd145828B76354abEb6E9;
-    uint expiry = now + 1;
+    uint expiry = now + 100;
     uint amount = 1 ether;
     uint fee = 0.001 ether;
 

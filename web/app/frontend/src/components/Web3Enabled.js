@@ -1,17 +1,17 @@
-import { h, Component } from 'preact'
-import { Web3Provider } from 'react-web3';
+import { h, Component } from "preact"
+import { Web3Provider } from "react-web3";
 var Web3 = require("web3");
 
 
 export default class Web3Enabled extends Component{
   constructor(props){
     super(props);
-    //if (typeof web3 !== 'undefined') {
-        //web3 = new Web3(web3.currentProvider);
-    //}
-    //else {
-      //web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-    //}
+    if (typeof web3 !== "undefined") {
+        web3 = new Web3(web3.currentProvider);
+    }
+    else {
+      web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    }
   }
 
 

@@ -76,4 +76,34 @@ contract('CaiShen', accounts => {
     assert.isTrue(giftIds[0].equals(0), "recipientToGiftIds[recipient][0] should be 0");
     assert.isTrue(giftIds[1].equals(2), "recipientToGiftIds[recipient][0] should be 2");
   });
+
+  it("should update recipientToGiftIds (3 gifts in array and the item is the last gift)", async () => {
+    let cs = await CaiShen.new();
+    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
+
+    // Give 3 gifts
+    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
+    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
+    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
+
+    let giftIds = await cs.getGiftIdsByRecipient(recipient);
+    assert.isTrue(giftIds[0].equals(0), "recipientToGiftIds[recipient][0] should be correct");
+    assert.isTrue(giftIds[1].equals(1), "recipientToGiftIds[recipient][1] should be correct");
+    assert.isTrue(giftIds[2].equals(2), "recipientToGiftIds[recipient][2] should be correct");
+
+    // Call changeRecipient()
+    await cs.changeRecipient(newRecipient, 2, {from: recipient});
+
+    const giftNew = await cs.giftIdToGift(2);
+    assert.equal(giftNew[3], newRecipient, "newRecipient should be the current recipient");
+
+    giftIds = await cs.getGiftIdsByRecipient(newRecipient);
+    assert.equal(giftIds.length, 1, "recipientToGiftIds[newRecipient] should have 1 element");
+    assert.isTrue(giftIds[0].equals(2), "recipientToGiftIds[newRecipient][0] should be 1");
+
+    giftIds = await cs.getGiftIdsByRecipient(recipient);
+    assert.equal(giftIds.length, 2, "recipientToGiftIds[recipient] should have 2 elements");
+    assert.isTrue(giftIds[0].equals(0), "recipientToGiftIds[recipient][0] should be 0");
+    assert.isTrue(giftIds[1].equals(1), "recipientToGiftIds[recipient][0] should be 2");
+  });
 });

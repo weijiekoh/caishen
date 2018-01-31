@@ -60,9 +60,9 @@ contract('CaiShen', accounts => {
 
   it("should fail to refund if the expiry has passed", async () => {
     let cs = await CaiShen.new();
-    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 300;
+    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 30;
     await cs.give(recipient, expiry, {to: cs.address, from: giver, value: amount, gasPrice: gasPrice});
-    await increaseTime(10000);
+    await increaseTime(100000);
     await cs.allowRefunds({from: creator});
     const result = await expectThrow(cs.claimRefund(0, {from: giver, gasPrice: gasPrice}));
     assert.isTrue(result, "claimRefund() should throw because the expiry has passed");
