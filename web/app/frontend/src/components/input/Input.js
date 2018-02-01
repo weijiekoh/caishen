@@ -17,7 +17,6 @@ export default class Input extends Component{
     };
 
     const value = e.target.value;
-    console.log(this.validate(value), value);
 
     if (this.validate(value)){
       this.setState({ 
@@ -44,8 +43,6 @@ export default class Input extends Component{
       errorParentClass = "pure-u-sm-1-1 pure-u-md-3-5";
     }
 
-    //const inputClass = (!this.props.showErrorMsg && this.state.isValid) ? "" : "invalid";
-    const inputClass = "";
 
     return (
       <div class="input_component">
@@ -55,7 +52,6 @@ export default class Input extends Component{
 
         <div class={inputParentClass}>
           <input 
-            class={inputClass}
             onInput={this.handleChange}
             onChange={this.handleChange}
             value={this.state.value}
@@ -64,7 +60,7 @@ export default class Input extends Component{
         </div>
 
         <div class={errorParentClass}>
-          {this.props.showErrorMsg &&
+          {this.props.showErrorMsgs &&
             <span class="error">
               {this.genErrorMsg(this.state.value)}
             </span>

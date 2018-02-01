@@ -8,7 +8,7 @@ gulp.task('default', ['build-prod']);
 
 // Run preact build in production mode, and delete JS sourcemaps
 gulp.task('build-prod', shell.task([
-  'cd app/frontend && nwb build --no-vendor --config nwb.config.js',
+  'cd app/frontend && nwb build --no-vendor --no-html --config nwb.config.js',
   'echo "Deleting sourcemaps..."',
   'rm -rf ./app/frontend/dist/*.map',
   'echo "Renaming output files..."',

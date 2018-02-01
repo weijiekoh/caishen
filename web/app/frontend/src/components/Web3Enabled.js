@@ -1,5 +1,4 @@
 import { h, Component } from "preact"
-import { Web3Provider } from "react-web3";
 var Web3 = require("web3");
 
 
@@ -9,9 +8,9 @@ export default class Web3Enabled extends Component{
     if (typeof web3 !== "undefined") {
         web3 = new Web3(web3.currentProvider);
     }
-    else {
-      web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-    }
+    //else {
+      //window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    //}
   }
 
 
@@ -36,14 +35,6 @@ export default class Web3Enabled extends Component{
 
 
   render() {
-    return (
-      <Web3Provider
-        web3UnavailableScreen={this.renderNoWeb3}
-        accountUnavailableScreen={this.renderLockedWeb3}>
-
-        {this.renderUnlockedWeb3()}
-
-      </Web3Provider>
-    );
+    return this.renderUnlockedWeb3();
   }
 }
