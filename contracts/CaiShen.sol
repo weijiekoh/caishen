@@ -13,7 +13,7 @@ contract CaiShen is Ownable {
         address recipient;  // 3 The address of the recipient
         uint expiry;        // 4 The expiry datetime of the timelock as a
                             //   Unix timestamp
-        uint amount;        // 5 The amount of Ether
+        uint amount;        // 5 The amount of ETH
         bool redeemed;      // 6 Whether the funds have already been redeemed
         bool returned;      // 7 Whether the funds were returned to the giver
         bool refunded;      // 8 Whether the funds were refunded to the giver
@@ -74,7 +74,7 @@ contract CaiShen is Ownable {
 
     // Fallback function which allows this contract to receive funds.
     function () public payable {
-        // Sending ether directly to this contract does nothing except log an
+        // Sending ETH directly to this contract does nothing except log an
         // event.
         DirectlyDeposited(msg.sender, msg.value);
     }

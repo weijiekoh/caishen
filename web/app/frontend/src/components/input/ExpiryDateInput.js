@@ -45,11 +45,16 @@ export default class DateInput extends Input{
       if (month !== p.getMonth() + 1) throw "Invalid month";
       if (day !== p.getDate()) throw "Invalid day";
 
-      return true;
+      return p > Date.now();
     }
     catch(err){
       return false;
     }
+  }
+
+
+  isFuture = expiry => {
+    return this.constructor.parseDate(expiry).getTime() < Date.now();
   }
 
   genErrorMsg = expiry => {
@@ -57,10 +62,12 @@ export default class DateInput extends Input{
       return "Enter a date.";
     }
     else if (!this.validate(expiry)){
-      return "Please enter a valid date.";
-    }
-    else if (this.constructor.parseDate(expiry).getTime() < Date.now()){
-      return "Please enter a date in the future.";
+      if (this.isFuture(expiry)){
+        return "Please enter a date in the future.";
+      }
+      else{
+        return "Please enter a valid date.";
+      }
     }
   }
 }

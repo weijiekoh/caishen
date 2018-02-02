@@ -1,6 +1,4 @@
 import { h, Component } from 'preact'
-import contract from 'truffle-contract'
-import CaiShenContract from '../../../../../build/contracts/CaiShen.json';
 
 import Web3Enabled from "../components/Web3Enabled.js";
 import EthAmountInput from "../components/input/EthAmountInput.js";
@@ -14,7 +12,11 @@ export default class Give extends Web3Enabled{
   constructor(props){
     super(props);
 
-    this.state = {
+    this.filter = null;
+
+    Object.assign(this.state, {
+      blankInputs: false,
+
       address: null,
       balance: null,
 
@@ -27,35 +29,9 @@ export default class Give extends Web3Enabled{
       validRecipient: false,
 
       showErrorMsgs: false,
-    }
-  }
 
-
-  componentWillMount = () => {
-    if (typeof web3 !== "undefined") {
-      this.setAccountData();
-      this.setAccountDataInterval = setInterval(this.setAccountData, 1000);
-
-      let meta = contract(CaiShenContract);
-      meta.setProvider(web3.currentProvider);
-      meta.deployed().then(instance => {
-        this.caishen = instance;
-      });
-    }
-  }
-
-
-  setAccountData = () => {
-    if (typeof web3 !== "undefined" && web3 != null){
-      web3.eth.getAccounts((error, accounts) => {
-        const address = accounts[0];
-        if (web3.isAddress(address)){
-          web3.eth.getBalance(address, (error, balance) => {
-            this.setState({ address, balance });
-          });
-        }
-      });
-    }
+      transactions: [],
+    });
   }
 
 
@@ -65,6 +41,7 @@ export default class Give extends Web3Enabled{
       validRecipient: valid,
     });
   }
+
 
   handleAmountChange = (value, valid) => {
     this.setState({
@@ -84,14 +61,51 @@ export default class Give extends Web3Enabled{
 
   handleGiveBtnClick = () => {
     const valid = this.state.validAmount &&
-                  this.state.validRecipient &&
-                  this.state.validExpiry;
+      this.state.validRecipient &&
+      this.state.validExpiry;
 
 
     if (valid){
-      //this.caishen.give("0x414Ab7Cb9886f94D299df992f0bE9F0b30A6358E",
-        //1517306495493,
-        //{from: this.state.address, value: web3.toWei(this.state.amount, "ether")});
+      const recipientAddress = this.state.address;
+      const amountWei = web3.toWei(this.state.amount, "ether");
+      const expiry = this.state.expiry.getTime() / 1000;
+      const payload = {
+        value: amountWei,
+        from: this.state.address
+      };
+
+      console.log("Calling contract's give()");
+      console.log(recipientAddress, expiry, payload);
+
+      // Estimate gas
+      this.caishen.give.estimateGas(recipientAddress, expiry, {value: amountWei}).then(gas => {
+        console.log("gas", gas);
+        payload.gas = gas;
+
+        console.log(recipientAddress, expiry, payload);
+
+        this.caishen.give(recipientAddress, expiry, payload).then(tx => {
+          console.log("tx:", tx);
+
+          let transactions = this.state.transactions;
+          if (typeof transactions === "undefined"){
+            transactions = [];
+          }
+
+          transactions.push({
+            txHash: tx.receipt.transactionHash,
+            txAmount: amountWei,
+            txExpiry: expiry,
+            txRecipient: recipientAddress,
+          });
+          return transactions;
+        }).then(transactions => {
+          this.setState({ 
+            transactions: transactions,
+            blankInputs: true,
+          });
+        });
+      });
     }
     else {
       this.setState({ 
@@ -100,68 +114,97 @@ export default class Give extends Web3Enabled{
     }
   }
 
+  renderTransactions = transactions => {
+
+    const formatDate = timestamp => {
+      const months = [ "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+
+      const d = new Date(timestamp * 1000);
+      const year = d.getFullYear().toString();
+      const month = months[d.getMonth() + 1];
+      const day = d.getDate().toString();
+
+      return day + " " + month + " " + year;
+    }
+
+    return transactions.map((transaction, i) => 
+        <div class="transaction_success">
+          <em class="success">#{i+1} Gift transaction broadcasted.</em>
+          <p>
+            <a target="_blank" href={"https://etherscan.io/tx/" + transaction.txHash}>
+              Click here
+            </a> to 
+            view the status of the transaction.
+          </p>
+          <p>If it is successfully mined, the owner of the ETH address
+            <pre>{transaction.txRecipient}</pre> may 
+            redeem {web3.fromWei(transaction.txAmount)} ETH 
+            after midnight, {formatDate(transaction.txExpiry)}.
+          </p>
+          <hr />
+        </div>
+    );
+  }
 
   renderUnlockedWeb3() {
-    if (typeof web3 === "undefined" || web3 == null){
-      return this.renderNoWeb3();
-    }
-    else if (this.state.balance == null){
-      return this.renderLockedWeb3();
-    }
-    else{
-      const balance = web3.fromWei(this.state.balance, "ether").toString();
+    const dateLabel = "Enter the earliest date for the recipient to claim the funds (dd/mm/yyyy).";
 
-      const dateLabel = (
-        <span>
-          Enter the earliest date for the recipient to claim the funds 
-          (dd/mm/yyyy).<br />The expiry time will be midnight, 
-          GMT+{(new Date().getTimezoneOffset() / 60 * -1).toString()}.
-        </span>
-      );
+    return (
+      <div class="give pure-form pure-form-stacked">
+        <h1>Give a smart red packet</h1>
 
-      return (
-        <div class="give pure-form pure-form-stacked">
-          <h1>Give a smart red packet</h1>
-          <p>Your address: {this.state.address}</p>
-          <p>Your balance: {balance}</p>
+        {this.renderAccountInfo()}
 
-          <hr />
+        <hr />
 
-          <fieldset>
-            <EthAmountInput 
-              name="amount"
-              label="Enter the amount of ETH to give."
-              handleChange={this.handleAmountChange}
-              showErrorMsgs={this.state.showErrorMsgs}
-              maximum={this.state.balance}
-              smallerInput={true}
-            />
+        {this.state.transactions && this.state.transactions.length > 0 &&
+          this.renderTransactions(this.state.transactions)}
 
-            <ExpiryDateInput
-              name="expiry"
-              label={dateLabel}
-              handleChange={this.handleExpiryChange}
-              showErrorMsgs={this.state.showErrorMsgs}
-              smallerInput={true}
-            />
+        {this.state.transactions && this.state.transactions.length > 0 &&
+            <h2>Give another smart red packet:</h2>}
 
-            <EthAccountInput
-              name="recipient"
-              label={"Enter the recipient's ETH address."}
-              handleChange={this.handleRecipientChange}
-              showErrorMsgs={this.state.showErrorMsgs}
-              ownAddress={this.state.address}
-              smallerInput={false}
-            />
+        <fieldset>
+          <EthAmountInput 
+            name="amount"
+            blank={this.state.blankInputs}
+            label="Enter the amount of ETH to give."
+            handleChange={this.handleAmountChange}
+            showErrorMsgs={this.state.showErrorMsgs}
+            handleEnterKeyDown={this.handleGiveBtnClick}
+            maximum={this.state.balance}
+            smallerInput={true}
+          />
 
-            <button 
-              onClick={this.handleGiveBtnClick}
-              class="pure-button button-success">
-              Give
-            </button>
-          </fieldset>
-        </div>
-      )
-    }
+          <ExpiryDateInput
+            name="expiry"
+            blank={this.state.blankInputs}
+            label={dateLabel}
+            handleChange={this.handleExpiryChange}
+            showErrorMsgs={this.state.showErrorMsgs}
+            handleEnterKeyDown={this.handleGiveBtnClick}
+            smallerInput={true}
+          />
+
+          <EthAccountInput
+            name="recipient"
+            blank={this.state.blankInputs}
+            label={"Enter the recipient's ETH address."}
+            handleChange={this.handleRecipientChange}
+            handleEnterKeyDown={this.handleGiveBtnClick}
+            showErrorMsgs={this.state.showErrorMsgs}
+            ownAddress={this.state.address}
+            smallerInput={false}
+          />
+
+        <button 
+          onClick={this.handleGiveBtnClick}
+          class="pure-button button-success">
+          Give
+        </button>
+
+      </fieldset>
+    </div>
+    )
   }
 }
