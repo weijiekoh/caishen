@@ -2,6 +2,23 @@ import { h, Component } from 'preact'
 import Input from "./Input.js";
 
 export default class EthAmountInput extends Input{
+  fee = amount => {
+    let result;
+    if (amount < 0.01){
+      result = 0;
+    } 
+    else if (amount >= 0.01 && amount < 0.1 ) {
+      result = amount / 100000;
+    } 
+    else if (amount >= 0.1 && amount < 1 ) {
+      result = amount / 10000;
+    } 
+    else if (amount >= 1 ) {
+      result = amount / 1000;
+    }
+    return result;
+  }
+
   validate = amount => {
     // Reject null or empty values
     if (amount == null || amount.trim().length == 0){

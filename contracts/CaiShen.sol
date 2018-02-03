@@ -121,7 +121,7 @@ contract CaiShen is Ownable {
     }
 
     //// Contract functions:
-    // Call this function while sending ether to give a gift.
+    // Call this function while sending ETH to give a gift.
     // @recipient: the recipient's address
     // @expiry: the Unix timestamp of the expiry datetime.
     // Tested in test/test_give.js and test/TestGive.sol
@@ -132,7 +132,7 @@ contract CaiShen is Ownable {
         // Validate the giver address
         assert(giver != address(0));
 
-        // The gift must be a positive amount of ether
+        // The gift must be a positive amount of ETH
         uint amount = msg.value;
         require(amount > 0);
         
@@ -190,7 +190,7 @@ contract CaiShen is Ownable {
         return giftId;
     }
 
-    // Call this function to redeem a gift of ether.
+    // Call this function to redeem a gift of ETH.
     // Tested in test/test_redeem.js
     function redeem (uint giftId) public {
         // The giftID should be 0 or positive
@@ -212,7 +212,7 @@ contract CaiShen is Ownable {
         //// If the following assert statements are triggered, this contract is
         //// buggy.
 
-        // The amount must be positive because this was required in give()
+        // The amount must be positive because this is required in give()
         uint amount = giftIdToGift[giftId].amount;
         assert(amount > 0);
 
@@ -281,8 +281,12 @@ contract CaiShen is Ownable {
         address currentRecipient = giftIdToGift[giftId].recipient;
         require(msg.sender == currentRecipient);
 
+        // The giver must not be the recipient because this is required in give() and redeem()
+        address giver = giftIdToGift[giftId].giver;
+        require(giver != newRecipient);
+
         // Make sure the new recipient is not the same as the existing one
-        assert(currentRecipient != newRecipient);
+        require(currentRecipient != newRecipient);
 
         // Update the gift
         giftIdToGift[giftId].recipient = newRecipient;

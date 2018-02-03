@@ -21,10 +21,12 @@ export default class Web3Enabled extends Component{
 
       web3.eth.getAccounts((error, accounts) => {
         if (error){
-          console.log("getAccounts error", error);
+          console.error(error);
         }
         else{
-          if (typeof accounts === "undefined" || accounts.length == 0) {
+          if (typeof accounts === "undefined" ||
+              accounts == null ||
+              accounts.length == 0) {
             wStatus = this.web3StatusCodes.locked;
           }
           else{
@@ -57,6 +59,7 @@ export default class Web3Enabled extends Component{
 
       let meta = contract(CaiShenContract);
       meta.setProvider(web3.currentProvider);
+
       meta.deployed().then(instance => {
         this.caishen = instance;
         window.caishen = instance;
@@ -76,6 +79,7 @@ export default class Web3Enabled extends Component{
         if (accounts != null && accounts.length > 0){
           const address = accounts[0];
           if (web3.isAddress(address)){
+            web3.eth.defaultAccount = address;
             web3.eth.getBalance(address, (error, balance) => {
               let web3Status = this.web3StatusCodes.unlocked;
               this.setState({ address, balance, web3Status });
@@ -122,6 +126,9 @@ export default class Web3Enabled extends Component{
     }
     else if (this.state.web3Status === this.web3StatusCodes.unlocked){
       return this.renderUnlockedWeb3();
+    }
+    else{
+      return <p>Please ensure that MetaMask is connected to the Ethereum network.</p>
     }
   }
 }

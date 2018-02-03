@@ -11,7 +11,7 @@ export default class Input extends Component{
   }
 
   componentWillReceiveProps = newProps => {
-    if (!this.props.blank && newProps.blank){
+    if (this.props.changeCounter !== newProps.changeCounter){
       this.setState({
         isValid: true,
         value: "",
@@ -57,12 +57,33 @@ export default class Input extends Component{
       errorParentClass = "pure-u-sm-1-1 pure-u-md-3-5";
     }
 
+    const formatFee = fee => {
+      let f = fee.toFixed(8);
+      while(true) {
+        if (f[f.length-1] === "0"){
+          f = f.slice(0, f.length-1);
+        }
+        else if (f[f.length-1] === "."){
+          f = f.slice(0, f.length-1);
+          break;
+        }
+        else{
+          break;
+        }
+      }
+      return f;
+    }
+
 
     return (
       <div class="input_component">
         <label for={this.props.name}>
           {this.props.label}
         </label>
+
+        {typeof this.fee !== "undefined" &&
+          <p>Fee: {formatFee(this.fee(this.state.value))} ETH <a href="/about">(see rates)</a></p>
+        }
 
         <div class={inputParentClass}>
           <input 

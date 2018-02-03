@@ -3,8 +3,16 @@ import Input from "./Input.js";
 
 export default class EthAccountInput extends Input{
   validate = address => {
-    return web3.isAddress(address) &&
-           this.props.ownAddress !== address;
+    let valid = typeof address !== "undefined" &&
+           web3.isAddress(address) &&
+           this.props.notThisAddress.toLowerCase() !== address.trim().toLowerCase();
+    
+    if (this.props.notGiverAddress &&
+        this.props.notGiverAddress.trim().toLowerCase() === address.trim().toLowerCase()){
+      valid = false;
+    }
+
+    return valid;
   }
 
 
@@ -12,12 +20,15 @@ export default class EthAccountInput extends Input{
     if (address == null || address.trim().length == 0){
       return "Enter an address.";
     }
-    else if (!web3.isAddress(address)){
+    else if (!web3.isAddress(address.trim())){
       return "Please enter a valid ETH address.";
     }
-    else if (this.props.ownAddress &&
-             this.props.ownAddress.toLowerCase() === address.toLowerCase()){
-      return "The recipient address must not be your current address.";
+    else if (this.props.notThisAddress.toLowerCase() === address.trim().toLowerCase()){
+      return this.props.notThisAddressMsg;
+    }
+    else if (this.props.notGiverAddress &&
+        this.props.notGiverAddress.trim().toLowerCase() === address.trim().toLowerCase()){
+      return this.props.notGiverAddressMsg;
     }
   }
 }

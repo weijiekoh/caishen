@@ -1,10 +1,10 @@
 import { h, Component } from 'preact'
 
+import { formatDate } from "../dates.js";
 import Web3Enabled from "../components/Web3Enabled.js";
 import EthAmountInput from "../components/input/EthAmountInput.js";
 import ExpiryDateInput from "../components/input/ExpiryDateInput.js";
 import EthAccountInput from "../components/input/EthAccountInput.js";
-
 var Web3 = require("web3");
 
 
@@ -15,8 +15,6 @@ export default class Give extends Web3Enabled{
     this.filter = null;
 
     Object.assign(this.state, {
-      blankInputs: false,
-
       address: null,
       balance: null,
 
@@ -31,6 +29,8 @@ export default class Give extends Web3Enabled{
       showErrorMsgs: false,
 
       transactions: [],
+
+      changeCounter: 0,
     });
   }
 
@@ -64,9 +64,8 @@ export default class Give extends Web3Enabled{
       this.state.validRecipient &&
       this.state.validExpiry;
 
-
     if (valid){
-      const recipientAddress = this.state.address;
+      const recipientAddress = this.state.recipient;
       const amountWei = web3.toWei(this.state.amount, "ether");
       const expiry = this.state.expiry.getTime() / 1000;
       const payload = {
@@ -74,18 +73,14 @@ export default class Give extends Web3Enabled{
         from: this.state.address
       };
 
-      console.log("Calling contract's give()");
-      console.log(recipientAddress, expiry, payload);
-
       // Estimate gas
-      this.caishen.give.estimateGas(recipientAddress, expiry, {value: amountWei}).then(gas => {
-        console.log("gas", gas);
+      this.caishen.give.estimateGas(recipientAddress, expiry, {value: amountWei})
+      .then(gas => {
         payload.gas = gas;
 
-        console.log(recipientAddress, expiry, payload);
-
+        //console.log(recipientAddress, expiry, payload);
         this.caishen.give(recipientAddress, expiry, payload).then(tx => {
-          console.log("tx:", tx);
+          //console.log("tx:", tx);
 
           let transactions = this.state.transactions;
           if (typeof transactions === "undefined"){
@@ -95,14 +90,14 @@ export default class Give extends Web3Enabled{
           transactions.push({
             txHash: tx.receipt.transactionHash,
             txAmount: amountWei,
-            txExpiry: expiry,
+            txExpiry: new Date(expiry),
             txRecipient: recipientAddress,
           });
           return transactions;
         }).then(transactions => {
           this.setState({ 
             transactions: transactions,
-            blankInputs: true,
+            changeCounter: Math.random(),
           });
         });
       });
@@ -115,35 +110,22 @@ export default class Give extends Web3Enabled{
   }
 
   renderTransactions = transactions => {
-
-    const formatDate = timestamp => {
-      const months = [ "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"];
-
-      const d = new Date(timestamp * 1000);
-      const year = d.getFullYear().toString();
-      const month = months[d.getMonth() + 1];
-      const day = d.getDate().toString();
-
-      return day + " " + month + " " + year;
-    }
-
     return transactions.map((transaction, i) => 
-        <div class="transaction_success">
-          <em class="success">#{i+1} Gift transaction broadcasted.</em>
-          <p>
-            <a target="_blank" href={"https://etherscan.io/tx/" + transaction.txHash}>
-              Click here
-            </a> to 
-            view the status of the transaction.
-          </p>
-          <p>If it is successfully mined, the owner of the ETH address
-            <pre>{transaction.txRecipient}</pre> may 
-            redeem {web3.fromWei(transaction.txAmount)} ETH 
-            after midnight, {formatDate(transaction.txExpiry)}.
-          </p>
-          <hr />
-        </div>
+      <div class="transaction_success">
+        <em class="success">#{i+1} Gift transaction broadcasted.</em>
+        <p>
+          <a target="_blank" href={"https://etherscan.io/tx/" + transaction.txHash}>
+            Click here
+          </a> to 
+          view the status of the transaction.
+        </p>
+        <p>If it is successfully mined, the owner of the ETH address
+          <pre>{transaction.txRecipient}</pre> may 
+          redeem {web3.fromWei(transaction.txAmount)} ETH 
+          after midnight, {formatDate(transaction.txExpiry)}.
+        </p>
+        <hr />
+      </div>
     );
   }
 
@@ -167,7 +149,7 @@ export default class Give extends Web3Enabled{
         <fieldset>
           <EthAmountInput 
             name="amount"
-            blank={this.state.blankInputs}
+            changeCounter={this.state.changeCounter}
             label="Enter the amount of ETH to give."
             handleChange={this.handleAmountChange}
             showErrorMsgs={this.state.showErrorMsgs}
@@ -178,7 +160,7 @@ export default class Give extends Web3Enabled{
 
           <ExpiryDateInput
             name="expiry"
-            blank={this.state.blankInputs}
+            changeCounter={this.state.changeCounter}
             label={dateLabel}
             handleChange={this.handleExpiryChange}
             showErrorMsgs={this.state.showErrorMsgs}
@@ -188,12 +170,13 @@ export default class Give extends Web3Enabled{
 
           <EthAccountInput
             name="recipient"
-            blank={this.state.blankInputs}
+            changeCounter={this.state.changeCounter}
             label={"Enter the recipient's ETH address."}
             handleChange={this.handleRecipientChange}
             handleEnterKeyDown={this.handleGiveBtnClick}
             showErrorMsgs={this.state.showErrorMsgs}
-            ownAddress={this.state.address}
+            notThisAddress={this.state.address}
+            notThisAddressMsg={"The recipient address must not be your current address."}
             smallerInput={false}
           />
 
