@@ -142,7 +142,7 @@ export default class Give extends Web3Enabled{
 
   renderUnlockedWeb3() {
     if (!this.props.address || !this.props.caishen){
-      return <p>Loading...</p>
+      return <p>Please connect to the Ropsten testnet.</p>
     }
 
     const dateLabel = "Enter the earliest date for the recipient to claim the funds (dd/mm/yyyy).";
@@ -196,9 +196,7 @@ export default class Give extends Web3Enabled{
             smallerInput={false}
           />
 
-          {this.state.giveBtnClicked &&
-            <PendingTransaction />
-          }
+          {this.state.giveBtnClicked && <PendingTransaction /> }
 
           <button 
             onClick={this.handleGiveBtnClick}
