@@ -10,7 +10,12 @@ export default class PendingTransaction extends Component {
           </div>
           <div class="spinner"></div>
         </div>
-        <p><em>Click on the MetaMask icon if you don't see a pop-up.</em></p>
+        <p>
+          <em>
+            Click on the MetaMask icon in your browser's toolbar if you don't
+            see a pop-up.
+          </em>
+        </p>
       </div>
     );
   }

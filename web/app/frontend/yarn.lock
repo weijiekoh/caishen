@@ -6156,12 +6156,6 @@ react-transform-hmr@1.0.4:
     global "^4.3.0"
     react-proxy "^1.1.7"
 
-react-web3@^0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/react-web3/-/react-web3-0.4.4.tgz#6d10542fdb8eb5c3f5b73127ad929960eb6bb541"
-  dependencies:
-    lodash "^4.17.4"
-
 read-only-stream@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/read-only-stream/-/read-only-stream-2.0.0.tgz#2724fd6a8113d73764ac288d4386270c1dbf17f0"

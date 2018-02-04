@@ -74,7 +74,7 @@ export default class Give extends Web3Enabled{
         from: this.state.address
       };
 
-      this.setState({ giveBtnClicked: true, }, () => {
+      this.setState({ btnClicked: true, }, () => {
         // Estimate gas
         this.props.caishen.give.estimateGas(recipientAddress, expiry, {value: amountWei})
         .then(gas => {
@@ -95,8 +95,7 @@ export default class Give extends Web3Enabled{
               txExpiry: new Date(expiry),
               txRecipient: recipientAddress,
             });
-            return transactions;
-          }).then(transactions => {
+
             this.setState({ 
               transactions: transactions,
               changeCounter: Math.random(),
@@ -109,6 +108,8 @@ export default class Give extends Web3Enabled{
               validExpiry: false,
               validRecipient: false,
             });
+          }).catch(err => {
+            this.setState({ btnClicked: false });
           });
         });
       });
@@ -121,11 +122,16 @@ export default class Give extends Web3Enabled{
   }
 
   renderTransactions = transactions => {
+    const networkId = web3.version.network;
+    let url = "https://etherscan.io/tx/"
+    if (networkId === "3"){
+      url = "https://ropsten.etherscan.io/tx/";
+    }
     return transactions.map((transaction, i) => 
       <div class="transaction_success">
         <em class="success">#{i+1} Gift transaction broadcasted.</em>
         <p>
-          <a target="_blank" href={"https://etherscan.io/tx/" + transaction.txHash}>
+          <a target="_blank" href={url + transaction.txHash}>
             Click here
           </a> to 
           view the status of the transaction.
@@ -196,7 +202,7 @@ export default class Give extends Web3Enabled{
             smallerInput={false}
           />
 
-          {this.state.giveBtnClicked && <PendingTransaction /> }
+          {this.state.btnClicked && <PendingTransaction /> }
 
           <button 
             onClick={this.handleGiveBtnClick}

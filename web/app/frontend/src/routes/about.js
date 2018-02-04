@@ -67,8 +67,8 @@ export default class About extends Component{
         </table>
 
         <h2>Source code</h2>
-        <p>The source code of the smart contract can be viewed here.</p>
-        <p>(TBC)</p>
+        <p>The source code of the smart contract can be 
+          viewed <a href="https://github.com/weijiekoh/caishen">here</a>.</p>
 
       </div>
     )

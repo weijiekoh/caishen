@@ -37,6 +37,8 @@ export default class ChangeRecipient extends Component{
               showErrorMsgs: false,
               transaction: transaction,
             }, this.props.hideReturn);
+          }).catch(err => {
+            this.setState({ btnClicked: false });
           });
         });
       });

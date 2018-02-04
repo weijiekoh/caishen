@@ -176,7 +176,6 @@ export default class App extends Component {
           }}
           class="footer">
         <hr />
-          <p>CaiShen is a side project by Koh Wei Jie</p>
           <p>contact [at] kohweijie [dot] com</p>
         </div>
       </div>

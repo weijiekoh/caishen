@@ -134,6 +134,10 @@ export default class GiftSelect extends Component {
 
 
   componentWillMount = () => {
+    this.retriveGiftInfo();
+  }
+
+  retriveGiftInfo = () => {
     let gifts = [];
     this.props.caishen.getGiftIdsByRecipient.call(this.props.address).then(giftIds => {
       giftIds.forEach(giftId => {
@@ -155,6 +159,13 @@ export default class GiftSelect extends Component {
   }
 
 
+  componentWillReceiveProps = newProps => {
+    if (this.props.address !== newProps.address){
+      this.setState({ gifts: [] }, this.retriveGiftInfo);
+    }
+  }
+
+
   render() {
     if (this.state.noWeb3 && this.props.renderNoWeb3){
       return this.props.renderNoWeb3();
@@ -162,7 +173,11 @@ export default class GiftSelect extends Component {
 
     let sortedGifts = this.state.gifts;
     if (this.state.gifts.length === 0){
-      return <p>You didn't receive any gifts.</p>
+      return (
+        <div>
+          <p>You didn't receive any gifts.</p>
+        </div>
+      );
     }
 
     sortedGifts.sort((a, b) => {

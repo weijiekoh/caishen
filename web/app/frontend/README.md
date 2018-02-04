@@ -1,3 +1,0 @@
-# frontend
-
-Describe frontend here.

@@ -16,9 +16,10 @@ export default class ReturnFunds extends Component {
     this.setState({ btnClicked: true }, () => {
       this.props.caishen.returnToGiver.estimateGas(giftId).then(gas => {
         this.props.caishen.returnToGiver(giftId).then(tx => {
-          console.log(tx);
           const transaction = { txHash: tx.receipt.transactionHash };
           this.setState({ transaction }, this.props.hideChangeRecipient);
+        }).catch(err => {
+          this.setState({ btnClicked: false });
         });
       });
     });
