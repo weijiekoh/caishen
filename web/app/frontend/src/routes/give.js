@@ -199,7 +199,6 @@ export default class Give extends Web3Enabled{
           {this.state.giveBtnClicked &&
             <PendingTransaction />
           }
-            <PendingTransaction />
 
           <button 
             onClick={this.handleGiveBtnClick}
