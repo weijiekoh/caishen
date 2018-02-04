@@ -1,6 +1,6 @@
 var HDWalletProvider = require("truffle-hdwallet-provider");
 const mnemonic = "***REMOVED***";
-const infuraRopstenUri = "***REMOVED***";
+const infuraRopstenUri = "https://ropsten.infura.io/API_KEY";
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
