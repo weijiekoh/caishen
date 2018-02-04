@@ -1,5 +1,5 @@
 var HDWalletProvider = require("truffle-hdwallet-provider");
-const mnemonic = "***REMOVED***";
+const mnemonic = "autumn swap blame obscure escape clap leaf home ugly addict comic garment";
 const infuraRopstenUri = "https://ropsten.infura.io/API_KEY";
 
 module.exports = {
