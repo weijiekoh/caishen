@@ -2,29 +2,59 @@ import { h, Component } from 'preact'
 import { formatDate } from "../../dates.js";
 import ReturnFunds from "./ReturnFunds.js";
 import ChangeRecipient from "./ChangeRecipient.js";
+import TxSuccess from "./TxSuccess.js";
 
 
 class Gift extends Component {
   state = {
-    showAdvanced: false,
+    transaction: null,
     hideReturn: false,
-    hideChangeRecipient: false
+    hideRedeem: false,
+    hideChangeRecipient: false,
+    showAdvanced: false,
   };
 
 
+  handleRedeemBtnClick = () => {
+    this.props.caishen.redeem.estimateGas(this.props.gift.id).then(gas => {
+      this.props.caishen.redeem(this.props.gift.id, { gas }).then(tx => {
+        this.setState({
+          transaction: { txHash: tx.receipt.transactionHash },
+          hideReturn: true,
+          hideChangeRecipient: true,
+          hideRedeem: true,
+          showAdvanced: false,
+        });
+      });
+    });
+  }
+
+
   render(){
+    const returnClass = this.state.hideReturn ? "hidden" : "";
+    const changeRecipientClass = this.state.hideChangeRecipient ? "hidden" : "";
     const expiry =  this.props.gift.expiry;
+    const expiryTimestamp = expiry.getTime();
+
+    const now = parseInt((Date.now() / 1000).toFixed(0), 10);
+    const hasExpired = now > expiryTimestamp;
+
     return (
       <div class="gift">
         <p>{this.props.gift.amount} ETH given by</p>
         <pre>{this.props.gift.giver}</pre>
         <p>
-          {Date.now() > expiry.getTime() &&
-              "May be redeemed after " + formatDate(expiry)
-              }
+          {!hasExpired &&
+            "May be redeemed after " + formatDate(expiry)
+          }
         </p>
+
+        {this.state.transaction != null &&
+          <TxSuccess transaction={this.state.transaction} />
+        }
+
         <div class="pure-u-md-3-4">
-          {Date.now() < expiry.getTime() &&
+          {hasExpired && !this.state.hideRedeem &&
             <button
               class="pure-button button-success"
               onClick={this.handleRedeemBtnClick}>
@@ -32,9 +62,10 @@ class Gift extends Component {
             </button>
           }
         </div>
+
         <div class="pure-u-md-1-4">
           <span class="advanced_opt_link">
-            {!this.state.showAdvanced &&
+            {!this.state.hideRedeem && !this.state.showAdvanced &&
               <a onClick={() => {
                 this.setState({ showAdvanced: true });
               }}>
@@ -43,35 +74,54 @@ class Gift extends Component {
             }
           </span>
         </div>
+
         {this.state.showAdvanced &&
           <div class="advanced">
-            <h3>Advanced options</h3>
-
-            {!this.state.hideChangeRecipient &&
+            {this.state.showAdvancedBrief &&
               <div>
-                <h4>Change recipient</h4>
-                <ChangeRecipient
-                  caishen={this.props.caishen}
-                  gift={this.props.gift}
-                  hideReturn={() => this.setState({hideReturn: true})}
-                  address={this.props.address} />
+                <h3>Advanced options</h3>
+
+                <p>
+                  Note: if any of these options don't work, try again with a higher
+                  gas limit.
+                </p>
               </div>
             }
 
-            {!this.state.hideReturn &&
-              <div>
-                <h4>Return to giver</h4>
-                <ReturnFunds
-                  caishen={this.props.caishen}
-                  gift={this.props.gift}
-                  hideChangeRecipient={() => {this.setState({hideChangeRecipient: true})}}
-                  address={this.props.address} />
-              </div>
-            }
+            <div class={changeRecipientClass}>
+              <h4>Change recipient</h4>
+              <ChangeRecipient
+                gift={this.props.gift}
+                caishen={this.props.caishen}
+                address={this.props.address}
+                hideReturn={() => {
+                  this.setState({
+                    hideChangeRecipient: false,
+                    showAdvancedBrief: false,
+                    hideReturn: true
+                  })
+                }} />
+            </div>
+
+            <div class={returnClass}>
+              <h4>Return to giver</h4>
+
+              <ReturnFunds
+                gift={this.props.gift}
+                caishen={this.props.caishen}
+                address={this.props.address}
+                hideChangeRecipient={() => {
+                  this.setState({
+                    hideChangeRecipient: true,
+                    showAdvancedBrief: false,
+                    hideReturn: false,
+                  })
+                }} />
+            </div>
 
           </div>
         }
-        <hr />
+
       </div>
     );
   }
@@ -88,9 +138,9 @@ export default class GiftSelect extends Component {
     this.props.caishen.getGiftIdsByRecipient.call(this.props.address).then(giftIds => {
       giftIds.forEach(giftId => {
         this.props.caishen.giftIdToGift(giftId).then(gift => {
-          // Only show gifts which exist, have not been redeemed, and have not
-          // been returned
-          if (gift[0] && !gift[7] && !gift[8]){
+          // Only show gifts which exist, and have been neither redeemed,
+          // returned, nor refunded.
+          if (gift[0] && !gift[6] && !gift[7] && !gift[8]){
             gifts.push({
               id: gift[1].toNumber(),
               giver: gift[2],
@@ -106,11 +156,30 @@ export default class GiftSelect extends Component {
 
 
   render() {
+    if (this.state.noWeb3 && this.props.renderNoWeb3){
+      return this.props.renderNoWeb3();
+    }
+
     let sortedGifts = this.state.gifts;
     if (this.state.gifts.length === 0){
       return <p>You didn't receive any gifts.</p>
     }
-    sortedGifts.sort((a, b) => a.expiry - b.expiry);
+
+    sortedGifts.sort((a, b) => {
+      const aExpiry = a.expiry.getTime();
+      const bExpiry = b.expiry.getTime();
+      if (a.giver === b.giver){
+        if (aExpiry === bExpiry){
+          return a.amount - b.amount;
+        }
+        else{
+          return aExpiry - bExpiry;
+        }
+      }
+      else{
+        return a.giver.localeCompare(b.giver);
+      }
+    });
 
     return (
       <div class="gift_select">

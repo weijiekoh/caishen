@@ -74,6 +74,26 @@ export default class Input extends Component{
       return f;
     }
 
+    let feeLabel = null;
+    const blankFeeLabel = (<p>&nbsp;</p>);
+    if (typeof this.props.showFee !== "undefined"){
+      if (this.props.showFee){
+        if (this.state.isValid){
+          feeLabel = (
+            <p>
+              Fee: {formatFee(this.fee(this.state.value))} ETH <a href="/about">
+                (see rates)</a>
+            </p>
+          );
+        }
+        else{
+          feeLabel = blankFeeLabel;
+        }
+      }
+      else{
+        feeLabel = blankFeeLabel;
+      }
+    }
 
     return (
       <div class="input_component">
@@ -81,9 +101,7 @@ export default class Input extends Component{
           {this.props.label}
         </label>
 
-        {typeof this.fee !== "undefined" &&
-          <p>Fee: {formatFee(this.fee(this.state.value))} ETH <a href="/about">(see rates)</a></p>
-        }
+        {feeLabel != null && feeLabel}
 
         <div class={inputParentClass}>
           <input 

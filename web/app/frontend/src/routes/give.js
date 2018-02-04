@@ -5,6 +5,7 @@ import Web3Enabled from "../components/Web3Enabled.js";
 import EthAmountInput from "../components/input/EthAmountInput.js";
 import ExpiryDateInput from "../components/input/ExpiryDateInput.js";
 import EthAccountInput from "../components/input/EthAccountInput.js";
+import PendingTransaction from "../components/PendingTransaction.js";
 var Web3 = require("web3");
 
 
@@ -73,31 +74,41 @@ export default class Give extends Web3Enabled{
         from: this.state.address
       };
 
-      // Estimate gas
-      this.caishen.give.estimateGas(recipientAddress, expiry, {value: amountWei})
-      .then(gas => {
-        payload.gas = gas;
+      this.setState({ giveBtnClicked: true, }, () => {
+        // Estimate gas
+        this.props.caishen.give.estimateGas(recipientAddress, expiry, {value: amountWei})
+        .then(gas => {
+          payload.gas = gas;
 
-        //console.log(recipientAddress, expiry, payload);
-        this.caishen.give(recipientAddress, expiry, payload).then(tx => {
-          //console.log("tx:", tx);
+          //console.log(recipientAddress, expiry, payload);
+          this.props.caishen.give(recipientAddress, expiry, payload).then(tx => {
+            //console.log("tx:", tx);
 
-          let transactions = this.state.transactions;
-          if (typeof transactions === "undefined"){
-            transactions = [];
-          }
+            let transactions = this.state.transactions;
+            if (typeof transactions === "undefined"){
+              transactions = [];
+            }
 
-          transactions.push({
-            txHash: tx.receipt.transactionHash,
-            txAmount: amountWei,
-            txExpiry: new Date(expiry),
-            txRecipient: recipientAddress,
-          });
-          return transactions;
-        }).then(transactions => {
-          this.setState({ 
-            transactions: transactions,
-            changeCounter: Math.random(),
+            transactions.push({
+              txHash: tx.receipt.transactionHash,
+              txAmount: amountWei,
+              txExpiry: new Date(expiry),
+              txRecipient: recipientAddress,
+            });
+            return transactions;
+          }).then(transactions => {
+            this.setState({ 
+              transactions: transactions,
+              changeCounter: Math.random(),
+              showErrorMsgs: false,
+              giveBtnClicked: false,
+              amount: "",
+              expiry: "",
+              recipient: "",
+              validAmount: false,
+              validExpiry: false,
+              validRecipient: false,
+            });
           });
         });
       });
@@ -130,6 +141,10 @@ export default class Give extends Web3Enabled{
   }
 
   renderUnlockedWeb3() {
+    if (!this.props.address || !this.props.caishen){
+      return <p>Loading...</p>
+    }
+
     const dateLabel = "Enter the earliest date for the recipient to claim the funds (dd/mm/yyyy).";
 
     return (
@@ -154,7 +169,8 @@ export default class Give extends Web3Enabled{
             handleChange={this.handleAmountChange}
             showErrorMsgs={this.state.showErrorMsgs}
             handleEnterKeyDown={this.handleGiveBtnClick}
-            maximum={this.state.balance}
+            maximum={this.props.balance}
+            showFee={true}
             smallerInput={true}
           />
 
@@ -175,19 +191,23 @@ export default class Give extends Web3Enabled{
             handleChange={this.handleRecipientChange}
             handleEnterKeyDown={this.handleGiveBtnClick}
             showErrorMsgs={this.state.showErrorMsgs}
-            notThisAddress={this.state.address}
+            notThisAddress={this.props.address}
             notThisAddressMsg={"The recipient address must not be your current address."}
             smallerInput={false}
           />
 
-        <button 
-          onClick={this.handleGiveBtnClick}
-          class="pure-button button-success">
-          Give
-        </button>
+          {this.state.giveBtnClicked &&
+            <PendingTransaction />
+          }
+            <PendingTransaction />
 
-      </fieldset>
-    </div>
+          <button 
+            onClick={this.handleGiveBtnClick}
+            class="pure-button button-success">
+            Give
+          </button>
+        </fieldset>
+      </div>
     )
   }
 }

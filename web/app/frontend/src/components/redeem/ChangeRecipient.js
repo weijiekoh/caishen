@@ -1,14 +1,20 @@
 import { h, Component } from 'preact'
 
 import EthAccountInput from "../../components/input/EthAccountInput.js";
+import PendingTransaction from "../PendingTransaction.js";
+import TxSuccess from "./TxSuccess.js";
 
 
 export default class ChangeRecipient extends Component{
-  state = {
-    newRecipientAddress: "",
-    valid: true,
-    transactions: [],
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      newRecipientAddress: "",
+      valid: false,
+      transaction: null,
+    };
+  }
+
 
   handleNewRecipientChange = (value, valid) => {
     this.setState({
@@ -17,24 +23,21 @@ export default class ChangeRecipient extends Component{
     });
   }
 
+
   handleNewRecipientClick = () => {
     if (this.state.valid){
-      console.log(this.props.gift);
-      const giftId = this.props.gift.id;
-      const newAdd = this.state.newRecipientAddress;
-      console.log(newAdd, giftId);
-      this.props.caishen.changeRecipient.estimateGas(newAdd, giftId)
-      .then(gas => {
-        this.props.caishen.changeRecipient(newAdd, giftId, {gas: gas * 2})
-        .then(tx => {
-          let transactions = this.state.transactions;
-          transactions.push({
-            txHash: tx.receipt.transactionHash,
+      this.setState({ btnClicked: true }, () => {
+        const giftId = this.props.gift.id;
+        const newAdd = this.state.newRecipientAddress;
+        this.props.caishen.changeRecipient.estimateGas(newAdd, giftId).then(gas => {
+          this.props.caishen.changeRecipient(newAdd, giftId, {gas}).then(tx => {
+              return { txHash: tx.receipt.transactionHash };
+          }).then(transaction => {
+            this.setState({
+              showErrorMsgs: false,
+              transaction: transaction,
+            }, this.props.hideReturn);
           });
-          this.setState({
-            showErrorMsgs: false,
-            transactions: transactions,
-          }, this.props.hideReturn());
         });
       });
     }
@@ -46,31 +49,13 @@ export default class ChangeRecipient extends Component{
   }
 
 
-  renderTx = (transaction, i) => {
-    return (
-      <div class="transaction_success">
-        <em class="success">Transaction broadcasted.</em>
-        <p>
-          <a target="_blank" href={"https://etherscan.io/tx/" + transaction.txHash}>
-            Click here
-          </a> to 
-          view the status of the transaction.
-        </p>
-      </div>
-    );
-  }
-
   render() {
     return (
       <div class="change_recipient">
 
-        {this.state.transactions.length > 0 &&
-          <div class="transactions">
-            {this.state.transactions.map(this.renderTx)}
-          </div>
-        }
-
-        {this.state.transactions.length === 0 &&
+        {this.state.transaction != null ?
+          <TxSuccess transaction={this.state.transaction} />
+          :
           <fieldset>
             <EthAccountInput
               name="change_recipient"
@@ -85,7 +70,7 @@ export default class ChangeRecipient extends Component{
               smallerInput={false}
             />
 
-            <p>Note: if this transaction fails, try again with a higher gas limit.</p>
+            {this.state.btnClicked && <PendingTransaction /> }
 
             <button 
               onClick={this.handleNewRecipientClick}

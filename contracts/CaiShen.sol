@@ -116,7 +116,8 @@ contract CaiShen is Ownable {
         return giftIdToGift[giftId].refunded;
     }
 
-    function getGiftIdsByRecipient (address recipient) public view returns (uint[]) {
+    function getGiftIdsByRecipient (address recipient) 
+    public view returns (uint[]) {
         return recipientToGiftIds[recipient];
     }
 
@@ -126,7 +127,6 @@ contract CaiShen is Ownable {
     // @expiry: the Unix timestamp of the expiry datetime.
     // Tested in test/test_give.js and test/TestGive.sol
     function give (address recipient, uint expiry) public payable returns (uint) {
-        // The giver is the address which calls this contract
         address giver = msg.sender;
 
         // Validate the giver address
@@ -136,10 +136,10 @@ contract CaiShen is Ownable {
         uint amount = msg.value;
         require(amount > 0);
         
-        // The expiry datetime must be in the future.  It is fine to use the
-        // block timestamp in this contract because the possible drift due to a
-        // malicious miner is only 12 minutes. See:
-        // https://consensys.github.io/smart-contract-best-practices/recommendations/#timestamp-dependence
+        // The expiry datetime must be in the future. It is fine to use the
+        // block timestamp in this contract because the possible drift is 
+        // only 12 minutes. See: https://consensys.github.io
+        // /smart-contract-best-practices/recommendations/#timestamp-dependence
         require(expiry > now);
 
         // The giver and the recipient must be different addresses
@@ -170,12 +170,9 @@ contract CaiShen is Ownable {
 
         // Update the giftIdToGift mapping with the new gift
         giftIdToGift[nextGiftId] = 
-            Gift(
-                true, nextGiftId, giver,
-                recipient, expiry, amtGiven,
+            Gift(true, nextGiftId, giver, recipient, expiry, amtGiven,
                 false, false, false);
 
-        // Store nextGiftId in a temp variable
         uint giftId = nextGiftId;
 
         // Increment nextGiftId
@@ -184,9 +181,9 @@ contract CaiShen is Ownable {
         // If a gift with this new gift ID already exists, this contract is buggy.
         assert(giftIdToGift[nextGiftId].exists == false);
 
+        // Log the event
         Gave(giftId, giver, recipient, amount, expiry);
 
-        // Return the giftId of the new gift
         return giftId;
     }
 
@@ -216,9 +213,12 @@ contract CaiShen is Ownable {
         uint amount = giftIdToGift[giftId].amount;
         assert(amount > 0);
 
-        // The giver must not be the recipient because this was required in give()
+        // The giver must not be the recipient because this was asserted in give()
         address giver = giftIdToGift[giftId].giver;
         assert(giver != recipient);
+
+        // Make sure the giver is valid because this was asserted in give();
+        assert(giver != address(0));
 
         // Update the gift to mark it as redeemed, so that the funds cannot be
         // double-spent
@@ -292,42 +292,48 @@ contract CaiShen is Ownable {
         giftIdToGift[giftId].recipient = newRecipient;
 
         // Make sure that the exisiting recipient is in the recipientToGiftIds mapping
-        assert(recipientToGiftIds[msg.sender].length > 0);
+        require(recipientToGiftIds[msg.sender].length > 0);
 
         // Update the recipientToGiftIds mapping. This is slightly tricky.
 
-        // First, remove the gift from the mapping for the old recipient:
-        uint len = recipientToGiftIds[msg.sender].length;
-        bool success = false;
+        // First, remove the gift from the mapping for the old recipient.
         // If the giftId is the last element of the array, deleting it is
         // straightforward:
+        uint len = recipientToGiftIds[msg.sender].length;
+        bool success = false;
         if (recipientToGiftIds[msg.sender][len-1] == giftId) {
+            // Just delete the last element
             delete recipientToGiftIds[msg.sender][len-1];
+
+            // Decrement the array length
             recipientToGiftIds[msg.sender].length--;
-            success = true; // success indicator
+
+            // For the assert stmt later on
+            success = true; 
+
         } else {
-        // Otherwise, find its index (i), replace it with the last element, and
-        // then delete the last element
-            // Loop through the array to find a match
+            // Otherwise, find its index (i), replace it with the last element, and
+            // then delete the last element
             for (uint i=0; i < len-1; i++) {
                 if (recipientToGiftIds[msg.sender][i] == giftId) {
-                    // Replace with the last element
+                    // Replace the found item at [i] with the last element
                     uint lastGiftId = recipientToGiftIds[msg.sender][len-1];
                     recipientToGiftIds[msg.sender][i] = lastGiftId;
 
                     // Delete the last element
                     delete recipientToGiftIds[msg.sender][len-1];
                     recipientToGiftIds[msg.sender].length--;
-                    success = true; // success indicator
+
+                    // For the assert stmt later on
+                    success = true;
                     break;
                 }
             }
         }
 
-        // Make sure the removal worked
+        // Make sure the removal worked and make sure the array length is
+        // smaller by 1
         assert(success == true);
-
-        // Make sure the array length is smaller by 1
         assert(len-1 == recipientToGiftIds[msg.sender].length);
 
         // Finally, append the giftId to the array in the mapping for the new recipient
@@ -351,6 +357,9 @@ contract CaiShen is Ownable {
 
         // Only allow a positive fund transfer
         require(giftIdToGift[giftId].amount > 0);
+
+        // Make sure the giver's address is valid as this is asserted in give() and redeem():
+        assert(giftIdToGift[giftId].giver != address(0));
 
         // Update the gift data
         giftIdToGift[giftId].returned = true;
@@ -376,6 +385,9 @@ contract CaiShen is Ownable {
         // Only the gift giver can call this function
         address giver = giftIdToGift[giftId].giver;
         require(giver == msg.sender);
+
+        // Make sure the giver's address is valid as this is asserted in give() and redeem():
+        assert(giftIdToGift[giftId].giver != address(0));
 
         // Only transfer positive amounts
         uint amount = giftIdToGift[giftId].amount;
