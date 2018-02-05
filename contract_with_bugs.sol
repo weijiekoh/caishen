@@ -1,5 +1,3 @@
-// IS CODE LAW? WHAT WOULD LESSIG SAY? OR PANINI?
-
 // THIS CONTRACT IS UNSAFE because I added two major bugs to make it more
 // exciting to audit ;)
 
@@ -13,7 +11,7 @@ import "zeppelin-solidity/contracts/math/SafeMath.sol";
 import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 
 
-contract CaiShen is Ownable {
+contract BuggyContract is Ownable {
     //// Data types:
     struct Gift {
         bool exists;        // 0 Only true if this exists
@@ -76,7 +74,7 @@ contract CaiShen is Ownable {
     event DisallowedRefunds(address indexed by);
 
     // Constructor
-    function CaiShen() public payable {
+    function BuggyContract() public payable {
         refundsAllowed = false; // disallow refunds by default
         Constructed(msg.sender, msg.value);
     }

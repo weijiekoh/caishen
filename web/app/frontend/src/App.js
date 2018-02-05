@@ -4,6 +4,7 @@ import { Router, route } from "preact-router";
 import Home from "./routes/home.js";
 import Give from "./routes/give.js";
 import Redeem from "./routes/redeem.js";
+import ManualRedeem from "./routes/manual_redeem.js";
 import About from "./routes/about.js";
 import Nav from "./components/Nav.js";
 
@@ -170,15 +171,16 @@ export default class App extends Component {
             path="redeem" />
 
           <About path="about/" />
+
+          <ManualRedeem path="redeem/manual" />
         </Router>
 
-        <div 
-          style={{
-            marginTop: footerTopMargin
-          }}
-          class="footer">
-        <hr />
-          <p>contact [at] kohweijie [dot] com</p>
+        <div style={{ marginTop: footerTopMargin }} class="footer">
+          <em>
+            We have exercised due care and diligence to ensure that this smart
+            contract is secure, but we provide it as-is, with no warranties or
+            guarantees of any kind, express or implied.
+          </em>
         </div>
       </div>
     );

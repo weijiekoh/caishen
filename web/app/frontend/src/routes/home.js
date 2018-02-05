@@ -56,7 +56,10 @@ export default class Home extends Component{
         </p>
         {this.renderGiftBtn(true)}
         <p><a href="/about">Learn more</a> about this dApp.</p>
+
       </div>
+
+
     );
   }
 }
