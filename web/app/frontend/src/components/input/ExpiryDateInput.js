@@ -57,6 +57,7 @@ export default class DateInput extends Input{
     return this.constructor.parseDate(expiry).getTime() < Date.now();
   }
 
+
   genErrorMsg = expiry => {
     if (expiry == null || expiry.trim().length == 0){
       return "Enter a date.";

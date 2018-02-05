@@ -17,6 +17,9 @@ https://git.heroku.com/<your Heroku app name>.git
 ```
 (See this guide for more information: https://devcenter.heroku.com/articles/git)
 
+Set the `DJ_SECRET_KEY` config variable in the Heroku app dashboard to a long
+and random string (https://dashboard.heroku.com/apps -> Name of the app ->Settings -> Config Variables). This will be used as the `SECRET_KEY` in Django's `settings.py`.
+
 Then install build dependencies and run `build_and_deploy.sh`:
 
 ```bash
@@ -28,8 +31,7 @@ cd ../../..
 ```
 
 `build_and_deploy.sh` uses `gulp` to build and package the JS frontend, and
-then pushs the Django project to Heroku.
-
+then pushes the Django project to Heroku.
 
 ## Smart Contract
 

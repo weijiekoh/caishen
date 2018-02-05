@@ -100,7 +100,7 @@ export default class Give extends Web3Enabled{
               transactions: transactions,
               changeCounter: Math.random(),
               showErrorMsgs: false,
-              giveBtnClicked: false,
+              btnClicked: false,
               amount: "",
               expiry: "",
               recipient: "",
@@ -129,14 +129,14 @@ export default class Give extends Web3Enabled{
     }
     return transactions.map((transaction, i) => 
       <div class="transaction_success">
-        <em class="success">#{i+1} Gift transaction broadcasted.</em>
+        <em class="success">#{i+1} Red packet sent.</em>
         <p>
           <a target="_blank" href={url + transaction.txHash}>
             Click here
           </a> to 
-          view the status of the transaction.
+          view the transaction details.
         </p>
-        <p>If it is successfully mined, the owner of the ETH address
+        <p>The owner of the ETH address
           <pre>{transaction.txRecipient}</pre> may 
           redeem {web3.fromWei(transaction.txAmount)} ETH 
           after midnight, {formatDate(transaction.txExpiry)}.
