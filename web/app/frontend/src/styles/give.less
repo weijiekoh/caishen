@@ -1,2 +1,47 @@
 .give{
+    .date_picker{
+        height:370px;
+        margin-top:1em;
+
+        input{
+            background-color:initial;
+            color:black;
+            width:40%;
+            margin-bottom:1em;
+            border:none;
+            box-shadow:none;
+            padding:0;
+
+            cursor:auto;
+        }
+
+        .flatpickr-month{
+            padding-top:5px;
+            padding-bottom:5px;
+        }
+
+        .flatpickr-weekdays{
+            display:none;
+        }
+    }
+}
+
+
+.flatpickr-calendar{
+    font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+    margin-bottom:1em;
+
+    -webkit-transform:scale(1.15, 1.15);
+    transform:scale(1.15, 1.15);
+    -webkit-transform-origin: 0% 0%;
+    transform-origin: 0% 0%;
+
+    .flatpickr-current-month input.cur-year{
+        width:200px !important;
+        box-shadow:none;
+    }
+
+    .flatpickr-current-month .numInputWrapper{
+        margin-left:0.5em;
+    }
 }

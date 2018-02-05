@@ -48,9 +48,11 @@ export default class EthAmountInput extends Input{
 
 
   lessThanMax = amount => {
+    const parsedAmt = parseFloat(amount, 10);
+
     return typeof this.props.maximum !== "undefined" &&
         this.props.maximum != null &&
-        this.props.maximum.lessThan(web3.toWei(amount, "ether"));
+        this.props.maximum.lessThan(web3.toWei(parsedAmt + this.fee(parsedAmt), "ether"));
   }
 
 

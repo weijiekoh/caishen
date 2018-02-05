@@ -1,74 +1,99 @@
 import { h, Component } from 'preact'
 import Input from "./Input.js";
 
-export default class DateInput extends Input{
-  static parseDate = value => {
-    const sp = value.trim().split("/");
-    const day = parseInt(sp[0], 10);
-    const month = parseInt(sp[1], 10);
-    const year = parseInt(sp[2], 10);
-    return new Date(year, month-1, day);
+import Flatpickr from 'react-flatpickr'
+import "flatpickr/dist/themes/airbnb.css"
+
+
+export default class DateInput extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      isValid: true,
+      value: null,
+    };
   }
 
-  validate = expiry => {
-    try{
-      const sp = expiry.trim().split("/");
-      if (sp.length !== 3) throw "Wrong date format";
-      if (sp[0].length > 2 || sp[0].length === 0) throw "Wrong day format";
-      if (sp[1].length > 2 || sp[1].length === 0) throw "Wrong month format";
-      if (sp[2].length !== 4) throw "Wrong year format";
-
-      const day = parseInt(sp[0], 10);
-      const month = parseInt(sp[1], 10);
-      const year = parseInt(sp[2], 10);
-
-      if ([day, month, year].some(isNaN)) throw "NaN";
-      if (day > 31 || day < 1) throw "Invalid day";
-      if (month > 12 || month < 1) throw "Invalid month";
-      //if (year < (new Date()).getFullYear()) throw "Invalid year";
-
-      if ([4, 6, 9, 11].some(x => x === month)){
-        if (day > 30) throw "Invalid day";
-      }
-      if (month == 2){
-        if (new Date(year, 1, 29).getDate() === 29){
-          if (day > 29) throw "Invalid day due to leap year";
-        }
-        else{
-          if (day > 28) throw "Invalid day due to leap year";
-        }
-      }
-
-      // Validate using unix time conversion and parsing
-      const p = new Date(new Date(year, month-1, day).getTime());
-      if (year !== p.getFullYear()) throw "Invalid year";
-      if (month !== p.getMonth() + 1) throw "Invalid month";
-      if (day !== p.getDate()) throw "Invalid day";
-
-      return p > Date.now();
+  componentWillReceiveProps = newProps => {
+    if (this.props.changeCounter !== newProps.changeCounter){
+      this.setState({
+        isValid: true,
+        value: null,
+      });
     }
-    catch(err){
+  }
+
+
+  validate = date => {
+    if (date == null){
       return false;
     }
+
+    return Date.now() < date.getTime();
   }
 
 
-  isFuture = expiry => {
-    return this.constructor.parseDate(expiry).getTime() < Date.now();
+  handleChange = dates => {
+    if (dates != null && dates.length > 0){
+      const d = dates[0];
+
+      this.setState({
+        value: d,
+      }, () => {
+        this.props.handleChange(d, this.validate(d));
+      });
+    }
   }
 
 
-  genErrorMsg = expiry => {
-    if (expiry == null || expiry.trim().length == 0){
-      return "Enter a date.";
+  genErrorMsg = date => {
+    if (date == null){
+      return "Please select a date.";
     }
-    else if (!this.validate(expiry)){
-      if (this.isFuture(expiry)){
-        return "Please enter a date in the future.";
-      }
-      else{
-        return "Please enter a valid date.";
-      }
+    else if (Date.now() > date.getTime()){
+      // This shouldn't happen because the datepicker component has a minimum
+      // date in its config
+      return "Please select a date in the future.";
     }
+  }
+
+
+  render() {
+    // Minimum date is midnight of tomorrow
+    const minDate = new Date();
+    minDate.setHours(0);
+    minDate.setMinutes(0);
+    minDate.setSeconds(0);
+    minDate.setMilliseconds(0);
+    minDate.setDate(minDate.getDate() + 1);
+
+    return (
+      <div class="input_component">
+        <label>
+          {this.props.label}
+        </label>
+
+        <div class="pure-u-1-1 date_picker">
+          <Flatpickr 
+            onChange={this.handleChange}
+            value={this.state.value}
+            options={{
+              animate: false,
+              inline: true,
+              enableTime: false,
+              altInput: true,
+              minDate: minDate,
+            }} />
+        </div>
+
+        <div class="pure-u-1-1 date_error">
+          {this.props.showErrorMsgs &&
+            <span class="error">
+              {this.genErrorMsg(this.state.value)}
+            </span>
+          }
+        </div>
+      </div>
+    );
   }
 }

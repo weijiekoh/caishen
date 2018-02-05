@@ -10,13 +10,11 @@ export default class TxSuccess extends Component {
     return (
       <div class="transactions">
         <div class="transaction_success">
-          <em class="success">Transaction completed.</em>
+          <em class="success">{this.props.label}</em>
           <p>
-            <a target="_blank"
-              href={url + this.props.transaction.txHash}>
+            <a target="_blank" href={url + this.props.transaction.txHash}>
               Click here
-            </a> to 
-            view the status of the transaction.
+            </a> to view the status of the transaction.
           </p>
         </div>
       </div>

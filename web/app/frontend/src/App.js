@@ -49,7 +49,9 @@ export default class App extends Component {
   componentWillMount = () => {
     if (this.state.web3Status !== this.web3StatusCodes.missing){
       this.setAccountData();
-      this.setAccountDataInterval = setInterval(this.setAccountData, 1000);
+      // Don't set this interval because it interferes with the calendar
+      // in gift.js
+      //this.setAccountDataInterval = setInterval(this.setAccountData, 1000);
 
       let meta = contract(CaiShenContract);
       meta.setProvider(web3.currentProvider);

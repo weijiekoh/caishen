@@ -54,7 +54,7 @@ export default class Give extends Web3Enabled{
 
   handleExpiryChange = (value, valid) => {
     this.setState({ 
-      expiry: ExpiryDateInput.parseDate(value),
+      expiry: value,
       validExpiry: valid,
     });
   }
@@ -129,7 +129,7 @@ export default class Give extends Web3Enabled{
     }
     return transactions.map((transaction, i) => 
       <div class="transaction_success">
-        <em class="success">#{i+1} Red packet sent.</em>
+        <em class="success">Red packet sent.</em>
         <p>
           <a target="_blank" href={url + transaction.txHash}>
             Click here
@@ -151,7 +151,7 @@ export default class Give extends Web3Enabled{
       return <p>Please connect to the Ropsten testnet.</p>
     }
 
-    const dateLabel = "Enter the earliest date for the recipient to claim the funds (dd/mm/yyyy).";
+    const dateLabel = "Select the earliest date for the recipient to claim the funds.";
 
     return (
       <div class="give pure-form pure-form-stacked">
@@ -186,8 +186,6 @@ export default class Give extends Web3Enabled{
             label={dateLabel}
             handleChange={this.handleExpiryChange}
             showErrorMsgs={this.state.showErrorMsgs}
-            handleEnterKeyDown={this.handleGiveBtnClick}
-            smallerInput={true}
           />
 
           <EthAccountInput

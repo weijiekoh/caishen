@@ -3,6 +3,7 @@ import { formatDate } from "../../dates.js";
 import ReturnFunds from "./ReturnFunds.js";
 import ChangeRecipient from "./ChangeRecipient.js";
 import TxSuccess from "./TxSuccess.js";
+import PendingTransaction from "../PendingTransaction.js";
 
 
 class Gift extends Component {
@@ -12,18 +13,26 @@ class Gift extends Component {
     hideRedeem: false,
     hideChangeRecipient: false,
     showAdvanced: false,
+    btnClicked: false,
   };
 
 
   handleRedeemBtnClick = () => {
-    this.props.caishen.redeem.estimateGas(this.props.gift.id).then(gas => {
-      this.props.caishen.redeem(this.props.gift.id, { gas }).then(tx => {
-        this.setState({
-          transaction: { txHash: tx.receipt.transactionHash },
-          hideReturn: true,
-          hideChangeRecipient: true,
-          hideRedeem: true,
-          showAdvanced: false,
+    this.setState({ 
+      btnClicked: true,
+      showAdvanced: false 
+    }, () => {
+      this.props.caishen.redeem.estimateGas(this.props.gift.id).then(gas => {
+        this.props.caishen.redeem(this.props.gift.id, { gas }).then(tx => {
+          this.setState({
+            transaction: { txHash: tx.receipt.transactionHash },
+            hideReturn: true,
+            hideRedeem: true,
+            hideChangeRecipient: true,
+            btnClicked: false,
+          });
+        }).catch(err => {
+          this.setState({ btnClicked: false });
         });
       });
     });
@@ -33,7 +42,7 @@ class Gift extends Component {
   render(){
     const returnClass = this.state.hideReturn ? "hidden" : "";
     const changeRecipientClass = this.state.hideChangeRecipient ? "hidden" : "";
-    const expiry =  this.props.gift.expiry;
+    const expiry = this.props.gift.expiry;
     const expiryTimestamp = expiry.getTime();
 
     const now = parseInt((Date.now() / 1000).toFixed(0), 10);
@@ -54,18 +63,22 @@ class Gift extends Component {
         }
 
         <div class="pure-u-md-3-4">
-          {hasExpired && !this.state.hideRedeem &&
+          {!this.state.btnClicked && hasExpired && !this.state.hideRedeem &&
             <button
               class="pure-button button-success"
               onClick={this.handleRedeemBtnClick}>
               Redeem
             </button>
+
           }
+          {this.state.btnClicked && <PendingTransaction /> }
         </div>
 
         <div class="pure-u-md-1-4">
           <span class="advanced_opt_link">
-            {!this.state.hideRedeem && !this.state.showAdvanced &&
+            {!this.state.btnClicked &&
+             !this.state.hideRedeem &&
+             !this.state.showAdvanced &&
               <a onClick={() => {
                 this.setState({ showAdvanced: true });
               }}>
@@ -77,16 +90,14 @@ class Gift extends Component {
 
         {this.state.showAdvanced &&
           <div class="advanced">
-            {this.state.showAdvancedBrief &&
-              <div>
-                <h3>Advanced options</h3>
+            <div>
+              <h3>Advanced options</h3>
 
-                <p>
-                  Note: if any of these options don't work, try again with a higher
-                  gas limit.
-                </p>
-              </div>
-            }
+              <p>
+                Note: if any of these options don't work, try again with a higher
+                gas limit.
+              </p>
+            </div>
 
             <div class={changeRecipientClass}>
               <h4>Change recipient</h4>
@@ -94,29 +105,45 @@ class Gift extends Component {
                 gift={this.props.gift}
                 caishen={this.props.caishen}
                 address={this.props.address}
-                hideReturn={() => {
+                onBtnClick={() => {
                   this.setState({
                     hideChangeRecipient: false,
-                    showAdvancedBrief: false,
-                    hideReturn: true
+                    hideReturn: true,
+                    hideRedeem: true,
                   })
-                }} />
+                }} 
+                onCancel={() => {
+                  this.setState({
+                    hideChangeRecipient: false,
+                    hideReturn: false,
+                    hideRedeem: false,
+                  })
+                }}
+              />
             </div>
 
             <div class={returnClass}>
-              <h4>Return to giver</h4>
+              <h4 class="return_label">Return to giver</h4>
 
               <ReturnFunds
                 gift={this.props.gift}
                 caishen={this.props.caishen}
                 address={this.props.address}
-                hideChangeRecipient={() => {
+                onBtnClick={() => {
                   this.setState({
                     hideChangeRecipient: true,
-                    showAdvancedBrief: false,
                     hideReturn: false,
+                    hideRedeem: true,
                   })
-                }} />
+                }} 
+                onCancel={() => {
+                  this.setState({
+                    hideChangeRecipient: false,
+                    hideReturn: false,
+                    hideRedeem: false,
+                  })
+                }} 
+              />
             </div>
 
           </div>

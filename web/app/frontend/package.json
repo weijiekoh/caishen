@@ -24,6 +24,7 @@
     "@ibm/type": "^0.5.3",
     "preact": "^8.2.7",
     "preact-compat": "^3.18.0",
+    "react-flatpickr": "^3.6.3",
     "truffle-contract": "^3.0.2",
     "web3": "^0.20.4"
   },

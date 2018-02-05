@@ -50,11 +50,11 @@ export default class Input extends Component{
 
   render() {
     let inputParentClass = "pure-u-sm-1-1 pure-u-md-3-4";
-    let errorParentClass = "pure-u-sm-1-1 pure-u-md-1-4";
+    let errorParentClass = "pure-u-sm-1-1 pure-u-md-1-1";
 
     if (this.props.smallerInput){
       inputParentClass = "pure-u-sm-1-1 pure-u-md-2-5";
-      errorParentClass = "pure-u-sm-1-1 pure-u-md-3-5";
+      errorParentClass = "pure-u-sm-1-1 pure-u-md-3-3";
     }
 
     const formatFee = fee => {
@@ -81,7 +81,7 @@ export default class Input extends Component{
         if (this.state.isValid){
           feeLabel = (
             <p>
-              Fee: {formatFee(this.fee(this.state.value))} ETH <a href="/about">
+              Fee: {formatFee(this.fee(this.state.value))} ETH <a target="_blank" href="/about">
                 (see rates)</a>
             </p>
           );
@@ -112,14 +112,13 @@ export default class Input extends Component{
             name={this.props.name}
             type="text" />
         </div>
-
-        <div class={errorParentClass}>
-          {this.props.showErrorMsgs &&
-            <span class="error">
-              {this.genErrorMsg(this.state.value)}
-            </span>
-          }
-        </div>
+        {this.props.showErrorMsgs &&
+          <div class={errorParentClass}>
+              <span class="error">
+                {this.genErrorMsg(this.state.value)}
+              </span>
+          </div>
+        }
       </div>
     );
   }

@@ -13,15 +13,18 @@ export default class ReturnFunds extends Component {
 
   handleReturnFundsClick = () => {
     const giftId = this.props.gift.id;
+
     this.setState({ btnClicked: true }, () => {
-      this.props.caishen.returnToGiver.estimateGas(giftId).then(gas => {
-        this.props.caishen.returnToGiver(giftId).then(tx => {
-          const transaction = { txHash: tx.receipt.transactionHash };
-          this.setState({ transaction }, this.props.hideChangeRecipient);
-        }).catch(err => {
-          this.setState({ btnClicked: false });
-        });
+      this.props.onBtnClick();
+      this.props.caishen.returnToGiver(giftId).then(tx => {
+
+        const transaction = { txHash: tx.receipt.transactionHash };
+        this.setState({ transaction });
+
+      }).catch(err => {
+        this.setState({ btnClicked: false }, this.props.onCancel);
       });
+
     });
   }
 
@@ -31,7 +34,9 @@ export default class ReturnFunds extends Component {
       <div class="return_funds">
 
         {this.state.transaction != null ?
-          <TxSuccess transaction={this.state.transaction} />
+            <TxSuccess
+              label="Gift returned."
+              transaction={this.state.transaction} />
           :
           <fieldset>
 

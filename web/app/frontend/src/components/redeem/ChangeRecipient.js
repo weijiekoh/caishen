@@ -26,20 +26,26 @@ export default class ChangeRecipient extends Component{
 
   handleNewRecipientClick = () => {
     if (this.state.valid){
+      this.props.onBtnClick();
+
       this.setState({ btnClicked: true }, () => {
         const giftId = this.props.gift.id;
         const newAdd = this.state.newRecipientAddress;
+
         this.props.caishen.changeRecipient.estimateGas(newAdd, giftId).then(gas => {
           this.props.caishen.changeRecipient(newAdd, giftId, {gas}).then(tx => {
               return { txHash: tx.receipt.transactionHash };
           }).then(transaction => {
+
             this.setState({
               showErrorMsgs: false,
               transaction: transaction,
-            }, this.props.hideReturn);
+            });
+
           }).catch(err => {
-            this.setState({ btnClicked: false });
+            this.setState({ btnClicked: false }, this.props.onCancel);
           });
+
         });
       });
     }
@@ -56,7 +62,9 @@ export default class ChangeRecipient extends Component{
       <div class="change_recipient">
 
         {this.state.transaction != null ?
-          <TxSuccess transaction={this.state.transaction} />
+          <TxSuccess 
+            label="Recipient changed."
+            transaction={this.state.transaction} />
           :
           <fieldset>
             <EthAccountInput
@@ -76,7 +84,7 @@ export default class ChangeRecipient extends Component{
 
             <button 
               onClick={this.handleNewRecipientClick}
-              class="pure-button button-primary">
+              class="change_recipient_btn pure-button button-primary">
               Change recipient
             </button>
           </fieldset>
