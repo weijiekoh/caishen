@@ -20,12 +20,6 @@ export default class About extends Component{
           unable to do so, you may choose to keep it in cold storage for them.
         </p>
         <p>
-          The recipient, or whomever has the recipient's private key, may
-          change the redemption address to a new one. In turn, the
-          private key of that new address must be kept safe, at least until the
-          funds are redeemed.
-        </p>
-        <p>
           Since the smart contract lives on the Ethereum blockchain, the
           recipient can redeem the funds even if this website does not exist by
           the time the expiry date passes.
@@ -107,27 +101,6 @@ export default class About extends Component{
           used this website to send the funds on a computer that is configured
           to use the GMT+8 timezone, the red packet may be redeemed on or after
           the date they specified at 00.00 GMT+8.
-        </p>
-
-        <h3>
-          Can I change the recipient address after sending the gift?
-        </h3>
-        <p>
-          Only the person who possesses the recipient's private key may change
-          the recipient's address. In the <a href="/redeem">Redeem page</a>, locate the gift to
-          change, click on Advanced Options, enter the new address, and click
-          on the "Change recipient" button.
-        </p>
-
-        <h3>
-          I received a gift from someone, but I would like to return the funds
-          before the expiry date. Is this possible?
-        </h3>
-        <p>
-          Yes, but only the person who possesses the recipient's private key
-          may return the funds before the expiry date.
-          In the <a href="/redeem">Redeem page</a>, locate the gift to
-          change, click on Advanced Options, and click on "Return funds".
         </p>
 
         <h3>
