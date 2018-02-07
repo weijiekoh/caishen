@@ -21,7 +21,7 @@ contract TestGive {
         uint giftId = 0;
 
         var (resExists, resGiftId, resGiver, resRecipient,
-             resExpiry, resAmount, resRedeemed, resReturned, resRefunded) = cs.giftIdToGift(giftId);
+             resExpiry, resAmount, resRedeemed, resRefunded) = cs.giftIdToGift(giftId);
 
         Assert.equal(resGiftId, giftId, "Gift ID should be 0");
         Assert.equal(resExists, true, "Gift should exist");
@@ -30,7 +30,6 @@ contract TestGive {
         Assert.equal(resExpiry, expiry, "Gift expiry should be correct");
         Assert.equal(resAmount, amount - fee, "Gift amount - fee should be 0.999 ether");
         Assert.equal(resRedeemed, false, "Gift should not already been redeemed");
-        Assert.equal(resReturned, false, "Gift should not already been returned");
         Assert.equal(resRefunded, false, "Gift should not already been refunded");
     }
 }

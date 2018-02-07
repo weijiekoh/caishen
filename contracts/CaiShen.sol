@@ -15,8 +15,7 @@ contract CaiShen is Ownable {
                             //   Unix timestamp
         uint amount;        // 5 The amount of ETH
         bool redeemed;      // 6 Whether the funds have already been redeemed
-        bool returned;      // 7 Whether the funds were returned to the giver
-        bool refunded;      // 8 Whether the funds were refunded to the giver
+        bool refunded;      // 7 Whether the funds have already been refunded
     }
 
     //// Mappings and state variables:
@@ -55,12 +54,6 @@ contract CaiShen is Ownable {
                     uint amount);
 
     event CollectedAllFees (address indexed by, uint indexed amount);
-
-    event ReturnedToGiver (uint indexed giftId);
-
-    event ChangedRecipient (uint indexed giftId,
-                            address indexed originalRecipient,
-                            address indexed newRecipient);
 
     event ClaimedRefund(address by, uint indexed amount, uint indexed giftId);
     event AllowedRefunds(address indexed by);
@@ -106,10 +99,6 @@ contract CaiShen is Ownable {
 
     function isGiftRedeemed (uint giftId) public view returns (bool) {
         return giftIdToGift[giftId].redeemed;
-    }
-
-    function isGiftReturned (uint giftId) public view returns (bool) {
-        return giftIdToGift[giftId].returned;
     }
 
     function isGiftRefunded (uint giftId) public view returns (bool) {
@@ -170,8 +159,7 @@ contract CaiShen is Ownable {
 
         // Update the giftIdToGift mapping with the new gift
         giftIdToGift[nextGiftId] = 
-            Gift(true, nextGiftId, giver, recipient, expiry, amtGiven,
-                false, false, false);
+            Gift(true, nextGiftId, giver, recipient, expiry, amtGiven, false, false);
 
         uint giftId = nextGiftId;
 
@@ -196,7 +184,7 @@ contract CaiShen is Ownable {
         // The gift must exist
         require(giftIdToGift[giftId].exists == true);
 
-        // The gift must exist and must not have already been redeemed, returned, or refunded
+        // The gift must exist and must not have already been redeemed
         require(isValidGift(giftIdToGift[giftId]));
 
         // The recipient must be the caller of this function
@@ -264,113 +252,6 @@ contract CaiShen is Ownable {
         CollectedAllFees(owner, amount);
     }
 
-    // A recipient may change the recipient address of a Gift
-    // Tested in test/test_change_recipient.js and test_update_recipient_to_giftids.js
-    function changeRecipient (address newRecipient, uint giftId) public {
-        // Validate the giftId
-        require(giftId >= 0);
-
-        // Validate the new recipient address
-        require(newRecipient != address(0));
-
-        // The gift must exist and must not have already been redeemed, returned, or refunded
-        require(isValidGift(giftIdToGift[giftId]));
-        
-        // Only allow an the existing recipient of the gift with giftId to
-        // change the recipient
-        address currentRecipient = giftIdToGift[giftId].recipient;
-        require(msg.sender == currentRecipient);
-
-        // The giver must not be the recipient because this is required in give() and redeem()
-        address giver = giftIdToGift[giftId].giver;
-        require(giver != newRecipient);
-
-        // Make sure the new recipient is not the same as the existing one
-        require(currentRecipient != newRecipient);
-
-        // Update the gift
-        giftIdToGift[giftId].recipient = newRecipient;
-
-        // Make sure that the exisiting recipient is in the recipientToGiftIds mapping
-        require(recipientToGiftIds[msg.sender].length > 0);
-
-        // Update the recipientToGiftIds mapping. This is slightly tricky.
-
-        // First, remove the gift from the mapping for the old recipient.
-        // If the giftId is the last element of the array, deleting it is
-        // straightforward:
-        uint len = recipientToGiftIds[msg.sender].length;
-        bool success = false;
-        if (recipientToGiftIds[msg.sender][len-1] == giftId) {
-            // Just delete the last element
-            delete recipientToGiftIds[msg.sender][len-1];
-
-            // Decrement the array length
-            recipientToGiftIds[msg.sender].length--;
-
-            // For the assert stmt later on
-            success = true; 
-
-        } else {
-            // Otherwise, find its index (i), replace it with the last element, and
-            // then delete the last element
-            for (uint i=0; i < len-1; i++) {
-                if (recipientToGiftIds[msg.sender][i] == giftId) {
-                    // Replace the found item at [i] with the last element
-                    uint lastGiftId = recipientToGiftIds[msg.sender][len-1];
-                    recipientToGiftIds[msg.sender][i] = lastGiftId;
-
-                    // Delete the last element
-                    delete recipientToGiftIds[msg.sender][len-1];
-                    recipientToGiftIds[msg.sender].length--;
-
-                    // For the assert stmt later on
-                    success = true;
-                    break;
-                }
-            }
-        }
-
-        // Make sure the removal worked and make sure the array length is
-        // smaller by 1
-        assert(success == true);
-        assert(len-1 == recipientToGiftIds[msg.sender].length);
-
-        // Finally, append the giftId to the array in the mapping for the new recipient
-        recipientToGiftIds[newRecipient].push(giftId);
-    
-        // Log the event
-        ChangedRecipient(giftId, msg.sender, newRecipient);
-    }
-
-    // A recipient may choose to return the funds to the giver at any time
-    // Tested by test/test_return_to_giver.js
-    function returnToGiver (uint giftId) public {
-        // Validate the giftId
-        require(giftId >= 0);
-
-        // The gift must exist and must not have already been redeemed, returned, or refunded
-        require(isValidGift(giftIdToGift[giftId]));
-
-        // Only the recipient can return funds to the giver
-        require(giftIdToGift[giftId].recipient == msg.sender);
-
-        // Only allow a positive fund transfer
-        require(giftIdToGift[giftId].amount > 0);
-
-        // Make sure the giver's address is valid as this is asserted in give() and redeem():
-        assert(giftIdToGift[giftId].giver != address(0));
-
-        // Update the gift data
-        giftIdToGift[giftId].returned = true;
-
-        // Make the transfer
-        giftIdToGift[giftId].giver.transfer(giftIdToGift[giftId].amount);
-
-        // Log the event
-        ReturnedToGiver(giftId);
-    }
-
     // This function should only be called in the unlikey situation where the
     // funds have to be returned to all givers. Refunds are only possible if
     // the expiry datetime has not passed.
@@ -379,7 +260,7 @@ contract CaiShen is Ownable {
         // Only allow a refund if allowRefunds() has been invoked
         require(refundsAllowed == true);
 
-        // The gift must exist and must not have already been redeemed, returned, or refunded
+        // The gift must exist and must not have already been redeemed
         require(isValidGift(giftIdToGift[giftId]));
 
         // Only the gift giver can call this function
@@ -419,11 +300,8 @@ contract CaiShen is Ownable {
     }
 
     // Returns true only if the gift exists and has not already been
-    // redeemed, returned, or refunded
+    // redeemed
     function isValidGift(Gift gift) private pure returns (bool) {
-        return gift.exists == true &&
-            gift.redeemed == false &&
-            gift.returned == false &&
-            gift.refunded == false;
+        return gift.exists == true && gift.redeemed == false;
     }
 }

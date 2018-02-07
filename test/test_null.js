@@ -22,6 +22,7 @@ contract('CaiShen', accounts => {
     const expiryRes = nullGift[4];
     const amountRes = nullGift[5];
     const redeemedRes = nullGift[6];
+    const refundedRes = nullGift[7];
 
     assert.equal(giftIdRes.valueOf(), giftId, "Gift ID should be 0");
     assert.equal(amountRes.valueOf(), amount, "Amount should match");
@@ -30,6 +31,7 @@ contract('CaiShen', accounts => {
     assert.equal(recipientRes.valueOf(), nullAddress, "Recipient's address should match");
     assert.equal(existsRes.valueOf(), false, "Gift should be marked as existing");
     assert.equal(redeemedRes.valueOf(), false, "Gift should be marked as unredeemed");
+    assert.equal(refundedRes.valueOf(), false, "Gift should be marked as unrefunded");
   });
 
 
@@ -41,6 +43,7 @@ contract('CaiShen', accounts => {
     const recipientRes = await cs.getGiftRecipient(1);
     const existsRes = await cs.doesGiftExist(1);
     const redeemRes = await cs.isGiftRedeemed(1);
+    const refundedRes = await cs.isGiftRefunded(1);
 
     assert.equal(giftIds.length, 0, "No gift IDs should be in the array");
     assert.equal(amountRes.valueOf(), amount, "Amount should match");
@@ -49,5 +52,6 @@ contract('CaiShen', accounts => {
     assert.equal(recipientRes.valueOf(), nullAddress, "Recipient's address should match");
     assert.equal(existsRes.valueOf(), false, "Gift should be marked as existing");
     assert.equal(redeemRes.valueOf(), false, "Gift should be marked as unredeemed");
+    assert.equal(refundedRes.valueOf(), false, "Gift should be marked as unrefunded");
   });
 });

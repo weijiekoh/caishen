@@ -42,6 +42,7 @@ contract('CaiShen', accounts => {
     const expiryRes = gift[4];
     const amountRes = gift[5];
     const redeemedRes = gift[6];
+    const refundedRes = gift[7];
 
     const feesCollected = await cs.feesCollected();
     assert.equal(feesCollected.toNumber(), fee, "Total fees collected should be correct");
@@ -53,6 +54,7 @@ contract('CaiShen', accounts => {
     assert.equal(expiryRes.valueOf(), expiry, "Expiry timestamp should match");
     assert.equal(amountRes.valueOf(), amount - fee, "Amount - fee should match");
     assert.equal(redeemedRes.valueOf(), false, "Gift should be marked as unredeemed");
+    assert.equal(refundedRes.valueOf(), false, "Gift should be marked as unrefunded");
   });
 
 
@@ -67,6 +69,7 @@ contract('CaiShen', accounts => {
     const expiryRes = await cs.getGiftExpiry(giftIds[0].valueOf());
     const amountRes = await cs.getGiftAmount(giftIds[0].valueOf());
     const redeemedRes = await cs.isGiftRedeemed(giftIds[0].valueOf());
+    const refundedRes = await cs.isGiftRefunded(giftIds[0].valueOf());
 
     const feesCollected = await cs.feesCollected();
     assert.equal(feesCollected.toNumber(), fee, "Total fees collected should be correct");
@@ -78,5 +81,6 @@ contract('CaiShen', accounts => {
     assert.equal(recipientRes.valueOf(), recipient, "Recipient's address should match");
     assert.equal(existsRes.valueOf(), true, "Gift should be marked as existing");
     assert.equal(redeemedRes.valueOf(), false, "Gift should be marked as unredeemed");
+    assert.equal(refundedRes.valueOf(), false, "Gift should be marked as unrefunded");
   });
 });

@@ -20,17 +20,6 @@ contract('CaiShen', accounts => {
     assert.isTrue(result, "redeem() should throw an error because the gift does not belong to the sender");
   });
 
-  it("should fail when trying to redeem a gift that has already been returned", async () => {
-    cs = await CaiShen.new();
-    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
-
-    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
-    await cs.returnToGiver(0, {from: recipient});
-
-    const result = await expectThrow(cs.redeem(0, {from: recipient}));
-    assert.isTrue(result, "redeem() should throw an error because the gift has already been redeemed");
-  });
-
   it("should fail when trying to redeem a gift that has already been redeemed", async () => {
     cs = await CaiShen.new();
     const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;

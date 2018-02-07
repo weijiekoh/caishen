@@ -37,16 +37,6 @@ contract('CaiShen', accounts => {
     assert.isTrue(result, "claimRefund() should throw because it had already been refunded");
   });
 
-  it("should fail to refund if gift has already been returned", async () => {
-    let cs = await CaiShen.new();
-    const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 300;
-    await cs.give(recipient, expiry, {to: cs.address, from: giver, value: amount, gasPrice: gasPrice});
-    await cs.allowRefunds({from: creator});
-    await cs.returnToGiver(0, {from: recipient});
-    const result = await expectThrow(cs.claimRefund(0, {from: giver, gasPrice: gasPrice}));
-    assert.isTrue(result, "claimRefund() should throw because it had already been returned to the giver");
-  });
-
   it("should fail to refund if gift has already been redeemed", async () => {
     let cs = await CaiShen.new();
     const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 300;
