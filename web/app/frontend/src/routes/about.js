@@ -4,7 +4,6 @@ export default class About extends Component{
   render() {
     return (
       <div class="about">
-        <h1>About CaiShen</h1>
         <p>
           CaiShen is a smart contract on the Ethereum blockchain. With this
           dApp, you can give Ether to someone else in a way that they can only
@@ -42,26 +41,18 @@ export default class About extends Component{
         <table class="pure-table pure-table-bordered">
           <thead>
             <tr>
-              <th>Range (ETH)</th>
+              <th>Amount</th>
               <th>Fee (%)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><pre>amount &lt; 0.01</pre></td>
-              <td><pre>0</pre></td>
+              <td><pre>???</pre></td>
+              <td><pre>???</pre></td>
             </tr>
             <tr>
-              <td><pre>0.01 &lt;= amount &lt; 0.1</pre></td>
-              <td><pre>0.001</pre></td>
-            </tr>
-            <tr>
-              <td><pre>0.1 &lt;= amount &lt; 1</pre></td>
-              <td><pre>0.01</pre></td>
-            </tr>
-            <tr>
-              <td><pre>amount &gt;= 1</pre></td>
-              <td><pre>0.1</pre></td>
+              <td><pre>???</pre></td>
+              <td><pre>???</pre></td>
             </tr>
           </tbody>
         </table>

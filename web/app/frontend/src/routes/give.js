@@ -28,6 +28,7 @@ export default class Give extends Web3Enabled{
       validRecipient: false,
 
       showErrorMsgs: false,
+      showForm: true,
 
       transactions: [],
 
@@ -74,7 +75,7 @@ export default class Give extends Web3Enabled{
         from: this.state.address
       };
 
-      this.setState({ btnClicked: true, }, () => {
+      this.setState({ btnClicked: true, showForm: false, }, () => {
         // Estimate gas
         this.props.caishen.give.estimateGas(recipientAddress, expiry, {value: amountWei})
         .then(gas => {
@@ -109,7 +110,10 @@ export default class Give extends Web3Enabled{
               validRecipient: false,
             });
           }).catch(err => {
-            this.setState({ btnClicked: false });
+            this.setState({ 
+              btnClicked: false,
+              showForm: true,
+            });
           });
         });
       });
@@ -130,28 +134,35 @@ export default class Give extends Web3Enabled{
     return transactions.map((transaction, i) => 
       <div class="transaction_success">
         <em class="success">Red packet sent.</em>
+        <p>The owner of the ETH address
+          <pre>{transaction.txRecipient}</pre> may 
+          redeem {web3.fromWei(transaction.txAmount)} ETH 
+          after midnight, {formatDate(transaction.txExpiry)}.
+        </p>
         <p>
           <a target="_blank" href={url + transaction.txHash}>
             Click here
           </a> to 
           view the transaction details.
         </p>
-        <p>The owner of the ETH address
-          <pre>{transaction.txRecipient}</pre> may 
-          redeem {web3.fromWei(transaction.txAmount)} ETH 
-          after midnight, {formatDate(transaction.txExpiry)}.
-        </p>
         <hr />
       </div>
     );
   }
+
 
   renderUnlockedWeb3() {
     if (!this.props.address || !this.props.caishen){
       return <p>Please connect to the Ropsten testnet.</p>
     }
 
-    const dateLabel = "Select the earliest date for the recipient to claim the funds.";
+    const offset = new Date().getTimezoneOffset();
+    const minutes = Math.abs(offset);
+    const hours = Math.floor(minutes / 60);
+    const prefix = offset < 0 ? "+" : "-";
+    const timezone = prefix + hours;
+
+    const dateLabel = "Select the earliest date for the recipient to claim the funds. The opening time will be set as midnight, GMT" + timezone + ".";
 
     return (
       <div class="give pure-form pure-form-stacked">
@@ -164,50 +175,51 @@ export default class Give extends Web3Enabled{
         {this.state.transactions && this.state.transactions.length > 0 &&
           this.renderTransactions(this.state.transactions)}
 
-        {this.state.transactions && this.state.transactions.length > 0 &&
-            <h2>Give another smart red packet:</h2>}
+        {this.state.showForm &&
+          <fieldset>
+            <EthAmountInput 
+              name="amount"
+              changeCounter={this.state.changeCounter}
+              label="Enter the amount of ETH to give."
+              handleChange={this.handleAmountChange}
+              showErrorMsgs={this.state.showErrorMsgs}
+              handleEnterKeyDown={this.handleGiveBtnClick}
+              maximum={this.props.balance}
+              showFee={true}
+              smallerInput={true}
+            />
 
-        <fieldset>
-          <EthAmountInput 
-            name="amount"
-            changeCounter={this.state.changeCounter}
-            label="Enter the amount of ETH to give."
-            handleChange={this.handleAmountChange}
-            showErrorMsgs={this.state.showErrorMsgs}
-            handleEnterKeyDown={this.handleGiveBtnClick}
-            maximum={this.props.balance}
-            showFee={true}
-            smallerInput={true}
-          />
+            <ExpiryDateInput
+              name="expiry"
+              changeCounter={this.state.changeCounter}
+              label={dateLabel}
+              handleChange={this.handleExpiryChange}
+              showErrorMsgs={this.state.showErrorMsgs}
+            />
 
-          <ExpiryDateInput
-            name="expiry"
-            changeCounter={this.state.changeCounter}
-            label={dateLabel}
-            handleChange={this.handleExpiryChange}
-            showErrorMsgs={this.state.showErrorMsgs}
-          />
+            <EthAccountInput
+              name="recipient"
+              changeCounter={this.state.changeCounter}
+              label={"Enter the recipient's ETH address."}
+              handleChange={this.handleRecipientChange}
+              handleEnterKeyDown={this.handleGiveBtnClick}
+              showErrorMsgs={this.state.showErrorMsgs}
+              notThisAddress={this.props.address}
+              notThisAddressMsg={"The recipient address must not be your current address."}
+              smallerInput={false}
+            />
+          </fieldset>
+        }
 
-          <EthAccountInput
-            name="recipient"
-            changeCounter={this.state.changeCounter}
-            label={"Enter the recipient's ETH address."}
-            handleChange={this.handleRecipientChange}
-            handleEnterKeyDown={this.handleGiveBtnClick}
-            showErrorMsgs={this.state.showErrorMsgs}
-            notThisAddress={this.props.address}
-            notThisAddressMsg={"The recipient address must not be your current address."}
-            smallerInput={false}
-          />
+        {this.state.btnClicked && <PendingTransaction /> }
 
-          {this.state.btnClicked && <PendingTransaction /> }
-
+        {this.state.showForm &&
           <button 
             onClick={this.handleGiveBtnClick}
             class="pure-button button-success">
             Give
           </button>
-        </fieldset>
+        }
       </div>
     )
   }

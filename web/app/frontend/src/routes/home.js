@@ -46,8 +46,8 @@ export default class Home extends Component{
           <p>
             <ul>
               <li>
-                Google Chrome or Mozilla Firefox with the <a target="_blank"
-                  href="https://metamask.io/">MetaMask extension</a>.
+                Chrome or Firefox on a desktop computer with the <a target="_blank"
+                  href="https://metamask.io/">MetaMask digital wallet</a> installed.
               </li>
 
               <li>

@@ -117,9 +117,10 @@ export default class App extends Component {
   renderNoWeb3 = () => {
     return (
       <div>
-        <p>To run this dApp, <a target="_blank" href="https://metamask.io/">install the MetaMask 
-            extension</a> or visit this site in any web3-enabled browser.
-        </p>
+        <p>
+          To give a smart red packet, please use Chrome or Firefox on a desktop
+      computer with the <a target="_blank" href="https://metamask.io/">MetaMask
+        digital wallet</a> installed.</p>
       </div>
     );
   }
