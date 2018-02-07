@@ -1,5 +1,6 @@
 import { h, Component } from 'preact'
 import { Router, route } from "preact-router"; 
+import { IntlProvider, Text } from 'preact-i18n';
 
 import Home from "./routes/home.js";
 import Give from "./routes/give.js";
@@ -177,9 +178,7 @@ export default class App extends Component {
 
         <div style={{ marginTop: footerTopMargin }} class="footer">
           <em>
-            We have exercised due care and diligence to ensure that this smart
-            contract is secure, but we provide it as-is, with no warranties or
-            guarantees of any kind, express or implied.
+            © CaiShen {new Date().getFullYear()}. Contact: weijie.koh [at] smarthongbao [dot] com
           </em>
         </div>
       </div>

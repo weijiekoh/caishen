@@ -1,7 +1,6 @@
-import "./styles/index.less";
-import "./styles/index.less";
-
 import { h, render } from 'preact'
+import { IntlProvider } from 'preact-i18n';
+import "./styles/index.less";
 
 if (process.env.NODE_ENV === 'development') {
   // Enable use of React Developer Tools
@@ -11,7 +10,12 @@ if (process.env.NODE_ENV === 'development') {
 let root
 function init() {
   let App = require('./App').default
-  root = render(<App/>, document.querySelector('#app'), root)
+  root = render(
+    (
+      <App />
+    ),
+
+    document.querySelector('#app'), root)
 }
 
 if (module.hot) {

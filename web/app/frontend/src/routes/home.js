@@ -1,65 +1,93 @@
 import { h, Component } from 'preact'
 import { route } from "preact-router"; 
 
+
 export default class Home extends Component{
-  renderGiftBtn = eng => {
-    const gen = t => {
-      return (
-        <div class="get_started">
-          <button 
-            onClick={() => { route("/give") }}
-            class="pure-button button-success">
-            {t}
-          </button>
-        </div>
-      );
-    }
-
-    if (eng){
-      const t = "Give a smart red packet"
-      return gen(t);
-    }
-    else{
-      const t = "赠送智能红包";
-      return gen(t);
-    }
-  }
-
-
   render() {
     return (
-      <div class="pure-u-1">
-        <p>这个农历新年，与下一代分享财务的未来。</p>
-        <p>这是一个此分布式应用创建带时间锁的智能红包。
-          收金人只能在时间到期后才能收到款项。
-        </p>
-        <p>您的资金在<a target="_blank" href="https://www.ethereum.org/">以太坊区块链</a>
-          上是安全的。 只有收金人可以获得这些以太基金。</p>
+      <div class="home">
+        <div class="concept pure-u-1">
+          Concept graphic goes here.
+          <p>
+            Use CaiShen to give your loved ones an Ethereum red packet that
+            which can only be opened after a specified date. Like a time
+            capsule, the recipient can only withdraw the cryptocurrency funds
+            after the opening date.
+          </p>
+        </div>
 
-        {this.renderGiftBtn(false)}
-        <p><a href="/about">了解更多</a>关于这个分布式应用。</p>
+        <div class="pricing pure-u-1">
+          <h2>Pricing</h2>
+          <table class="pure-table pure-table-bordered">
+            <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Fee (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><pre>???</pre></td>
+                <td><pre>???</pre></td>
+              </tr>
+              <tr>
+                <td><pre>???</pre></td>
+                <td><pre>???</pre></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-        <hr />
+        <div class="requirements pure-u-1">
+          <h2>What you need</h2>
+          <p>
+            To use CaiShen, you will need:
+          </p>
+          <p>
+            <ul>
+              <li>
+                Google Chrome or Mozilla Firefox with the <a target="_blank"
+                  href="https://metamask.io/">MetaMask extension</a>.
+              </li>
 
-        <p>
-          This Lunar New Year, share the future of finance with the next
-          generation.
-        </p>
-        <p>
-          Use this dApp to create a smart red packet with a time-lock.
-          The recipient can only receive the funds after the time-lock expires.
-        </p>
-        <p>
-          Your funds are secure on
-          the <a target="_blank" href="https://www.ethereum.org/">Ethereum</a> blockchain. Only 
-          the recipient may access the Ether funds.
-        </p>
-        {this.renderGiftBtn(true)}
-        <p><a href="/about">Learn more</a> about this dApp.</p>
+              <li>
+                Some Ethereum cryptocurrency. You may purchase Ethereum from <a
+                  href="https://www.coinbase.com" target="_blank">Coinbase
+                  </a> or <a href="https://www.coinhako.com/"
+                  target="_blank">Coinhako</a>.
+              </li>
+              <li>
+                Read our <a href="/about" target="_blank">FAQ</a> carefully. We
+                will not be able to help you if you forget your wallet
+                password, send funds to the wrong address, or set a wrong the
+                withdrawal date as everything takes place on the blockchain.
+              </li>
+            </ul>
+          </p>
+        </div>
 
+        <div class="terms pure-u-1">
+          <h2>Terms and conditions</h2>
+          <p>
+            CaiShen is a tool which uses the Ethereum blockchain and smart
+            contracts technology. It enables you to deposit an amount of funds,
+            denominated in Ethereum, that can only be withdrawn after a certain
+            time using a specific private key.
+          </p>
+
+          <p> CaiShen is not a financial institution as we do not store any of
+            your funds. Nor is it a payment processor as we do not process any
+            of your funds.
+          </p>
+
+          <p>
+            As such, CaiShen will not and cannot be responsible for the long term
+            viability of your funds or the eventual security of your funds. We
+            are and can only be responsible for the design of the deposit of
+            the Ethereum funds and the design of the smart contract.
+          </p>
+        </div>
       </div>
-
-
     );
   }
 }
