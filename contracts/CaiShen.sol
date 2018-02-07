@@ -222,14 +222,10 @@ contract CaiShen is Ownable {
     // Calculate the contract owner's fee
     // Tested in test/test_fee.js
     function fee (uint amount) public pure returns (uint) {
-        if (amount < 0.01 ether) {
+        if (amount <= 0.01 ether) {
             return 0;
-        } else if (amount >= 0.01 ether && amount < 0.1 ether) {
-            return SafeMath.div(amount, 100000);
-        } else if (amount >= 0.1 ether && amount < 1 ether) {
-            return SafeMath.div(amount, 10000);
-        } else if (amount >= 1 ether) {
-            return SafeMath.div(amount, 1000);
+        } else if (amount > 0.01 ether) {
+            return SafeMath.div(amount, 100);
         }
     }
 

@@ -6,7 +6,7 @@ contract('CaiShen', accounts => {
   const giver = accounts[1];
   const recipient = accounts[2];
   const amount = web3.toWei(4, "ether");
-  const fee = web3.toWei(0.004, "ether");
+  const fee = web3.toWei(0.04, "ether");
   const gasPrice = web3.toBigNumber(10000000000);
 
   it("should not collect if called by a non-owner", async () => {

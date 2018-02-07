@@ -6,7 +6,7 @@ contract('CaiShen', accounts => {
   const creator = accounts[0];
   const recipient = accounts[1];
   const amount = web3.toWei(1, "ether");
-  const fee = web3.toWei(0.001, "ether");
+  const fee = web3.toWei(0.01, "ether");
 
   it("give() should fail because the expiry is in the past", async () => {
     let cs = await CaiShen.new();

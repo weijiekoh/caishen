@@ -1,5 +1,6 @@
 import { h, Component } from 'preact'
 import { route } from "preact-router"; 
+import About from "./about.js";
 
 
 export default class Home extends Component{
@@ -18,24 +19,7 @@ export default class Home extends Component{
 
         <div class="pricing pure-u-1">
           <h2>Pricing</h2>
-          <table class="pure-table pure-table-bordered">
-            <thead>
-              <tr>
-                <th>Amount</th>
-                <th>Fee (%)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><pre>???</pre></td>
-                <td><pre>???</pre></td>
-              </tr>
-              <tr>
-                <td><pre>???</pre></td>
-                <td><pre>???</pre></td>
-              </tr>
-            </tbody>
-          </table>
+          {About.renderFeeTable()}
         </div>
 
         <div class="requirements pure-u-1">

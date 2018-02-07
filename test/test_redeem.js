@@ -8,7 +8,7 @@ contract('CaiShen', accounts => {
   const giver = accounts[0];
   const recipient = accounts[1];
   const amount = web3.toWei(5, "ether");
-  const fee = web3.toWei(0.005, "ether");
+  const fee = web3.toWei(0.05, "ether");
 
   it("should fail when trying to redeem a gift that doesn't belong to the sender", async () => {
     cs = await CaiShen.new();

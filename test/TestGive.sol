@@ -11,7 +11,7 @@ contract TestGive {
     address recipient = 0x4e86D7E70cf98E599CACd145828B76354abEb6E9;
     uint expiry = now + 100;
     uint amount = 1 ether;
-    uint fee = 0.001 ether;
+    uint fee = 0.01 ether;
 
     function beforeAll () public {
         cs.give.value(amount)(recipient, expiry);

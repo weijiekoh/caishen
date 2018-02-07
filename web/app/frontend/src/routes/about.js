@@ -1,6 +1,32 @@
 import { h, Component } from 'preact'
 
 export default class About extends Component{
+  static renderFeeTable = () => {
+    return (
+      <div>
+        <table class="pure-table pure-table-bordered">
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>One-time fee</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0.01 ETH and below</td>
+              <td>Free forever</td>
+            </tr>
+            <tr>
+              <td>Above 0.01 ETH</td>
+              <td>1%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+
   render() {
     return (
       <div class="about">
@@ -32,24 +58,7 @@ export default class About extends Component{
           used to cover hosting costs.
         </p>
 
-        <table class="pure-table pure-table-bordered">
-          <thead>
-            <tr>
-              <th>Amount</th>
-              <th>Fee (%)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><pre>???</pre></td>
-              <td><pre>???</pre></td>
-            </tr>
-            <tr>
-              <td><pre>???</pre></td>
-              <td><pre>???</pre></td>
-            </tr>
-          </tbody>
-        </table>
+        {this.constructor.renderFeeTable()}
 
         <h2>Frequently asked questions</h2>
 
