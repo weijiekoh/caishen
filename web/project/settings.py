@@ -67,8 +67,10 @@ HTML_MINIFY = True
 
 CSRF_TRUSTED_ORIGINS = [
     'cs.kohweijie.com',
+    'd36gysogqvy4e7.cloudfront.net',
+
     'smarthongbao.com',
-    'blockchainhongbao.com'
+    'd2jfrgsjvyi0al.cloudfront.net',
 ]
 
 ROOT_URLCONF = 'project.urls'

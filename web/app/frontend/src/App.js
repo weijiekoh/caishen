@@ -1,6 +1,5 @@
 import { h, Component } from 'preact'
 import { Router, route } from "preact-router"; 
-import { IntlProvider, Text } from 'preact-i18n';
 
 import Home from "./routes/home.js";
 import Give from "./routes/give.js";
@@ -141,6 +140,10 @@ export default class App extends Component {
       footerTopMargin = window.height - document.body.scrollHeight;
     }
 
+    const isZh = window.document.getElementsByTagName("html")[0]
+                   .getAttribute("lang") === "zh" ||
+                 window.location.hash === "#zh";
+
     return (
       <div class="pure-g">
         <Nav />
@@ -148,9 +151,12 @@ export default class App extends Component {
         <hr />
 
         <Router onChange={this.handleRoute}>
-          <Home path="/" />
+          <Home 
+            isZh={isZh}
+            path="/" />
 
           <Give 
+            isZh={isZh}
             renderNoWeb3={this.renderNoWeb3}
             renderUnlockedWeb3={this.renderUnlockedWeb3}
             renderLockedWeb3={this.renderLockedWeb3}
@@ -162,6 +168,7 @@ export default class App extends Component {
             path="give" />
 
           <Redeem 
+            isZh={isZh}
             renderNoWeb3={this.renderNoWeb3}
             renderUnlockedWeb3={this.renderUnlockedWeb3}
             renderLockedWeb3={this.renderLockedWeb3}
@@ -172,9 +179,13 @@ export default class App extends Component {
             caishen={this.state.caishen}
             path="redeem" />
 
-          <About path="about/" />
+          <About 
+            isZh={isZh}
+            path="about/" />
 
-          <ManualRedeem path="redeem/manual" />
+          <ManualRedeem 
+            isZh={isZh}
+            path="redeem/manual" />
         </Router>
 
         <div style={{ marginTop: footerTopMargin }} class="footer">

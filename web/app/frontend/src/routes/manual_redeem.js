@@ -22,7 +22,7 @@ export default class ManualRedeem extends Component{
           the drop-down menu on the top right corner of the page and use this
           address:
           <pre>
-            0x805B827E1cc082697F1e578EE8e286E6e5C53227
+            0xc881fdc2368f3b64f832fa9965b4ef3c7d024448
           </pre>
         </p>
 
@@ -32,7 +32,10 @@ export default class ManualRedeem extends Component{
         </textarea>
 
         <p>The ABI can also be
-          found <a href="https://ropsten.etherscan.io/address/0x805B827E1cc082697F1e578EE8e286E6e5C53227#code">on Etherscan</a> (Ropsten).</p>
+          found <a 
+            target="_blank"
+            href="https://ropsten.etherscan.io/address/0xc881fdc2368f3b64f832fa9965b4ef3c7d024448#code">
+          on Etherscan</a> (Ropsten).</p>
         <p>Click the Access button.</p>
 
         <h2>Get gift IDs</h2>
