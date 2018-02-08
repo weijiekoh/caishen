@@ -29,8 +29,7 @@ if "DJ_SECRET_KEY" in os.environ:
 LOGIN_REDIRECT_URL = '/'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
-DEBUG = True
+DEBUG = False
 
 if "DEV" in os.environ:
     DEBUG = os.environ["DEV"].lower() == "true"
@@ -68,10 +67,10 @@ HTML_MINIFY = True
 
 CSRF_TRUSTED_ORIGINS = [
     'cs.kohweijie.com',
-    # 'd36gysogqvy4e7.cloudfront.net',
+    'd36gysogqvy4e7.cloudfront.net',
 
-    # 'smarthongbao.com',
-    # 'd2jfrgsjvyi0al.cloudfront.net',
+    'smarthongbao.com',
+    'd2jfrgsjvyi0al.cloudfront.net',
 ]
 
 ROOT_URLCONF = 'project.urls'

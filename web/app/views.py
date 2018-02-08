@@ -8,7 +8,15 @@ from project import settings
 
 @login_required
 def index(request):
-    lang = request.META.get('LANGUAGE', request.META.get('LANG')).split(":")[1]
+    lang = request.META.get('LANGUAGE', request.META.get('LANG'))
+    if lang is None:
+        lang = "en"
+    else:
+        try:
+            lang = lang.split(":")[1]
+        except:
+            lang = "en"
+
     return render(
             request,
             "app/index.html",
