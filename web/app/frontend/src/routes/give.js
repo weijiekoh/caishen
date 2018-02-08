@@ -94,8 +94,9 @@ export default class Give extends Web3Enabled{
       const recipientAddress = this.state.recipient;
       const amountWei = web3.toWei(this.state.amount, "ether");
       const expiry = this.state.expiry.getTime() / 1000;
-      const giverName = this.state.giverName;
-      const message = this.state.message
+      const giverName = this.state.giverName.trim();
+      const message = this.state.message.trim()
+
       const payload = {
         value: amountWei,
         from: this.state.address
@@ -186,7 +187,7 @@ export default class Give extends Web3Enabled{
 
   renderUnlockedWeb3() {
     if (!this.props.address || !this.props.caishen){
-      return <p>Please connect to the Ropsten testnet.</p>
+      return this.renderPlsConnect();
     }
 
     const offset = new Date().getTimezoneOffset();

@@ -53,9 +53,11 @@ class Gift extends Component {
           <p>
             Giver's name: {this.props.gift.giverName}
           </p>
-          <p>
-            Giver's message: {this.props.gift.message}
-          </p>
+          {this.props.gift.message.length > 0 &&
+            <p>
+              Giver's message: {this.props.gift.message}
+            </p>
+          }
           <p>
             ETH Address: <pre>{this.props.gift.giver}</pre>
           </p>
@@ -70,6 +72,11 @@ class Gift extends Component {
         <p>Given on: {timestamp}</p>
         <p>Amount: {this.props.gift.amount} ETH</p>
         {giver}
+        {this.props.gift.giverName.length === 0 && this.props.gift.message.length > 0 &&
+          <p>
+            Giver's message: {this.props.gift.message}
+          </p>
+        }
         <p>Opening date: {formatDate(expiry)}</p>
 
         {this.state.transaction != null &&

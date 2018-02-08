@@ -12,6 +12,11 @@ export default class Web3Enabled extends Component{
   }
 
 
+  renderPlsConnect = () => {
+      return <p>Use MetaMask to connect to the main Ethereum network.</p>
+  }
+
+
   render() {
     if (this.props.web3Status === this.props.web3StatusCodes.missing){
       return this.props.renderNoWeb3();

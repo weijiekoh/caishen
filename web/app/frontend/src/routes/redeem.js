@@ -10,8 +10,9 @@ var Web3 = require("web3");
 export default class Redeem extends Web3Enabled{
   renderUnlockedWeb3() {
     if (!this.props.address || !this.props.caishen){
-      return <p>Please connect to the Ropsten testnet.</p>
+      return this.renderPlsConnect();
     }
+
     return (
       <div class="redeem pure-form pure-form-stacked">
         <h1>Redeem your red packets</h1>
