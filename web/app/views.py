@@ -9,18 +9,16 @@ from project import settings
 @login_required
 def index(request):
     lang = request.META.get('LANGUAGE', request.META.get('LANG'))
-    print(lang)
+
     if lang is None:
         lang = "en"
     elif lang == "zh":
         pass
-    else:
+    elif ":" in lang:
         try:
             lang = lang.split(":")[1]
         except:
             lang = "en"
-
-    print(lang)
 
     return render(
             request,
