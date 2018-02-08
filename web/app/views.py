@@ -8,7 +8,7 @@ from project import settings
 
 @login_required
 def index(request):
-    lang = request.META["LANGUAGE"].split(":")[1]
+    lang = request.META.get('LANGUAGE', request.META.get('LANG')).split(":")[1]
     return render(
             request,
             "app/index.html",
