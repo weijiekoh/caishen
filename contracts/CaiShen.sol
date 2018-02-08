@@ -102,9 +102,6 @@ contract CaiShen is Ownable {
         // Make sure nextGiftId is 0 or positive, or this contract is buggy
         assert(nextGiftId >= 0);
 
-        // Append the gift to the mapping
-        recipientToGiftIds[recipient].push(nextGiftId);
-
         // Calculate the contract owner's fee
         uint feeTaken = fee(amount);
         assert(feeTaken >= 0);
@@ -119,7 +116,8 @@ contract CaiShen is Ownable {
         // If a gift with this new gift ID already exists, this contract is buggy.
         assert(giftIdToGift[nextGiftId].exists == false);
 
-        // Update the giftIdToGift mapping with the new gift
+        // Update the mappings
+        recipientToGiftIds[recipient].push(nextGiftId);
         giftIdToGift[nextGiftId] = 
             Gift(true, nextGiftId, giver, recipient, expiry, 
             amtGiven, false, giverName, message, now);
