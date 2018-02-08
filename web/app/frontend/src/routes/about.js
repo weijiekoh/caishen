@@ -40,26 +40,30 @@ export default class About extends Component{
         <h2>The technology behind CaiShen</h2>
 
         <p>
-          CaiShen is based upon the Ethereum smart contract technology.  A
+          CaiShen is based upon the Ethereum smart contract technology. A
           smart contract is a computer program that runs on the blockchain. A
           smart contract will execute the instructions encoded precisely,
-          without censorship, and without a trusted intermediary. 
+          and without censorship, all without requiring a trusted intermediary.
         </p>
 
         <p>
-          For example, our CaiShen smart contract will only allow the funds
+          The CaiShen smart contract will only allow the funds
           to be withdrawn on or after the opening date, because the contract is
-          coded as such. If you set the opening date to 1st January 2020, the
+          coded as such.
+        </p>
+        <p>
+          For example, if you set the opening date to 1st January 2020, the
           recipient of the red packet can only redeem the funds on or after 1st
           January 2020.
         </p>
           
         <p>
-          CaiShen is a dApp (“distributed application”). Only the user
-          interface lives on our servers. However, the smart contract — the
-          heart of the application — resides on the Ethereum blockchain.  This
-          means that the assets and functionality of CaiShen is safe even when
-          the creators (ourselves) cease to exist.
+          The website you are seeing right now is is a dApp (“distributed
+          application”). Only this user interface lives on our servers.
+          However, the smart contract — the heart of the application — resides
+          on the Ethereum blockchain. This means that the assets and
+          functionality of CaiShen is safe even when this website, or even
+          ourselves, cease to exist.
         </p>
 
         <h2>The CaiShen team</h2>
@@ -70,11 +74,14 @@ export default class About extends Component{
           <li>Sun Yuanxin</li>
         </ul>
 
+        <h2>Web and graphic design</h2>
+        <p>Janel Ang <a href="http://angjanel.wixsite.com/sunflakes">(portfolio)</a></p>
+
         <h2>Fee structure</h2>
 
         <p>
           The fees for using this smart contract are very modest and will be
-          used to cover hosting costs.
+          used to cover hosting and contract deployment costs.
         </p>
 
         {this.constructor.renderFeeTable()}
@@ -113,15 +120,15 @@ export default class About extends Component{
           Will you steal my money?
         </h3>
         <p>
-          No. The funds are locked by the contract code and will only be
-          released to the owner of the recipient’s private key. Not even we can
-          access the funds. The entire creation of your Ethereum address, your
-          recipient’s Ethereum address, and the creation of the contract takes
-          place in your browser.
+          No. Only the person who owns a recipient's private keys can redeem a
+          red packet. The entire creation of your Ethereum address, your
+          recipient’s Ethereum address, and your interactions with the contract
+          takes place in your browser.
         </p>
         <p>
-          Only the person who owns a recipient's private keys can redeem a
-          red packet.
+          The funds are locked by the contract code and will only be released
+          to the owner of the recipient’s private key. Not even we can access
+          the funds. 
         </p>
 
         <h3>

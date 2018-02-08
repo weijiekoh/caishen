@@ -17,8 +17,8 @@ export default class Home extends Component{
           </p>
           <p>
             For example, if you give a red packet of 1 ETH and set the 
-            opening date to 1st January 2020, the person you gave it to
-            may only redeem the funds on or after 1st January 2020.
+            opening date to 1st January 2020, the recipient may only redeem the
+            funds on or after 1st January 2020.
           </p>
         </div>
 
@@ -59,12 +59,13 @@ export default class Home extends Component{
           <h2>Terms and conditions</h2>
           <p>
             CaiShen is a tool which uses the Ethereum blockchain and smart
-            contracts technology. It enables you to deposit an amount of funds,
+            contract technology. It enables you to deposit an amount of funds,
             denominated in Ethereum, that can only be withdrawn after a certain
             time using a specific private key.
           </p>
 
-          <p> CaiShen is not a financial institution as we do not store any of
+          <p>
+            CaiShen is not a financial institution as we do not store any of
             your funds. Nor is it a payment processor as we do not process any
             of your funds.
           </p>
