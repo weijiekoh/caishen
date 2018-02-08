@@ -21,7 +21,7 @@ export default class EthAccountInput extends Input{
       return "Enter an address.";
     }
     else if (!web3.isAddress(address.trim())){
-      return "Please enter a valid ETH address.";
+      return "Enter a valid ETH address.";
     }
     else if (this.props.notThisAddress.toLowerCase() === address.trim().toLowerCase()){
       return this.props.notThisAddressMsg;
