@@ -10,6 +10,7 @@ export default class Input extends Component{
     };
   }
 
+
   componentWillReceiveProps = newProps => {
     if (this.props.changeCounter !== newProps.changeCounter){
       this.setState({
@@ -19,11 +20,13 @@ export default class Input extends Component{
     }
   }
 
+
   handleOnKeyDown = e => {
     if (e.keyCode == 13){
       this.props.handleEnterKeyDown();
     }
   }
+
 
   handleChange = e => {
     const callback = (value, valid) => {
@@ -112,6 +115,7 @@ export default class Input extends Component{
             name={this.props.name}
             type="text" />
         </div>
+
         {this.props.showErrorMsgs &&
           <div class={errorParentClass}>
               <span class="error">

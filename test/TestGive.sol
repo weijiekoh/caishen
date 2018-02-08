@@ -14,15 +14,17 @@ contract TestGive {
     uint fee = 0.01 ether;
 
     function beforeAll () public {
-        cs.give.value(amount)(recipient, expiry);
+        cs.give.value(amount)(recipient, expiry, "name", "message");
     }
 
     function testDefaultGiftInfo () public {
         uint giftId = 0;
 
         var (resExists, resGiftId, resGiver, resRecipient,
-             resExpiry, resAmount, resRedeemed, resRefunded) = cs.giftIdToGift(giftId);
+             resExpiry, resAmount, resRedeemed,
+             resGiverName, resMessage, resTimestamp) = cs.giftIdToGift(giftId);
 
+        //resGiverName; resMessage;
         Assert.equal(resGiftId, giftId, "Gift ID should be 0");
         Assert.equal(resExists, true, "Gift should exist");
         Assert.equal(resGiver, this, "Gift giver should be test contract address");
@@ -30,6 +32,8 @@ contract TestGive {
         Assert.equal(resExpiry, expiry, "Gift expiry should be correct");
         Assert.equal(resAmount, amount - fee, "Gift amount - fee should be 0.999 ether");
         Assert.equal(resRedeemed, false, "Gift should not already been redeemed");
-        Assert.equal(resRefunded, false, "Gift should not already been refunded");
+        //Assert.isTrue(resTimestamp < now, "Gift timestamp should be in the past");
+        //Assert.equal(resGiverName, "name", "Giver's name should be correct");
+        //Assert.equal(resMessage, "message", "Message should be correct");
     }
 }

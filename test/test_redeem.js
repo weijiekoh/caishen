@@ -14,7 +14,7 @@ contract('CaiShen', accounts => {
     cs = await CaiShen.new();
     const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
 
-    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
+    await cs.give(recipient, expiry, "name", "message", {to: cs.address, from: creator, value: amount});
     await(increaseTime(20000));
     const result = await expectThrow(cs.redeem(0, {from: accounts[3]}));
     assert.isTrue(result, "redeem() should throw an error because the gift does not belong to the sender");
@@ -24,7 +24,7 @@ contract('CaiShen', accounts => {
     cs = await CaiShen.new();
     const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
 
-    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
+    await cs.give(recipient, expiry, "name", "message", {to: cs.address, from: creator, value: amount});
     await(increaseTime(20000));
     await cs.redeem(0, {from: recipient});
 
@@ -42,7 +42,7 @@ contract('CaiShen', accounts => {
     cs = await CaiShen.new();
     const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
 
-    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
+    await cs.give(recipient, expiry, "name", "message", {to: cs.address, from: creator, value: amount});
     let result = await expectThrow(cs.redeem(0, {from: recipient}));
 
     assert.equal(result, true, "redeem() should throw an error because of the expiry timestamp");
@@ -60,10 +60,10 @@ contract('CaiShen', accounts => {
     const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 10;
 
     // Call give()
-    await cs.give(recipient, expiry, {to: cs.address, from: giver, value: amount});
+    await cs.give(recipient, expiry, "name", "message", {to: cs.address, from: giver, value: amount});
 
-    const feesCollected = await cs.feesCollected();
-    assert.equal(feesCollected.toNumber(), fee, "Total fees collected should be correct");
+    const feesGathered = await cs.feesGathered();
+    assert.equal(feesGathered.toNumber(), fee, "Total fees collected should be correct");
 
     const postGiveContractBalance = web3.eth.getBalance(cs.address).toNumber();
     const postGiveGiverBalance = web3.eth.getBalance(giver).toNumber();

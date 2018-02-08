@@ -19,6 +19,11 @@ export default class EthAmountInput extends Input{
       return false;
     }
 
+    // Reject hex values
+    if (amount.toString().startsWith("0x")){
+      return false;
+    }
+
     // Reject non-numeric values
     try{
       web3.fromDecimal(amount);
@@ -53,6 +58,11 @@ export default class EthAmountInput extends Input{
   genErrorMsg = amount => {
     if (amount == null || amount.trim().length == 0){
       return "Enter a value.";
+    }
+
+    // Reject hex values
+    if (amount.toString().startsWith("0x")){
+      return "Enter a valid number.";
     }
 
     try{

@@ -66,7 +66,9 @@ MIDDLEWARE = [
 HTML_MINIFY = True
 
 CSRF_TRUSTED_ORIGINS = [
-    'cs.kohweijie.com'
+    'cs.kohweijie.com',
+    'smarthongbao.com',
+    'blockchainhongbao.com'
 ]
 
 ROOT_URLCONF = 'project.urls'

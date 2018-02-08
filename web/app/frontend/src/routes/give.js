@@ -5,6 +5,8 @@ import Web3Enabled from "../components/Web3Enabled.js";
 import EthAmountInput from "../components/input/EthAmountInput.js";
 import ExpiryDateInput from "../components/input/ExpiryDateInput.js";
 import EthAccountInput from "../components/input/EthAccountInput.js";
+import ShortTextInput from "../components/input/ShortTextInput.js";
+import LongTextInput from "../components/input/LongTextInput.js";
 import PendingTransaction from "../components/PendingTransaction.js";
 var Web3 = require("web3");
 
@@ -22,10 +24,14 @@ export default class Give extends Web3Enabled{
       amount: "",
       expiry: "",
       recipient: "",
+      giverName: "",
+      message: "",
 
       validAmount: false,
       validExpiry: false,
       validRecipient: false,
+      validGiverName: true,
+      validMessage: true,
 
       showErrorMsgs: false,
       showForm: true,
@@ -61,15 +67,35 @@ export default class Give extends Web3Enabled{
   }
 
 
+  handleGiverNameChange = (value, valid)  => {
+    this.setState({ 
+      giverName: value,
+      validGiverName: valid,
+    });
+  }
+
+
+  handleMessageChange = (value, valid) => {
+    this.setState({ 
+      message: value,
+      validMessage: valid,
+    });
+  }
+
+
   handleGiveBtnClick = () => {
     const valid = this.state.validAmount &&
       this.state.validRecipient &&
-      this.state.validExpiry;
+      this.state.validExpiry &&
+      this.state.validGiverName &&
+      this.state.validMessage;
 
     if (valid){
       const recipientAddress = this.state.recipient;
       const amountWei = web3.toWei(this.state.amount, "ether");
       const expiry = this.state.expiry.getTime() / 1000;
+      const giverName = this.state.giverName;
+      const message = this.state.message
       const payload = {
         value: amountWei,
         from: this.state.address
@@ -77,13 +103,13 @@ export default class Give extends Web3Enabled{
 
       this.setState({ btnClicked: true, showForm: false, }, () => {
         // Estimate gas
-        this.props.caishen.give.estimateGas(recipientAddress, expiry, {value: amountWei})
+        this.props.caishen.give.estimateGas(
+          recipientAddress,expiry, giverName, message, {value: amountWei})
         .then(gas => {
           payload.gas = gas;
 
-          //console.log(recipientAddress, expiry, payload);
-          this.props.caishen.give(recipientAddress, expiry, payload).then(tx => {
-            //console.log("tx:", tx);
+          this.props.caishen.give(
+            recipientAddress, expiry, giverName, message, payload).then(tx => {
 
             let transactions = this.state.transactions;
             if (typeof transactions === "undefined"){
@@ -111,8 +137,14 @@ export default class Give extends Web3Enabled{
             });
           }).catch(err => {
             this.setState({ 
+              transactions: [],
               btnClicked: false,
               showForm: true,
+              showErrorMsgs: false,
+              changeCounter: Math.random(),
+              amount: "",
+              expiry: "",
+              recipient: "",
             });
           });
         });
@@ -134,10 +166,11 @@ export default class Give extends Web3Enabled{
     return transactions.map((transaction, i) => 
       <div class="transaction_success">
         <em class="success">Red packet sent.</em>
-        <p>The owner of the ETH address
-          <pre>{transaction.txRecipient}</pre> may 
-          redeem {web3.fromWei(transaction.txAmount)} ETH 
-          after midnight, {formatDate(transaction.txExpiry)}.
+        <p>The owner of the ETH address </p>
+        <p><pre>{transaction.txRecipient}</pre></p>
+        <p>
+          may redeem {web3.fromWei(transaction.txAmount)} ETH after 
+          midnight, {formatDate(transaction.txExpiry)}.
         </p>
         <p>
           <a target="_blank" href={url + transaction.txHash}>
@@ -189,14 +222,6 @@ export default class Give extends Web3Enabled{
               smallerInput={true}
             />
 
-            <ExpiryDateInput
-              name="expiry"
-              changeCounter={this.state.changeCounter}
-              label={dateLabel}
-              handleChange={this.handleExpiryChange}
-              showErrorMsgs={this.state.showErrorMsgs}
-            />
-
             <EthAccountInput
               name="recipient"
               changeCounter={this.state.changeCounter}
@@ -208,6 +233,42 @@ export default class Give extends Web3Enabled{
               notThisAddressMsg={"The recipient address must not be your current address."}
               smallerInput={false}
             />
+
+            <ExpiryDateInput
+              name="expiry"
+              changeCounter={this.state.changeCounter}
+              label={dateLabel}
+              handleChange={this.handleExpiryChange}
+              showErrorMsgs={this.state.showErrorMsgs}
+            />
+
+            <ShortTextInput
+              name="giver_name"
+              changeCounter={this.state.changeCounter}
+              label={"Optional: Enter your name."}
+              handleChange={this.handleGiverNameChange}
+              handleEnterKeyDown={this.handleGiverNameChange}
+              showErrorMsgs={this.state.showErrorMsgs}
+              maxLength={60}
+            />
+
+            <LongTextInput
+              name="giver_msg"
+              changeCounter={this.state.changeCounter}
+              label={"Optional: Enter a short message for the recipient."}
+              handleChange={this.handleMessageChange}
+              handleEnterKeyDown={this.handleMessageChange}
+              showErrorMsgs={this.state.showErrorMsgs}
+              maxLength={140}
+            />
+
+            <p>
+              <em>
+                Please note that the information you enter above will be stored
+                on the blockchain and can be seen by anyone.
+              </em>
+            </p>
+
           </fieldset>
         }
 

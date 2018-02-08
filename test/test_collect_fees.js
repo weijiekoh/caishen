@@ -14,7 +14,7 @@ contract('CaiShen', accounts => {
 
     const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 1000;
 
-    await cs.give(recipient, expiry, {to: cs.address, from: creator, value: amount});
+    await cs.give(recipient, expiry, "name", "message", {to: cs.address, from: creator, value: amount});
     let result = await expectThrow(cs.collectAllFees({from: recipient}));
 
     assert.equal(result, true, "collectAllFees() should throw an error because it was called by a different account");
@@ -25,14 +25,14 @@ contract('CaiShen', accounts => {
     let cs = await CaiShen.new();
     const expiry = web3.eth.getBlock(web3.eth.blockNumber).timestamp + 10;
 
-    await cs.give(recipient, expiry, {to: cs.address, from: giver, value: amount});
+    await cs.give(recipient, expiry, "name", "message", {to: cs.address, from: giver, value: amount});
 
-    // Check if feesCollected is correct
-    const feesCollected = await cs.getFeesCollected({from: creator});
-    assert.equal(feesCollected.equals(fee), true, "Total fees collected should be correct");
+    // Check if feesGathered is correct
+    const feesGathered = await cs.feesGathered({from: creator});
+    assert.equal(feesGathered.equals(fee), true, "Total fees collected should be correct");
 
-    const a = await cs.feesCollected();
-    assert.equal(a.equals(fee), true, "feesCollected() should return the correct fee");
+    const a = await cs.feesGathered();
+    assert.equal(a.equals(fee), true, "feesGathered() should return the correct fee");
 
     const initial = web3.eth.getBalance(creator);
 
@@ -46,9 +46,9 @@ contract('CaiShen', accounts => {
     const gasUsed = web3.toBigNumber(transaction.receipt.gasUsed);
     const gasPaid = gasUsed.times(gasPrice);
 
-    // Check if feesCollected is correct
-    const b = await cs.feesCollected();
-    assert.equal(b.equals(0), true, "feesCollected() should return 0");
+    // Check if feesGathered is correct
+    const b = await cs.feesGathered();
+    assert.equal(b.equals(0), true, "feesGathered() should return 0");
 
     // Check if the balance is correct, accounting for the gas paid
     assert.equal(post.plus(gasPaid).minus(initial).equals(fee), true, "Fees and gasPaid should add up");

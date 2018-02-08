@@ -3,8 +3,11 @@ pragma solidity 0.4.18;
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
 import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 
+// There are two planted security bugs in this contract.
+// The SHA256 hash of the original contract is:
+// abe7bc1b628cc9a17335d6ecce32a48e033f2479e931edcde782c68c1e69cd66
 
-contract CaiShen is Ownable {
+contract BuggyContract is Ownable {
     struct Gift {
         bool exists;        // 0 Only true if this exists
         uint giftId;        // 1 The gift ID
@@ -27,28 +30,24 @@ contract CaiShen is Ownable {
     // an unused gift ID.
     uint public nextGiftId;
 
-    // Maps each recipient address to a list of giftIDs of
+    // recipientToGiftIds maps each recipient address to a list of giftIDs of
     // Gifts they have received.
     mapping (address => uint[]) public recipientToGiftIds;
 
-    // Maps each gift ID to its associated gift.
+    // giftIdToGift maps each gift ID to its associated gift.
     mapping (uint => Gift) public giftIdToGift;
 
     event Constructed (address indexed by, uint indexed amount);
-
-    event CollectedAllFees (address indexed by, uint indexed amount);
-
     event DirectlyDeposited(address indexed from, uint indexed amount);
-
     event Gave (uint indexed giftId,
                 address indexed giver,
                 address indexed recipient,
                 uint amount, uint expiry);
-
     event Redeemed (uint indexed giftId,
                     address indexed giver,
                     address indexed recipient,
                     uint amount);
+    event CollectedAllFees (address indexed by, uint indexed amount);
 
     // Constructor
     function CaiShen() public payable {
@@ -112,7 +111,7 @@ contract CaiShen is Ownable {
         // Increment feesGathered
         feesGathered = SafeMath.add(feesGathered, feeTaken);
 
-        // Shave off the fee from the amount
+        // Shave off the fee
         uint amtGiven = SafeMath.sub(amount, feeTaken);
         assert(amtGiven > 0);
 
@@ -140,7 +139,7 @@ contract CaiShen is Ownable {
 
     // Call this function to redeem a gift of ETH.
     // Tested in test/test_redeem.js
-    function redeem (uint giftId) public {
+    function redeem (uint giftId, amount) public {
         // The giftID should be 0 or positive
         require(giftId >= 0);
 
@@ -158,7 +157,6 @@ contract CaiShen is Ownable {
         //// buggy.
 
         // The amount must be positive because this is required in give()
-        uint amount = giftIdToGift[giftId].amount;
         assert(amount > 0);
 
         // The giver must not be the recipient because this was asserted in give()
@@ -190,9 +188,8 @@ contract CaiShen is Ownable {
     }
 
     // Transfer the fees collected thus far to the contract owner.
-    // Only the contract owner may invoke this function.
     // Tested in test/test_collect_fees.js
-    function collectAllFees () public onlyOwner {
+    function collectAllFees () public {
         // Store the fee amount in a temporary variable
         uint amount = feesGathered;
 
@@ -203,7 +200,7 @@ contract CaiShen is Ownable {
         feesGathered = 0;
 
         // Make the transfer
-        owner.transfer(amount);
+        msg.sender.transfer(amount);
 
         CollectedAllFees(owner, amount);
     }

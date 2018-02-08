@@ -15,6 +15,11 @@ export default class Home extends Component{
             capsule, the recipient can only withdraw the cryptocurrency funds
             after the opening date.
           </p>
+          <p>
+            For example, if you give a red packet of 1 ETH and set the 
+            opening date to 1st January 2020, the person you gave it to
+            may only redeem the funds on or after 1st January 2020.
+          </p>
         </div>
 
         <div class="pricing pure-u-1">

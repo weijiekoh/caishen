@@ -179,7 +179,7 @@ export default class App extends Component {
 
         <div style={{ marginTop: footerTopMargin }} class="footer">
           <em>
-            © CaiShen {new Date().getFullYear()}. Contact: weijie.koh [at] smarthongbao [dot] com
+            © CaiShen {new Date().getFullYear()}. Contact: questions [at] smarthongbao [dot] com
           </em>
         </div>
       </div>
