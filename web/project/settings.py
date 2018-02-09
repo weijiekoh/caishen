@@ -69,6 +69,7 @@ CSRF_TRUSTED_ORIGINS = [
     'cs.kohweijie.com',
     'd36gysogqvy4e7.cloudfront.net',
 
+    'www.smarthongbao.com',
     'smarthongbao.com',
     'd2jfrgsjvyi0al.cloudfront.net',
 ]
