@@ -73,7 +73,7 @@ class Gift extends Component {
       );
     }
 
-    const timestamp = formatDate(new Date(this.props.gift.timestamp.toNumber()));
+    const timestamp = formatDate(new Date(this.props.gift.timestamp.toNumber()), this.props.isZh);
 
     return (
       <div class="gift">
@@ -104,14 +104,17 @@ class Gift extends Component {
         }
 
         {this.props.isZh ?
-          <p>领取日期: {formatDate(expiry)}</p>
+          <p>领取日期: {formatDate(expiry, true)}</p>
           :
-          <p>Date of Redemption: {formatDate(expiry)}</p>
+          <p>Date of Redemption: {formatDate(expiry, false)}</p>
         }
 
         {this.state.transaction != null &&
           <TxSuccess 
-            label="Gift redeemed."
+            label={this.props.isZh ?
+                "红包已领取。"
+                :
+                "Gift redeemed."}
             transaction={this.state.transaction} />
         }
 
@@ -124,7 +127,7 @@ class Gift extends Component {
             </button>
 
           }
-          {this.state.btnClicked && <PendingTransaction /> }
+          {this.state.btnClicked && <PendingTransaction isZh={this.props.isZh}/> }
         </div>
       </div>
     );
@@ -191,7 +194,11 @@ export default class GiftSelect extends Component {
     if (this.state.gifts == null){
       return (
         <div>
-          <p>Loading...</p>
+          {this.props.isZh ?
+            <p>加载中......</p>
+            :
+            <p>Loading...</p>
+          }
         </div>
       );
     }
@@ -200,7 +207,11 @@ export default class GiftSelect extends Component {
     if (this.state.gifts.length === 0){
       return (
         <div>
-          <p>You didn't receive any gifts.</p>
+          {this.props.isZh ?
+            <p>您没有收到任何红包。</p>
+            :
+            <p>You didn't receive any gifts.</p>
+          }
         </div>
       );
     }

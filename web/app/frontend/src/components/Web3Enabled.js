@@ -10,7 +10,12 @@ export default class Web3Enabled extends Component{
           :
           <p>Your address: <pre>{this.props.address}</pre></p>
         }
-        <p>Your balance: <pre>{web3.fromWei(this.props.balance, "ether").toString()}</pre> ETH</p>
+
+        {this.props.isZh ?
+          <p>您的以太币余额 <pre>{web3.fromWei(this.props.balance, "ether").toString()}</pre> ETH</p>
+          :
+          <p>Your balance: <pre>{web3.fromWei(this.props.balance, "ether").toString()}</pre> ETH</p>
+        }
       </div>
     );
   }

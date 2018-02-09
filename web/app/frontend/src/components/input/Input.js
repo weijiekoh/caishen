@@ -75,10 +75,16 @@ export default class Input extends Component{
       if (this.props.showFee){
         if (this.state.isValid){
           feeLabel = (
-            <p>
-              Fee: {formatFee(this.fee(this.state.value))} ETH <a target="_blank" href="/about">
-                (see rates)</a>
-            </p>
+            this.props.isZh ?
+              <p>
+                手续费： {formatFee(this.fee(this.state.value))} ETH <a target="_blank" href="/about#fees">
+                  （查看费率表）</a>
+              </p>
+              :
+              <p>
+                Fee: {formatFee(this.fee(this.state.value))} ETH <a target="_blank" href="/about#fees">
+                  (see rates)</a>
+              </p>
           );
         }
         else{

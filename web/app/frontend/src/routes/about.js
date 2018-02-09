@@ -143,6 +143,7 @@ export default class About extends Component{
 
               </p>
 
+              <a name="fees" />
               {this.props.isZh ?
                 <h2>手续费用</h2>
                   :

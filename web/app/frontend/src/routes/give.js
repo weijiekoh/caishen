@@ -166,19 +166,47 @@ export default class Give extends Web3Enabled{
     }
     return transactions.map((transaction, i) => 
       <div class="transaction_success">
-        <em class="success">Red packet sent.</em>
-        <p>The owner of the ETH address </p>
+        {this.props.isZh ?
+          <em class="success">红包已送出。</em>
+          :
+          <em class="success">Red packet sent.</em>
+        }
+
+        {this.props.isZh ?
+          <p>以太币地址</p>
+          :
+          <p>The owner of the ETH address </p>
+        }
+
         <p><pre>{transaction.txRecipient}</pre></p>
-        <p>
-          may redeem {web3.fromWei(transaction.txAmount)} ETH after 
-          midnight, {formatDate(transaction.txExpiry)}.
-        </p>
-        <p>
-          <a target="_blank" href={url + transaction.txHash}>
-            Click here
-          </a> to 
-          view the transaction details.
-        </p>
+
+        {this.props.isZh ?
+          <p>
+            的所有人可以于{formatDate(transaction.txExpiry, true)}
+            零点后领取{web3.fromWei(transaction.txAmount)} 以太币。
+          </p>
+            :
+          <p>
+            may redeem {web3.fromWei(transaction.txAmount)} ETH after 
+            midnight, {formatDate(transaction.txExpiry, false)}.
+          </p>
+        }
+
+        {this.props.isZh ?
+          <p>
+            <a target="_blank" href={url + transaction.txHash}>
+              点击此处
+            </a>
+            查看交易详情。
+          </p>
+          :
+          <p>
+            <a target="_blank" href={url + transaction.txHash}>
+              Click here
+            </a> to 
+            view the transaction details.
+          </p>
+        }
         <hr />
       </div>
     );
@@ -196,7 +224,10 @@ export default class Give extends Web3Enabled{
     const prefix = offset < 0 ? "+" : "-";
     const timezone = prefix + hours;
 
-    const dateLabel = "Select the earliest date for the recipient to claim the funds. The opening time will be set as midnight, GMT" + timezone + ".";
+    const dateLabel = this.props.isZh ?
+      "请选择接收人最早领取日期。红包将于东" + timezone + "区此日期零点时分解锁，以便接收人领取。"
+      :
+      "Select the earliest date for the recipient to claim the funds. The opening time will be set as midnight, GMT" + timezone + ".";
 
     return (
       <div class="give">
@@ -220,7 +251,12 @@ export default class Give extends Web3Enabled{
                     isZh={this.props.isZh}
                     name="amount"
                     changeCounter={this.state.changeCounter}
-                    label="Enter the amount of ETH to give."
+                    label={
+                      this.props.isZh ?
+                      "请输入您要赠出的以太币数额"
+                      :
+                      "Enter the amount of ETH to give."
+                    }
                     handleChange={this.handleAmountChange}
                     showErrorMsgs={this.state.showErrorMsgs}
                     handleEnterKeyDown={this.handleGiveBtnClick}
@@ -233,7 +269,12 @@ export default class Give extends Web3Enabled{
                     isZh={this.props.isZh}
                     name="recipient"
                     changeCounter={this.state.changeCounter}
-                    label={"Enter the recipient's ETH address."}
+                    label={
+                      this.props.isZh ?
+                        "请输入接收人以太币地址"
+                        :
+                        "Enter the recipient's ETH address."
+                    }
                     handleChange={this.handleRecipientChange}
                     handleEnterKeyDown={this.handleGiveBtnClick}
                     showErrorMsgs={this.state.showErrorMsgs}
@@ -254,7 +295,12 @@ export default class Give extends Web3Enabled{
                     isZh={this.props.isZh}
                     name="giver_name"
                     changeCounter={this.state.changeCounter}
-                    label={"Optional: Enter your name."}
+                    label={
+                      this.props.isZh ?
+                      "非必填项：请输入您的姓名"
+                      :
+                      "Optional: Enter your name."
+                    }
                     handleChange={this.handleGiverNameChange}
                     handleEnterKeyDown={this.handleGiverNameChange}
                     showErrorMsgs={this.state.showErrorMsgs}
@@ -265,7 +311,12 @@ export default class Give extends Web3Enabled{
                     isZh={this.props.isZh}
                     name="giver_msg"
                     changeCounter={this.state.changeCounter}
-                    label={"Optional: Enter a short message for the recipient."}
+                    label={
+                      this.props.isZh ?
+                        "非必填项：请输入您给接收人的留言"
+                        :
+                        "Optional: Enter a short message for the recipient."
+                    }
                     handleChange={this.handleMessageChange}
                     handleEnterKeyDown={this.handleMessageChange}
                     showErrorMsgs={this.state.showErrorMsgs}
@@ -273,16 +324,22 @@ export default class Give extends Web3Enabled{
                   />
 
                   <p>
-                    <em>
-                      Please note that the information you enter above will be stored
-                      on the blockchain and can be seen by anyone.
-                    </em>
+                    {this.props.isZh ?
+                      <em>
+                        请注意您以上输入的信息将存储于区块链中，为所有人可见。
+                      </em>
+                      :
+                      <em>
+                        Please note that the information you enter above will be stored
+                        on the blockchain and can be seen by anyone.
+                      </em>
+                    }
                   </p>
 
                 </fieldset>
               }
 
-              {this.state.btnClicked && <PendingTransaction /> }
+              {this.state.btnClicked && <PendingTransaction isZh={this.props.isZh}/> }
 
               {this.state.showForm &&
                 <button 
