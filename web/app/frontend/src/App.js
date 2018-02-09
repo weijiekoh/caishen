@@ -145,11 +145,7 @@ export default class App extends Component {
                  window.location.hash === "#zh";
 
     return (
-      <div class="pure-g">
-        <Nav />
-
-        <hr />
-
+      <div>
         <Router onChange={this.handleRoute}>
           <Home 
             isZh={isZh}
@@ -188,11 +184,8 @@ export default class App extends Component {
             path="redeem/manual" />
         </Router>
 
-        <div style={{ marginTop: footerTopMargin }} class="footer">
-          <em>
-            © CaiShen {new Date().getFullYear()}. Contact: questions [at] smarthongbao [dot] com
-          </em>
-        </div>
+        {/*
+        */}
       </div>
     );
   }
