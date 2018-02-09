@@ -23,6 +23,11 @@ export default class DateInput extends Component{
         value: null,
       });
     }
+
+    if (this.props.isZh !== newProps.isZh){
+      const locale = newProps.isZh ? Chinese : English;
+      this.cal.flatpickr.set("locale", locale);
+    }
   }
 
 
@@ -81,6 +86,7 @@ export default class DateInput extends Component{
           <Flatpickr 
             onChange={this.handleChange}
             value={this.state.value}
+            ref={r => {this.cal = r}}
             options={{
               locale: locale,
               dateFormat: "Y-m-d",
