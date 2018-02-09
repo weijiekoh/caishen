@@ -80,7 +80,7 @@ class Gift extends Component {
         {this.props.isZh ?
           <p>赠送日期: {timestamp}</p>
           :
-          <p>Date of Receipt: {timestamp}</p>
+          <p>Date of receipt: {timestamp}</p>
         }
 
         {this.props.isZh ?
@@ -106,7 +106,7 @@ class Gift extends Component {
         {this.props.isZh ?
           <p>领取日期: {formatDate(expiry, true)}</p>
           :
-          <p>Date of Redemption: {formatDate(expiry, false)}</p>
+          <p>Date of redemption: {formatDate(expiry, false)}</p>
         }
 
         {this.state.transaction != null &&
@@ -219,16 +219,20 @@ export default class GiftSelect extends Component {
     sortedGifts.sort((a, b) => {
       const aExpiry = a.expiry.getTime();
       const bExpiry = b.expiry.getTime();
-      if (a.giver === b.giver){
-        if (aExpiry === bExpiry){
+      const aGiver = a.giver;
+      const bGiver = b.giver;
+
+      if (aExpiry === bExpiry){
+        if (a.giver === b.giver){
           return a.amount - b.amount;
         }
-        else{
-          return aExpiry - bExpiry;
-        }
+        return b.giver.localeCompare(a.giver);
       }
       else{
-        return a.giver.localeCompare(b.giver);
+        if (a.giver === b.giver){
+          return a.amount - b.amount;
+        }
+        return aExpiry - bExpiry;
       }
     });
 

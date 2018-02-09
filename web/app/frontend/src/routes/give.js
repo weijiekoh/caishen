@@ -164,6 +164,7 @@ export default class Give extends Web3Enabled{
     if (networkId === "3"){
       url = "https://ropsten.etherscan.io/tx/";
     }
+
     return transactions.map((transaction, i) => 
       <div class="transaction_success">
         {this.props.isZh ?
