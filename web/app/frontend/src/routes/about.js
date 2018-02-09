@@ -8,7 +8,7 @@ export default class About extends Component{
           <table class="pure-table pure-table-bordered">
             <thead>
               <tr>
-                <th>赠送金额</th>
+                <th>赠送红包金额</th>
                 <th>一次性收费</th>
               </tr>
             </thead>
@@ -154,7 +154,7 @@ export default class About extends Component{
                 used to cover hosting and contract deployment costs.
               </p>
 
-              {this.constructor.renderFeeTable()}
+              {this.constructor.renderFeeTable(this.props.isZh)}
 
               {this.props.isZh ?
                 <h2>常见问题</h2>
@@ -195,7 +195,7 @@ export default class About extends Component{
                 <div>
                   <p>
                     以太坊的智能合约使得制定交易规则变为可能。合约的条款可以
-                    由专业人员为您定制，无须任何中介机构允许。欲了解更多有关
+                    由专业人员为您定制，无须任何中介或权威机构允许。欲了解更多有关
                     智能合约，请浏览 <a href="https://www.ethereum.org/" target="_blank">
                       以太币网站</a>。
                   </p>
@@ -419,6 +419,7 @@ export default class About extends Component{
               <p>
                 To redeem your red packet manually,
                 follow <a href="redeem/manual">these instructions</a>.
+                要领取您的红包，请按以下步骤操作。
               </p>
               */}
 

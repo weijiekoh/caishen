@@ -24,16 +24,16 @@ export default class Nav extends Component{
           </a>
           <a href="/redeem">
             {this.props.isZh ?
-              <img src="/static/images/redeem_btn_zh.png" alt="Redeem 赎回" />
+              <img src="/static/images/redeem_btn_zh.png" alt="领取" />
               :
-              <img src="/static/images/redeem_btn.png" alt="Redeem 赎回" />
+              <img src="/static/images/redeem_btn.png" alt="Redeem" />
             }
           </a>
           <a href="/about">
             {this.props.isZh ?
-              <img src="/static/images/about_btn_zh.png" alt="About 了解" />
+              <img src="/static/images/about_btn_zh.png" alt="了解" />
               :
-              <img src="/static/images/about_btn.png" alt="About 了解" />
+              <img src="/static/images/about_btn.png" alt="About" />
             }
           </a>
 
@@ -52,7 +52,7 @@ export default class Nav extends Component{
               <strong>财神</strong>
             </a>
             <a href="/give">赠送</a>
-            <a href="/redeem">赎回</a>
+            <a href="/redeem">领取</a>
             <a href="/about">了解</a>
             <a onClick={this.props.toggleLang}>English</a>
           </div>

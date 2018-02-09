@@ -6,11 +6,6 @@ export default class EthAccountInput extends Input{
     let valid = typeof address !== "undefined" &&
            web3.isAddress(address) &&
            this.props.notThisAddress.toLowerCase() !== address.trim().toLowerCase();
-    
-    if (this.props.notGiverAddress &&
-        this.props.notGiverAddress.trim().toLowerCase() === address.trim().toLowerCase()){
-      valid = false;
-    }
 
     return valid;
   }
@@ -18,17 +13,13 @@ export default class EthAccountInput extends Input{
 
   genErrorMsg = address => {
     if (address == null || address.trim().length == 0){
-      return "Enter an address.";
+      return this.props.isZh ? "请输入地址" : "Enter an address.";
     }
     else if (!web3.isAddress(address.trim())){
-      return "Enter a valid ETH address.";
+      return this.props.isZh ? "请输入有效以太币地址" : "Enter a valid ETH address.";
     }
     else if (this.props.notThisAddress.toLowerCase() === address.trim().toLowerCase()){
-      return this.props.notThisAddressMsg;
-    }
-    else if (this.props.notGiverAddress &&
-        this.props.notGiverAddress.trim().toLowerCase() === address.trim().toLowerCase()){
-      return this.props.notGiverAddressMsg;
+      return this.props.isZh ? "" : "The recipient's address must not be your own address.";
     }
   }
 }

@@ -33,7 +33,10 @@ export default class Home extends Component{
               {this.props.isZh ?
                 <div class="pure-u-1">
                   <p>
-                    用财<strong>神给</strong>您的亲朋好友赠送以太币红包！财神红包如时间胶囊，接
+                    这个农历新年, 用财<strong>神给</strong>您的亲朋好友赠送以太币红包！
+                  </p>
+                  <p>
+                    财神红包如时间胶囊，接
                     受人只有在指定日期之后才可以领取赠送的以太币金额。
                   </p>
                   <p>
@@ -45,10 +48,10 @@ export default class Home extends Component{
                   :
                 <div class="pure-u-1">
                   <p>
-                    Use CaiShen to give your loved ones an Ethereum red packet that
-                    which can only be opened after a specified date. Like a time
-                    capsule, the recipient can only withdraw the cryptocurrency funds
-                    after the opening date.
+                    This Lunar New Year, use CaiShen to give your loved ones an
+                    Ethereum red packet that which can only be opened after a
+                    specified date. Like a time capsule, the recipient can only
+                    withdraw the cryptocurrency funds after the opening date.
                   </p>
                   <p>
                     For example, if you give a red packet of 1 ETH and set the 
@@ -69,7 +72,7 @@ export default class Home extends Component{
 
               <div class="requirements pure-u-1">
                 {this.props.isZh ?
-                  <h2>使用须知：</h2>
+                  <h2>使用须知</h2>
                     :
                   <h2>What you need</h2>
                 }
@@ -147,7 +150,9 @@ export default class Home extends Component{
                         保管或处理赠出的财物。
                       </p>
                       <p>
-                        ???????????????
+                        综上，<strong>财神</strong>无法保障您赠出财物之长期合法
+                        性以及财产安全。然而，我们可以做到的是为您
+                        智能合约的内容。
                       </p>
                     </div>
                     :
@@ -179,9 +184,11 @@ export default class Home extends Component{
                 <p>
                   questions@smarthongbao.com
                 </p>
-                <p>
-                  © CaiShen {new Date().getFullYear()}
-                </p>
+                {this.props.isZh ?
+                  <p>© 财神{new Date().getFullYear()}</p>
+                  :
+                  <p>© CaiShen {new Date().getFullYear()}</p>
+                }
               </div>
             </div>
           </div>

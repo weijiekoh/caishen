@@ -20,6 +20,7 @@ export default class App extends Component {
     super(props);
 
     let wStatus = this.web3StatusCodes.missing;
+    const isHome = this.currentUrl === "/" || window.location.pathname === "/";
 
     if (typeof web3 !== "undefined"){
       web3 = new Web3(web3.currentProvider);
@@ -38,11 +39,11 @@ export default class App extends Component {
           }
         }
 
-        this.state = { web3Status: wStatus, isHome: true,}
+        this.state = { web3Status: wStatus, isHome: isHome,}
       });
     }
     else{
-      this.state = { web3Status: wStatus, isHome: true,}
+      this.state = { web3Status: wStatus, isHome: isHome,}
     }
   }
 
@@ -74,7 +75,6 @@ export default class App extends Component {
                    .getAttribute("lang") === "zh" ||
                  window.location.hash === "#zh";
     const lang = isZh ? "zh" : "en";
-    console.log(lang);
     this.setState({ lang });
 
   }
@@ -138,21 +138,46 @@ export default class App extends Component {
 	};
 
   renderNoWeb3 = () => {
+    const isZh = this.state.lang === "zh";
     return (
-      <div>
-        <p>
-          To give a smart red packet, please use Chrome or Firefox on a desktop
-      computer with the <a target="_blank" href="https://metamask.io/">MetaMask
-        digital wallet</a> installed.</p>
+      <div class="textbox">
+        <div class="textbox_inner">
+          {isZh ?
+              <p>
+                您需要在电脑上使用Chrome或者Firefox浏览器，并安装
+                <a target="_blank" href="https://metamask.io/">
+                  MetaMask digital wallet
+                </a>。
+              </p>
+            :
+            <p>Please use Chrome or Firefox on a 
+              computer with the <a target="_blank" href="https://metamask.io/">MetaMask
+                digital wallet</a> installed.</p>
+          }
+        </div>
       </div>
     );
   }
 
 
   renderLockedWeb3 = () => {
+    const isZh = this.state.lang === "zh";
     return (
       <div>
-        <p>Please unlock MetaMask.</p>
+        <Nav 
+          toggleLang={this.toggleLang}
+          isZh={isZh}
+          isHome={this.state.isHome} />
+
+        <div class="textbox">
+          <div class="textbox_inner">
+            {isZh ?
+              <p>Please unlock MetaMask.</p>
+              :
+              <p>请先打开MetaMask。</p>
+            }
+          </div>
+        </div>
       </div>
     );
   }

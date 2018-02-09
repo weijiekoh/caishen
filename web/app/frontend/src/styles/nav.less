@@ -9,15 +9,20 @@
     top: 0;
     width:100%;
     background:rgba(255, 255, 255, 0);
-    z-index:9999;
+    height:0;
 
     .logo {
         float: left;
         display:none;
-        img{
-            margin-top:1em;
-            margin-left:1em;
-            height:200px;
+        z-index:9999;
+        a{
+                z-index:9999;
+            img{
+                margin-top:1em;
+                margin-left:1em;
+                height:200px;
+                z-index:9999;
+            }
         }
 
         @media (min-width: @large_screen_width) {
@@ -29,11 +34,13 @@
         float: right;
         width:20%;
         min-width:285px;
+        z-index:9999;
 
         a{
             float:left;
             margin-left:1.5em;
             display:block;
+            cursor:pointer;
 
             img{
                 height:190px;

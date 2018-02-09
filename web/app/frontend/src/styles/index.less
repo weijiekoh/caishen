@@ -182,21 +182,25 @@ button{
 }
 
 .textbox{
+    z-index:999;
     background-color:@textbox_bg;
     border-radius:2em;
     margin:1em;
     padding:2em;
+    margin-top:3em;
     text-align:left;
     color:black;
 
     @media (min-width: @medium_screen_width) {
         max-width:@medium_screen_width;
         margin:auto;
+        margin-top:3em;
     }
 
     @media (max-width: @small_screen_width) {
         padding:0.75em;
         margin:10px;
+        margin-top:3em;
     }
 
     .textbox_inner{

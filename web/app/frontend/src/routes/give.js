@@ -199,10 +199,14 @@ export default class Give extends Web3Enabled{
     const dateLabel = "Select the earliest date for the recipient to claim the funds. The opening time will be set as midnight, GMT" + timezone + ".";
 
     return (
-      <div class="give pure-form pure-form-stacked">
+      <div class="give">
           <div class="textbox">
-            <div class="textbox_inner">
-              <h1>Give a smart red packet</h1>
+            <div class="textbox_inner pure-form pure-form-stacked">
+              {this.props.isZh ?
+                <h1>赠送智能红包</h1>
+                :
+                <h1>Give a smart red packet</h1>
+              }
               {this.renderAccountInfo()}
 
               <hr />
@@ -213,6 +217,7 @@ export default class Give extends Web3Enabled{
               {this.state.showForm &&
                 <fieldset>
                   <EthAmountInput 
+                    isZh={this.props.isZh}
                     name="amount"
                     changeCounter={this.state.changeCounter}
                     label="Enter the amount of ETH to give."
@@ -225,6 +230,7 @@ export default class Give extends Web3Enabled{
                   />
 
                   <EthAccountInput
+                    isZh={this.props.isZh}
                     name="recipient"
                     changeCounter={this.state.changeCounter}
                     label={"Enter the recipient's ETH address."}
@@ -232,11 +238,11 @@ export default class Give extends Web3Enabled{
                     handleEnterKeyDown={this.handleGiveBtnClick}
                     showErrorMsgs={this.state.showErrorMsgs}
                     notThisAddress={this.props.address}
-                    notThisAddressMsg={"The recipient address must not be your current address."}
                     smallerInput={false}
                   />
 
                   <ExpiryDateInput
+                    isZh={this.props.isZh}
                     name="expiry"
                     changeCounter={this.state.changeCounter}
                     label={dateLabel}
@@ -245,6 +251,7 @@ export default class Give extends Web3Enabled{
                   />
 
                   <ShortTextInput
+                    isZh={this.props.isZh}
                     name="giver_name"
                     changeCounter={this.state.changeCounter}
                     label={"Optional: Enter your name."}
@@ -255,6 +262,7 @@ export default class Give extends Web3Enabled{
                   />
 
                   <LongTextInput
+                    isZh={this.props.isZh}
                     name="giver_msg"
                     changeCounter={this.state.changeCounter}
                     label={"Optional: Enter a short message for the recipient."}
@@ -280,7 +288,7 @@ export default class Give extends Web3Enabled{
                 <button 
                   onClick={this.handleGiveBtnClick}
                   class="pure-button button-success">
-                  Give
+                  {this.props.isZh ? "赠送" : "Give"}
                 </button>
               }
 

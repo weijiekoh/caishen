@@ -48,12 +48,12 @@ export default class DateInput extends Component{
 
   genErrorMsg = date => {
     if (date == null){
-      return "Please select a date.";
+      return this.props.isZh ? "请选择日期" : "Please select a date.";
     }
     else if (Date.now() > date.getTime()){
       // This shouldn't happen because the datepicker component has a minimum
       // date in its config
-      return "Please select a date in the future.";
+      return this.props.isZh ? "请选择未来日期" : "Please select a date in the future.";
     }
   }
 

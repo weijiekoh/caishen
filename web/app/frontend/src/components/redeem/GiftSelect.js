@@ -41,26 +41,34 @@ class Gift extends Component {
     const now = parseInt((Date.now() / 1000).toFixed(0), 10);
     const hasExpired = now > expiryTimestamp;
 
-    let giver = (
-      <p>
-        From: <pre>{this.props.gift.giver}</pre>
-      </p>
-    );
+    let giver = 
+      this.props.isZh ?
+        <p>赠送人地址: <pre>{this.props.gift.giver}</pre></p>
+        :
+        <p>From: <pre>{this.props.gift.giver}</pre></p>
 
     if (this.props.gift.giverName.length > 0){
       giver = (
         <div>
-          <p>
-            Giver's name: {this.props.gift.giverName}
-          </p>
-          {this.props.gift.message.length > 0 &&
-            <p>
-              Giver's message: {this.props.gift.message}
-            </p>
+          {this.props.isZh ?
+            <p>赠送人姓名: {this.props.gift.giverName}</p>
+            :
+            <p>Giver's name: {this.props.gift.giverName}</p>
           }
-          <p>
-            ETH Address: <pre>{this.props.gift.giver}</pre>
-          </p>
+
+          {this.props.gift.message.length > 0 && this.props.isZh &&
+            <p>赠送人留言: {this.props.gift.message}</p>
+          }
+
+          {this.props.gift.message.length > 0 && !this.props.isZh &&
+            <p>Giver's message: {this.props.gift.message}</p>
+          }
+
+          {this.props.isZh ?
+            <p>以太币地址: <pre>{this.props.gift.giver}</pre></p>
+            :
+            <p>ETH Address: <pre>{this.props.gift.giver}</pre></p>
+          }
         </div>
       );
     }
@@ -69,15 +77,37 @@ class Gift extends Component {
 
     return (
       <div class="gift">
-        <p>Given on: {timestamp}</p>
-        <p>Amount: {this.props.gift.amount} ETH</p>
-        {giver}
-        {this.props.gift.giverName.length === 0 && this.props.gift.message.length > 0 &&
-          <p>
-            Giver's message: {this.props.gift.message}
-          </p>
+        {this.props.isZh ?
+          <p>赠送日期: {timestamp}</p>
+          :
+          <p>Date of Receipt: {timestamp}</p>
         }
-        <p>Opening date: {formatDate(expiry)}</p>
+
+        {this.props.isZh ?
+          <p>金额: {this.props.gift.amount} ETH</p>
+          :
+          <p>Amount: {this.props.gift.amount} ETH</p>
+        }
+
+        {giver}
+
+        {this.props.gift.giverName.length === 0 &&
+         this.props.gift.message.length > 0 &&
+         this.props.isZh &&
+          <p>赠送人留言: {this.props.gift.message}</p>
+        }
+
+        {this.props.gift.giverName.length === 0 &&
+         this.props.gift.message.length > 0 &&
+         !this.props.isZh &&
+          <p>Giver's message: {this.props.gift.message}</p>
+        }
+
+        {this.props.isZh ?
+          <p>领取日期: {formatDate(expiry)}</p>
+          :
+          <p>Date of Redemption: {formatDate(expiry)}</p>
+        }
 
         {this.state.transaction != null &&
           <TxSuccess 
@@ -90,7 +120,7 @@ class Gift extends Component {
             <button
               class="pure-button button-success"
               onClick={this.handleRedeemBtnClick}>
-              Redeem
+              {this.props.isZh ? "领取" : "Redeem"}
             </button>
 
           }
@@ -195,6 +225,7 @@ export default class GiftSelect extends Component {
       <div class="gift_select">
         {sortedGifts.map(gift => 
           <Gift 
+            isZh={this.props.isZh}
             caishen={this.props.caishen}
             address={this.props.address}
             gift={gift} />

@@ -57,26 +57,26 @@ export default class EthAmountInput extends Input{
 
   genErrorMsg = amount => {
     if (amount == null || amount.trim().length == 0){
-      return "Enter a value.";
+      return this.props.isZh ? "请输入数字" : "Enter a value.";
     }
 
     // Reject hex values
     if (amount.toString().startsWith("0x")){
-      return "Enter a valid number.";
+      return this.props.isZh ? "请输入有效数字" : "Enter a valid number.";
     }
 
     try{
       web3.fromDecimal(amount);
     }
     catch (err){
-      return "Enter a valid number.";
+      return this.props.isZh ? "请输入有效数字" : "Enter a valid number.";
     }
 
     if (amount <= 0){
-      return "Enter a positive value.";
+      return this.props.isZh ? "请输入正数" : "Enter a positive value.";
     }
     else if (this.lessThanMax(amount)){
-      return "You don't have enough ETH.";
+      return this.props.isZh ? "您的以太币余额不足" : "You don't have enough ETH.";
     }
   }
 }

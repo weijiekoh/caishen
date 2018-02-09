@@ -5,7 +5,11 @@ export default class Web3Enabled extends Component{
   renderAccountInfo = () => {
     return(
       <div class="account_info">
-        <p>Your address: <pre>{this.props.address}</pre></p>
+        {this.props.isZh ?
+          <p>您的以太币地址: <pre>{this.props.address}</pre></p>
+          :
+          <p>Your address: <pre>{this.props.address}</pre></p>
+        }
         <p>Your balance: <pre>{web3.fromWei(this.props.balance, "ether").toString()}</pre> ETH</p>
       </div>
     );
@@ -13,7 +17,13 @@ export default class Web3Enabled extends Component{
 
 
   renderPlsConnect = () => {
-      return <p>Use MetaMask to connect to the main Ethereum network.</p>
+    return (
+      <div class="textbox">
+        <div class="textbox_inner">
+          <p>Use MetaMask to connect to the main Ethereum network.</p>
+        </div>
+      </div>
+    );
   }
 
 
@@ -28,11 +38,7 @@ export default class Web3Enabled extends Component{
       return this.renderUnlockedWeb3();
     }
     else{
-      return (
-        <p>
-          Please ensure that MetaMask is connected to the Ethereum network.
-        </p>
-      );
+      return this.renderPlsConnect();
     }
   }
 }
