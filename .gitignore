@@ -1,5 +1,4 @@
 node_modules/
-web/project/static/*
 truffle.js
 ./truffle.js
 
