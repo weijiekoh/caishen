@@ -23,8 +23,5 @@ def index(request):
     return render(
             request,
             "app/index.html",
-            {
-                "DEBUG": settings.DEBUG,
-                "LANG": lang
-            }
+            {"DEBUG": settings.DEBUG, "LANG": lang}
     )
