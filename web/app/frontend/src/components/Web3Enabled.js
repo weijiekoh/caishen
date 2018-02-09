@@ -2,17 +2,22 @@ import { h, Component } from "preact"
 
 
 export default class Web3Enabled extends Component{
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  }
+
+
   renderAccountInfo = () => {
     return(
       <div class="account_info">
         {this.props.isZh ?
-          <p>您的以太币地址: <pre>{this.props.address}</pre></p>
+          <p>您的以太币地址： <pre>{this.props.address}</pre></p>
           :
           <p>Your address: <pre>{this.props.address}</pre></p>
         }
 
         {this.props.isZh ?
-          <p>您的以太币余额 <pre>{web3.fromWei(this.props.balance, "ether").toString()}</pre> ETH</p>
+          <p>您的以太币余额： <pre>{web3.fromWei(this.props.balance, "ether").toString()}</pre> ETH</p>
           :
           <p>Your balance: <pre>{web3.fromWei(this.props.balance, "ether").toString()}</pre> ETH</p>
         }

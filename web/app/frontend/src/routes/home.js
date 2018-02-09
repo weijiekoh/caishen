@@ -4,6 +4,11 @@ import About from "./about.js";
 
 
 export default class Home extends Component{
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  }
+
+
   render() {
     return (
       <div class="home">
@@ -33,16 +38,13 @@ export default class Home extends Component{
               {this.props.isZh ?
                 <div class="pure-u-1">
                   <p>
-                    这个农历新年, 用财<strong>神给</strong>您的亲朋好友赠送以太币红包！
+                    这个农历新年, 用<strong>财神</strong>给您的亲朋好友赠送以太币红包！
                   </p>
                   <p>
-                    财神红包如时间胶囊，接
-                    受人只有在指定日期之后才可以领取赠送的以太币金额。
+                    财神红包如时间胶囊，接受人只有在指定日期之后才可以领取赠送的以太币金额。
                   </p>
                   <p>
-                    例如，您赠送给他人一个以太币，并将领取日期设定为
-                    2020年1月1日。那么，该接受人只有在2020年1月1日之
-                    后才可以领取所收到的一个以太币。
+                    例如，您赠送给他人一个以太币，并将领取日期设定为2020年1月1日。那么，该接受人只有在2020年1月1日之后才可以领取所收到的一个以太币。
                   </p>
                 </div>
                   :
@@ -97,8 +99,7 @@ export default class Home extends Component{
                       </li>
                       <li>
                         认真阅读<strong>财神</strong> <a target="_blank"
-                          href="/about">FAQ</a>。若您忘记以太钱包密码，
-                        输入错误地址或者设定错误领取日期，我们将无法为您提供帮助。
+                          href="/about">FAQ</a>。若您忘记以太钱包密码，输入错误地址或者设定错误领取日期，我们将无法为您提供帮助。
                       </li>
                     </ul>
                   </p>
@@ -138,25 +139,20 @@ export default class Home extends Component{
 
               <div class="terms pure-u-1">
                 {this.props.isZh ?
-                    <h2>附加条件：</h2>
+                    <h2>附加条件</h2>
                     :
                     <h2>Terms and conditions</h2>
                 }
                 {this.props.isZh ?
                     <div>
                       <p>
-                        <strong>财神</strong>科技使用的是以太坊区块链的智能合约技
-                        术。用户可以将一定数 额的以太币用财神红包的形式赠出，并在
-                        指定日期之后领取。
+                        <strong>财神</strong> 科技使用的是以太坊区块链的智能合约技术。用户可以将一定数额的以太币用财神红包的形式赠出，并在指定日期之后领取。
                       </p>
                       <p>
-                        <strong>财神</strong>不是金融机构，亦非支付平台，不能为您
-                        保管或处理赠出的财物。
+                        <strong>财神</strong>不是金融机构，亦非支付平台，不能为您保管或处理赠出的财物。
                       </p>
                       <p>
-                        综上，<strong>财神</strong>无法保障您赠出财物之长期合法
-                        性以及财产安全。然而，我们可以做到的是为您
-                        智能合约的内容。
+                        综上，<strong>财神</strong>无法保障您赠出财物之长期合法性以及财产安全。然而，我们可以做到的是为您量身定做智能合约的内容。
                       </p>
                     </div>
                     :
@@ -177,8 +173,7 @@ export default class Home extends Component{
                       <p>
                         As such, CaiShen will not and cannot be responsible for the long term
                         viability of your funds or the eventual security of your funds. We
-                        are and can only be responsible for the design of the deposit of
-                        the Ethereum funds and the design of the smart contract.
+                        are and can only be responsible for the design of the smart contract.
                       </p>
                     </div>
                 }

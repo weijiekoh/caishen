@@ -1,6 +1,10 @@
 import { h, Component } from 'preact'
 
 export default class About extends Component{
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  }
+
   static renderFeeTable = isZh => {
     if (isZh){
       return (
@@ -26,6 +30,7 @@ export default class About extends Component{
         </div>
       );
     }
+
 
     return (
       <div>

@@ -3,6 +3,8 @@ import Input from "./Input.js";
 
 import Flatpickr from 'react-flatpickr'
 import "flatpickr/dist/themes/airbnb.css"
+const Chinese = require("flatpickr/dist/l10n/zh.js").default.zh;
+const English = require("flatpickr/dist/l10n/default.js").default;
 
 
 export default class DateInput extends Component{
@@ -67,6 +69,8 @@ export default class DateInput extends Component{
     minDate.setMilliseconds(0);
     minDate.setDate(minDate.getDate() + 1);
 
+    const locale = this.props.isZh ? Chinese : English;
+
     return (
       <div class="input_component">
         <label>
@@ -78,6 +82,8 @@ export default class DateInput extends Component{
             onChange={this.handleChange}
             value={this.state.value}
             options={{
+              locale: locale,
+              dateFormat: "Y-m-d",
               animate: false,
               inline: true,
               enableTime: false,
