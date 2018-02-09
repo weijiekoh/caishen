@@ -49,9 +49,12 @@ export default class Home extends Component{
                 <div class="pure-u-1">
                   <p>
                     This Lunar New Year, use CaiShen to give your loved ones an
-                    Ethereum red packet that which can only be opened after a
-                    specified date. Like a time capsule, the recipient can only
-                    withdraw the cryptocurrency funds after the opening date.
+                    smart red packet.
+                  </p>
+                  <p>
+                    Smart red packets can only be opened after a specified
+                    date. Like a time capsule, the recipient can only withdraw
+                    the Ethereum funds after the opening date.
                   </p>
                   <p>
                     For example, if you give a red packet of 1 ETH and set the 
@@ -60,15 +63,6 @@ export default class Home extends Component{
                   </p>
                 </div>
               }
-
-              <div class="pricing pure-u-1">
-                {this.props.isZh ?
-                    <h2>手续费用</h2>
-                    :
-                    <h2>Pricing</h2>
-                }
-                {About.renderFeeTable(this.props.isZh)}
-              </div>
 
               <div class="requirements pure-u-1">
                 {this.props.isZh ?
@@ -132,6 +126,16 @@ export default class Home extends Component{
                   </p>
                 }
               </div>
+
+              <div class="pricing pure-u-1">
+                {this.props.isZh ?
+                    <h2>手续费用</h2>
+                    :
+                    <h2>Pricing</h2>
+                }
+                {About.renderFeeTable(this.props.isZh)}
+              </div>
+
               <div class="terms pure-u-1">
                 {this.props.isZh ?
                     <h2>附加条件：</h2>
