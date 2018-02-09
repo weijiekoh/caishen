@@ -5,12 +5,21 @@
 
     .gift{
         padding:1em;
+        border-radius:2em;
+        margin-bottom:1em;
+        padding:1em;
+
         &:nth-of-type(even){
-            background-color:@ui-02;
+            background-color:@alternate_gift;
         }
 
         pre{
             display:initial;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
         }
 
         .advanced_opt_link{

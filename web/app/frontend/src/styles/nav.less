@@ -13,25 +13,30 @@
 
     .logo {
         float: left;
+        display:none;
         img{
+            margin-top:1em;
+            margin-left:1em;
             height:200px;
-            margin-left:auto;
-            margin-right:auto;
+        }
+
+        @media (min-width: @large_screen_width) {
+            display:block;
         }
     }
 
     .desktop{
         float: right;
-        width:15%;
-        min-width:260px;
+        width:20%;
+        min-width:285px;
 
         a{
             float:left;
-            margin-left:2em;
+            margin-left:1.5em;
             display:block;
 
             img{
-                height:230px;
+                height:190px;
             }
 
             &:first-of-type{

@@ -1,4 +1,6 @@
 .give{
+    margin-top:3em;
+
     pre{
         display:inline;
     }
@@ -7,9 +9,21 @@
         display: initial;
     }
 
+    .input_component{
+        margin-bottom:0 !important;
+        @media (max-width: @small_screen_width) {
+            width:94%;
+            margin-right:0;
+        }
+    }
+
     .date_picker{
         height:400px;
         margin-top:1em;
+        @media (max-width: @small_screen_width) {
+            height:270px;
+            margin-top:0em;
+        }
 
         input{
             background-color:initial;
@@ -21,6 +35,9 @@
             box-shadow:none;
             padding:0;
             cursor:auto;
+            @media (max-width: @small_screen_width) {
+                width:100%;
+            }
         }
 
         .flatpickr-month{
@@ -39,10 +56,17 @@
     font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
     margin-bottom:1em;
 
-    -webkit-transform:scale(1.15, 1.15);
-    transform:scale(1.15, 1.15);
+    @scale_factor: 1.15;
+    -webkit-transform:scale(@scale_factor, @scale_factor);
+    transform:scale(@scale_factor, @scale_factor);
     -webkit-transform-origin: 0% 0%;
     transform-origin: 0% 0%;
+
+    @media (max-width: @small_screen_width) {
+        @scale_factor: 0.8;
+        -webkit-transform:scale(@scale_factor, @scale_factor);
+        transform:scale(@scale_factor, @scale_factor);
+    }
 
     .flatpickr-current-month input.cur-year{
         width:200px !important;

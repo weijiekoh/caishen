@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="105.88976"
-     inkscape:cy="777.2335"
+     inkscape:cx="414.15783"
+     inkscape:cy="466.12719"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -52,157 +52,136 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <g
-       id="g1162"
+    <rect
+       style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332"
+       x="82.503029"
+       y="137.00969"
+       width="9.7895832"
+       height="41.275002"
+       id="rect2-5-4-4"
+       inkscape:export-filename="/home/di/dajidali/web/app/frontend/images/about_btn.png"
        inkscape:export-xdpi="207.57001"
-       inkscape:export-ydpi="207.57001">
-      <rect
-         inkscape:export-ydpi="207.57001"
-         inkscape:export-xdpi="207.57001"
-         inkscape:export-filename="/home/di/dajidali/web/app/frontend/images/about_btn.png"
-         id="rect2"
-         height="41.275002"
-         width="9.7895832"
-         y="137.00969"
-         x="82.503616"
-         style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332" />
-      <text
-         id="text904"
-         y="140.26527"
-         x="87.397133"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.61458302px;line-height:0%;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0.33072916px;word-spacing:0px;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'VAG Round';-inkscape-font-specification:'VAG Round';writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;stroke-width:0.26458332px"
-           y="87.397125"
-           x="140.26527"
-           id="tspan902"
-           sodipodi:role="line">ABOUT</tspan></text>
-    </g>
-    <g
-       id="g1157"
+       inkscape:export-ydpi="207.57001" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.61458302px;line-height:0%;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0.33072916px;word-spacing:0px;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="87.397133"
+       y="140.26527"
+       id="text904"><tspan
+         sodipodi:role="line"
+         id="tspan902"
+         x="136.47359"
+         y="91.18882"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'VAG Round';-inkscape-font-specification:'VAG Round';writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;stroke-width:0.26458332px">ABOUT</tspan></text>
+    <rect
+       style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332"
+       x="100.43697"
+       y="137.00969"
+       width="9.7895832"
+       height="41.275002"
+       id="rect2-5-4-5"
+       inkscape:export-filename="/home/di/dajidali/web/app/frontend/images/about_btn.png"
        inkscape:export-xdpi="207.57001"
-       inkscape:export-ydpi="207.57001">
-      <rect
-         id="rect2-3"
-         height="41.275002"
-         width="9.7895832"
-         y="137.00969"
-         x="100.44492"
-         style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332" />
-      <text
-         id="text908"
-         y="140.09016"
-         x="105.37939"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.61458302px;line-height:0%;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0.33072916px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:'Tsukushi A Round Gothic';-inkscape-font-specification:'Tsukushi A Round Gothic';writing-mode:vertical-lr;fill:#ffffff;stroke-width:0.26458332px"
-           y="105.37938"
-           x="140.09018"
-           id="tspan906"
-           sodipodi:role="line"><tspan
-   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Tsukushi A Round Gothic';-inkscape-font-specification:'Tsukushi A Round Gothic Bold'"
-   id="tspan1124">了解</tspan> </tspan></text>
-    </g>
-    <g
-       id="g1182"
+       inkscape:export-ydpi="207.57001" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.61458302px;line-height:0%;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0.33072916px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="105.37939"
+       y="140.09018"
+       id="text908"><tspan
+         sodipodi:role="line"
+         id="tspan906"
+         x="136.29849"
+         y="109.17107"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:'Tsukushi A Round Gothic';-inkscape-font-specification:'Tsukushi A Round Gothic';writing-mode:vertical-lr;fill:#ffffff;stroke-width:0.26458332px"><tspan
+   id="tspan1124"
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Tsukushi A Round Gothic';-inkscape-font-specification:'Tsukushi A Round Gothic Bold'">了解</tspan> </tspan></text>
+    <rect
+       style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332"
+       x="23.377544"
+       y="137.00969"
+       width="9.7895832"
+       height="41.275002"
+       id="rect2-5"
+       inkscape:export-filename="/home/di/dajidali/web/app/frontend/images/about_btn.png"
        inkscape:export-xdpi="207.57001"
-       inkscape:export-ydpi="207.57001">
-      <rect
-         inkscape:export-ydpi="207.57001"
-         inkscape:export-xdpi="207.57001"
-         inkscape:export-filename="/home/di/dajidali/web/app/frontend/images/about_btn.png"
-         id="rect2-5"
-         height="41.275002"
-         width="9.7895832"
-         y="137.00969"
-         x="23.406544"
-         style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332" />
-      <text
-         id="text904-3"
-         y="140.28319"
-         x="28.273026"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.61458349px;line-height:0%;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0.33072916px;word-spacing:0px;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'VAG Round';-inkscape-font-specification:'VAG Round';writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;stroke-width:0.26458332px"
-           y="28.273022"
-           x="140.28319"
-           id="tspan902-5"
-           sodipodi:role="line">GIVE</tspan></text>
-    </g>
-    <g
-       id="g1172"
+       inkscape:export-ydpi="207.57001" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.61458349px;line-height:0%;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0.33072916px;word-spacing:0px;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="28.273026"
+       y="140.28319"
+       id="text904-3"><tspan
+         sodipodi:role="line"
+         id="tspan902-5"
+         x="140.28319"
+         y="28.273026"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'VAG Round';-inkscape-font-specification:'VAG Round';writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;stroke-width:0.26458332px">GIVE</tspan></text>
+    <rect
+       style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332"
+       x="50.679691"
+       y="137.00969"
+       width="9.7895832"
+       height="41.275002"
+       id="rect2-5-4-7"
+       inkscape:export-filename="/home/di/dajidali/web/app/frontend/images/about_btn.png"
        inkscape:export-xdpi="207.57001"
-       inkscape:export-ydpi="207.57001">
-      <rect
-         inkscape:export-ydpi="207.57001"
-         inkscape:export-xdpi="207.57001"
-         inkscape:export-filename="/home/di/dajidali/web/app/frontend/images/about_btn.png"
-         id="rect2-5-6"
-         height="41.275002"
-         width="9.7895832"
-         y="137.00969"
-         x="50.639771"
-         style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332" />
-      <text
-         id="text904-3-2"
-         y="140.18672"
-         x="55.534519"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.61458349px;line-height:0%;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0.33072916px;word-spacing:0px;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'VAG Round';-inkscape-font-specification:'VAG Round';writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;stroke-width:0.26458332px"
-           y="55.286064"
-           x="140.43518"
-           id="tspan902-5-9"
-           sodipodi:role="line">REDEEM</tspan></text>
-    </g>
-    <g
-       id="g1167"
-       inkscape:export-xdpi="213.33324"
-       inkscape:export-ydpi="213.33324">
-      <rect
-         id="rect2-1"
-         height="41.275002"
-         width="9.5249996"
-         y="137.00969"
-         x="65.144737"
-         style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332" />
-      <text
-         style="font-size:3.17499995px;stroke-width:0.26458332"
-         id="text8"
+       inkscape:export-ydpi="207.57001" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.61458349px;line-height:0%;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0.33072916px;word-spacing:0px;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="55.534519"
+       y="140.18672"
+       id="text904-3-2"><tspan
+         sodipodi:role="line"
+         id="tspan902-5-9"
+         x="136.39505"
+         y="59.326195"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:'VAG Round';-inkscape-font-specification:'VAG Round';writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;stroke-width:0.26458332px">REDEEM</tspan></text>
+    <rect
+       style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332"
+       x="64.993401"
+       y="137.00969"
+       width="9.7895832"
+       height="41.275002"
+       id="rect2-5-4-8"
+       inkscape:export-filename="/home/di/dajidali/web/app/frontend/images/about_btn.png"
+       inkscape:export-xdpi="207.57001"
+       inkscape:export-ydpi="207.57001" />
+    <text
+       y="140.46483"
+       x="69.853264"
+       id="text8"
+       style="font-size:3.17499995px;stroke-width:0.26458332">
+      <tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.3499999px;font-family:'Tsukushi A Round Gothic';-inkscape-font-specification:'Tsukushi A Round Gothic Bold';writing-mode:tb-rl;text-orientation:upright;fill:#ffffff;stroke-width:0.26458332"
          x="69.853264"
-         y="140.46481">
-        <tspan
-           id="tspan4"
-           font-size="20.5795"
-           y="140.46481"
-           x="69.853264"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.3499999px;font-family:'Tsukushi A Round Gothic';-inkscape-font-specification:'Tsukushi A Round Gothic Bold';writing-mode:tb-rl;text-orientation:upright;fill:#ffffff;stroke-width:0.26458332">贖回</tspan>
-      </text>
-    </g>
-    <g
-       id="g1177"
-       inkscape:export-xdpi="213.33342"
-       inkscape:export-ydpi="213.33342">
-      <rect
-         id="rect2-2"
-         height="41.275002"
-         width="9.5249996"
-         y="137.00969"
-         x="35.996105"
-         style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332" />
-      <text
-         style="font-size:3.17499995px;stroke-width:0.26458332"
-         id="text8-7"
+         y="140.46483"
+         font-size="20.5795"
+         id="tspan4">贖回</tspan>
+    </text>
+    <rect
+       style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332"
+       x="35.838417"
+       y="137.00969"
+       width="9.7895832"
+       height="41.275002"
+       id="rect2-5-4"
+       inkscape:export-filename="/home/di/dajidali/web/app/frontend/images/about_btn.png"
+       inkscape:export-xdpi="207.57001"
+       inkscape:export-ydpi="207.57001" />
+    <text
+       y="140.27432"
+       x="40.761784"
+       id="text8-7"
+       style="font-size:3.17499995px;stroke-width:0.26458332">
+      <tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.3499999px;font-family:'Tsukushi A Round Gothic';-inkscape-font-specification:'Tsukushi A Round Gothic Bold';writing-mode:tb-rl;text-orientation:upright;fill:#ffffff;stroke-width:0.26458332"
          x="40.761784"
-         y="140.27432">
-        <tspan
-           id="tspan4-0"
-           font-size="20.5795"
-           y="140.27432"
-           x="40.761784"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.3499999px;font-family:'Tsukushi A Round Gothic';-inkscape-font-specification:'Tsukushi A Round Gothic Bold';writing-mode:tb-rl;text-orientation:upright;fill:#ffffff;stroke-width:0.26458332">贈送</tspan>
-      </text>
-    </g>
+         y="140.27432"
+         font-size="20.5795"
+         id="tspan4-0">贈送</tspan>
+    </text>
     <flowRoot
        xml:space="preserve"
        id="flowRoot1145"
@@ -303,9 +282,9 @@
     </g>
     <path
        inkscape:connector-curvature="0"
-       d="m 152.071,137.11607 -15.06869,15.39642 -15.06869,-15.39642 -4.58618,4.58618 19.65487,19.98248 19.65487,-19.98248 z"
+       d="m 255.50431,118.67447 -15.06869,15.39642 -15.06869,-15.39642 -4.58618,4.58618 19.65487,19.98248 19.65487,-19.98248 z"
        id="path2"
-       style="stroke-width:3.27581215;fill:#8c9ba5;fill-opacity:1"
+       style="fill:#8c9ba5;fill-opacity:1;stroke-width:3.27581215"
        inkscape:export-xdpi="64.620003"
        inkscape:export-ydpi="64.620003" />
     <path
@@ -454,5 +433,56 @@
          d="m -80.406557,66.050236 c 0.008,-7.67139 6.24766,-13.89356 13.91551,-13.87705 7.6794,0.0163 13.86712,6.24012 13.84997,13.93057 -0.0163,7.62523 -6.23051,13.84083 -13.83266,13.83619 -7.71081,-0.004 -13.94067,-6.21529 -13.93282,-13.88971 z m 13.88635,-10.11099 c -5.56752,-0.006 -10.10314,4.51158 -10.1174,10.07653 -0.0141,5.6164 4.51494,10.16115 10.12188,10.15682 5.58659,-0.004 10.11404,-4.52263 10.12494,-10.1049 0.0104,-5.58514 -4.52761,-10.12317 -10.12942,-10.12845 z"
          id="path33-5" />
     </g>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#fde4e3;fill-opacity:0.25098041;fill-rule:nonzero;stroke:#ff850b;stroke-width:2;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect1466"
+       width="64.679222"
+       height="63.075607"
+       x="122.94398"
+       y="235.528" />
+    <rect
+       style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332"
+       x="118.35111"
+       y="137.00969"
+       width="9.7895832"
+       height="41.275002"
+       id="rect2-5-4-0"
+       inkscape:export-filename="/home/di/dajidali/web/app/frontend/images/about_btn.png"
+       inkscape:export-xdpi="207.57001"
+       inkscape:export-ydpi="207.57001" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.61458302px;line-height:0%;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0.33072916px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="123.25225"
+       y="140.41402"
+       id="text908-6"><tspan
+         sodipodi:role="line"
+         id="tspan906-1"
+         x="136.62234"
+         y="127.04393"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.3499999px;font-family:'Tsukushi A Round Gothic';-inkscape-font-specification:'Tsukushi A Round Gothic Bold';writing-mode:vertical-lr;fill:#ffffff;stroke-width:0.26458332px">中文</tspan></text>
+    <rect
+       style="clip-rule:evenodd;fill:#f4b06c;fill-rule:evenodd;stroke-width:0.26458332"
+       x="140.50055"
+       y="137.00969"
+       width="9.7895832"
+       height="41.275002"
+       id="rect2-5-4-3"
+       inkscape:export-filename="/home/di/dajidali/web/app/frontend/images/about_btn.png"
+       inkscape:export-xdpi="207.57001"
+       inkscape:export-ydpi="207.57001" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.61458349px;line-height:0%;font-family:Lato;-inkscape-font-specification:Lato;letter-spacing:0.33072916px;word-spacing:0px;writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="145.3959"
+       y="140.30646"
+       id="text904-3-2-1"
+       inkscape:export-xdpi="207.57001"
+       inkscape:export-ydpi="207.57001"><tspan
+         sodipodi:role="line"
+         id="tspan902-5-9-9"
+         x="136.51477"
+         y="149.18759"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611107px;font-family:'VAG Round';-inkscape-font-specification:'VAG Round';writing-mode:vertical-lr;text-orientation:upright;fill:#ffffff;stroke-width:0.26458332px">ENGLISH</tspan></text>
   </g>
 </svg>

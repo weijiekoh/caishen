@@ -1,7 +1,6 @@
 import { h, Component } from 'preact'
 import { route } from "preact-router"; 
 import About from "./about.js";
-import Nav from "../components/Nav.js";
 
 
 export default class Home extends Component{
@@ -9,9 +8,6 @@ export default class Home extends Component{
     return (
       <div class="home">
         <div class="landing">
-          <Nav 
-            isZh={this.props.isZh}
-            isHome={true} />
 
           <div class="logo">
             <a href="#main">

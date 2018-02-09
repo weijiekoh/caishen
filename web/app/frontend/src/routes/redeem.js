@@ -15,17 +15,21 @@ export default class Redeem extends Web3Enabled{
 
     return (
       <div class="redeem pure-form pure-form-stacked">
-        <h1>Redeem your red packets</h1>
+        <div class="textbox">
+          <div class="textbox_inner">
+            <h1>Redeem your red packets</h1>
 
-        {this.renderAccountInfo()}
+            {this.renderAccountInfo()}
 
-        <hr />
+            <hr />
 
-        <GiftSelect 
-          renderNoWeb3={this.renderNoWeb3}
-          caishen={this.props.caishen}
-          address={this.props.address} />
+            <GiftSelect 
+              renderNoWeb3={this.renderNoWeb3}
+              caishen={this.props.caishen}
+              address={this.props.address} />
 
+          </div>
+        </div>
       </div>
     )
   }

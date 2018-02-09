@@ -200,89 +200,93 @@ export default class Give extends Web3Enabled{
 
     return (
       <div class="give pure-form pure-form-stacked">
-        <h1>Give a smart red packet</h1>
+          <div class="textbox">
+            <div class="textbox_inner">
+              <h1>Give a smart red packet</h1>
+              {this.renderAccountInfo()}
 
-        {this.renderAccountInfo()}
+              <hr />
 
-        <hr />
+              {this.state.transactions && this.state.transactions.length > 0 &&
+                this.renderTransactions(this.state.transactions)}
 
-        {this.state.transactions && this.state.transactions.length > 0 &&
-          this.renderTransactions(this.state.transactions)}
+              {this.state.showForm &&
+                <fieldset>
+                  <EthAmountInput 
+                    name="amount"
+                    changeCounter={this.state.changeCounter}
+                    label="Enter the amount of ETH to give."
+                    handleChange={this.handleAmountChange}
+                    showErrorMsgs={this.state.showErrorMsgs}
+                    handleEnterKeyDown={this.handleGiveBtnClick}
+                    maximum={this.props.balance}
+                    showFee={true}
+                    smallerInput={true}
+                  />
 
-        {this.state.showForm &&
-          <fieldset>
-            <EthAmountInput 
-              name="amount"
-              changeCounter={this.state.changeCounter}
-              label="Enter the amount of ETH to give."
-              handleChange={this.handleAmountChange}
-              showErrorMsgs={this.state.showErrorMsgs}
-              handleEnterKeyDown={this.handleGiveBtnClick}
-              maximum={this.props.balance}
-              showFee={true}
-              smallerInput={true}
-            />
+                  <EthAccountInput
+                    name="recipient"
+                    changeCounter={this.state.changeCounter}
+                    label={"Enter the recipient's ETH address."}
+                    handleChange={this.handleRecipientChange}
+                    handleEnterKeyDown={this.handleGiveBtnClick}
+                    showErrorMsgs={this.state.showErrorMsgs}
+                    notThisAddress={this.props.address}
+                    notThisAddressMsg={"The recipient address must not be your current address."}
+                    smallerInput={false}
+                  />
 
-            <EthAccountInput
-              name="recipient"
-              changeCounter={this.state.changeCounter}
-              label={"Enter the recipient's ETH address."}
-              handleChange={this.handleRecipientChange}
-              handleEnterKeyDown={this.handleGiveBtnClick}
-              showErrorMsgs={this.state.showErrorMsgs}
-              notThisAddress={this.props.address}
-              notThisAddressMsg={"The recipient address must not be your current address."}
-              smallerInput={false}
-            />
+                  <ExpiryDateInput
+                    name="expiry"
+                    changeCounter={this.state.changeCounter}
+                    label={dateLabel}
+                    handleChange={this.handleExpiryChange}
+                    showErrorMsgs={this.state.showErrorMsgs}
+                  />
 
-            <ExpiryDateInput
-              name="expiry"
-              changeCounter={this.state.changeCounter}
-              label={dateLabel}
-              handleChange={this.handleExpiryChange}
-              showErrorMsgs={this.state.showErrorMsgs}
-            />
+                  <ShortTextInput
+                    name="giver_name"
+                    changeCounter={this.state.changeCounter}
+                    label={"Optional: Enter your name."}
+                    handleChange={this.handleGiverNameChange}
+                    handleEnterKeyDown={this.handleGiverNameChange}
+                    showErrorMsgs={this.state.showErrorMsgs}
+                    maxLength={60}
+                  />
 
-            <ShortTextInput
-              name="giver_name"
-              changeCounter={this.state.changeCounter}
-              label={"Optional: Enter your name."}
-              handleChange={this.handleGiverNameChange}
-              handleEnterKeyDown={this.handleGiverNameChange}
-              showErrorMsgs={this.state.showErrorMsgs}
-              maxLength={60}
-            />
+                  <LongTextInput
+                    name="giver_msg"
+                    changeCounter={this.state.changeCounter}
+                    label={"Optional: Enter a short message for the recipient."}
+                    handleChange={this.handleMessageChange}
+                    handleEnterKeyDown={this.handleMessageChange}
+                    showErrorMsgs={this.state.showErrorMsgs}
+                    maxLength={140}
+                  />
 
-            <LongTextInput
-              name="giver_msg"
-              changeCounter={this.state.changeCounter}
-              label={"Optional: Enter a short message for the recipient."}
-              handleChange={this.handleMessageChange}
-              handleEnterKeyDown={this.handleMessageChange}
-              showErrorMsgs={this.state.showErrorMsgs}
-              maxLength={140}
-            />
+                  <p>
+                    <em>
+                      Please note that the information you enter above will be stored
+                      on the blockchain and can be seen by anyone.
+                    </em>
+                  </p>
 
-            <p>
-              <em>
-                Please note that the information you enter above will be stored
-                on the blockchain and can be seen by anyone.
-              </em>
-            </p>
+                </fieldset>
+              }
 
-          </fieldset>
-        }
+              {this.state.btnClicked && <PendingTransaction /> }
 
-        {this.state.btnClicked && <PendingTransaction /> }
+              {this.state.showForm &&
+                <button 
+                  onClick={this.handleGiveBtnClick}
+                  class="pure-button button-success">
+                  Give
+                </button>
+              }
 
-        {this.state.showForm &&
-          <button 
-            onClick={this.handleGiveBtnClick}
-            class="pure-button button-success">
-            Give
-          </button>
-        }
+            </div>
+          </div>
       </div>
-    )
+    );
   }
 }

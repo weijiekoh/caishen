@@ -38,11 +38,11 @@ export default class App extends Component {
           }
         }
 
-        this.state = { web3Status: wStatus, }
+        this.state = { web3Status: wStatus, isHome: true,}
       });
     }
     else{
-      this.state = { web3Status: wStatus, }
+      this.state = { web3Status: wStatus, isHome: true,}
     }
   }
 
@@ -63,6 +63,20 @@ export default class App extends Component {
         this.setState({ caishen: instance });
       });
     }
+
+    if (this.currentUrl === "/" || window.location.pathname === "/"){
+      this.setState({
+        isHome: true
+      });
+    }
+
+    const isZh = window.document.getElementsByTagName("html")[0]
+                   .getAttribute("lang") === "zh" ||
+                 window.location.hash === "#zh";
+    const lang = isZh ? "zh" : "en";
+    console.log(lang);
+    this.setState({ lang });
+
   }
 
 
@@ -102,6 +116,16 @@ export default class App extends Component {
 	 */
 	handleRoute = e => {
 		this.currentUrl = e.url;
+    if (this.currentUrl === "/"){
+      this.setState({
+        isHome: true,
+      });
+    }
+    else{
+      this.setState({
+        isHome: false,
+      });
+    }
 
     // Update Google Analytics
     if (typeof window !== "undefined"){
@@ -134,18 +158,32 @@ export default class App extends Component {
   }
 
 
+  toggleLang = () => {
+    let lang = this.state.lang;
+    if (lang === "zh"){
+      lang = "en";
+    }
+    else{
+      lang = "zh";
+    }
+    this.setState({ lang });
+  }
+
   render() {
     let footerTopMargin = 300;
     if (window.height > document.body.scrollHeight){
       footerTopMargin = window.height - document.body.scrollHeight;
     }
 
-    const isZh = window.document.getElementsByTagName("html")[0]
-                   .getAttribute("lang") === "zh" ||
-                 window.location.hash === "#zh";
+    const isZh = this.state.lang === "zh";
 
     return (
       <div>
+        <Nav 
+          toggleLang={this.toggleLang}
+          isZh={isZh}
+          isHome={this.state.isHome} />
+
         <Router onChange={this.handleRoute}>
           <Home 
             isZh={isZh}

@@ -1,6 +1,6 @@
 .home{
     .landing{
-        height:100vh;
+        height:80vh;
         .chevron, .logo{
             user-select:none;
             -webkit-touch-callout: none;
@@ -9,6 +9,7 @@
             -moz-user-select: none;
             -ms-user-select: none;
         }
+
         .logo{
             margin-top:30vh;
             @media (max-width: @medium_screen_width) {
@@ -39,91 +40,6 @@
     }
 
     .home_content{
-        .textbox{
-            background-color:@textbox_bg;
-            min-height:90vh;
-            border-radius:2em;
-            margin:1em;
-            padding:2em;
-            text-align:left;
-            color:black;
-
-            @media (min-width: @medium_screen_width) {
-                max-width:@medium_screen_width;
-                margin:auto;
-            }
-
-            @media (max-width: @small_screen_width) {
-                padding:0.75em;
-                margin:10px;
-            }
-
-            .textbox_inner{
-                background-color:@textbox_bg_inner;
-                padding:2em;
-                border:solid 3px white;
-                border-radius:2em;
-
-                @media (max-width: @small_screen_width) {
-                    padding:1em;
-                }
-
-                .concept{
-                    text-align:center;
-                    img{
-                        @media (max-width: @medium_screen_width) {
-                            width:70%;
-                            /*margin-left:15%;*/
-                            /*margin-right:auto;*/
-                        }
-                    }
-                }
-            }
-        }
+        margin-top:3em;
     }
 }
-
-    /*.content{*/
-        /*position:absolute;*/
-        /*margin-top:1em;*/
-        /*margin-bottom:1em;*/
-        /*top:100vh;*/
-        /*left:0;*/
-        /*min-height:90vh;*/
-        /*border-radius:2em;*/
-        /*width:100%;*/
-
-        /*.concept{*/
-            /*user-select:none;*/
-            /*-webkit-touch-callout: none;*/
-            /*-webkit-user-select: none;*/
-            /*-khtml-user-select: none;*/
-            /*-moz-user-select: none;*/
-            /*-ms-user-select: none;*/
-            /*text-align:center;*/
-            /*top:100vh;*/
-            /*padding-top:3em;*/
-            /*margin-bottom:3em;*/
-
-            /*@media (max-width: @medium_screen_width) {*/
-                /*img{*/
-                    /*width:250px;*/
-                /*}*/
-            /*}*/
-        /*}*/
-
-        /*.textbox{*/
-            /*background-color:@textbox_bg;*/
-            /*min-height:90vh;*/
-            /*border-radius:2em;*/
-            /*padding:2em;*/
-
-            /*.textbox_inner{*/
-                /*background-color:@textbox_bg_inner;*/
-                /*padding:2em;*/
-                /*border:solid 3px white;*/
-                /*border-radius:2em;*/
-            /*}*/
-        /*}*/
-    /*}*/
-/*}*/

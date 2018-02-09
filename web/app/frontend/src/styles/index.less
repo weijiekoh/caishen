@@ -62,9 +62,10 @@ li{
 }
 
 hr{
-    color: @brand-01;
-    border-color: @brand-01;
-    background-color: @brand-01;
+    color: @hr;
+    border-color: @hr;
+    background-color: @hr;
+    border-style:solid;
     height:0.3rem;
     width:5rem;
     margin:2em;
@@ -102,6 +103,7 @@ button{
 .error{
     color:@support-01;
 }
+
 .input_component{
     margin-bottom:1em !important;
 
@@ -176,5 +178,46 @@ button{
     textarea{
         width:100%;
         height:200px;
+    }
+}
+
+.textbox{
+    background-color:@textbox_bg;
+    border-radius:2em;
+    margin:1em;
+    padding:2em;
+    text-align:left;
+    color:black;
+
+    @media (min-width: @medium_screen_width) {
+        max-width:@medium_screen_width;
+        margin:auto;
+    }
+
+    @media (max-width: @small_screen_width) {
+        padding:0.75em;
+        margin:10px;
+    }
+
+    .textbox_inner{
+        background-color:@textbox_bg_inner;
+        padding:2em;
+        border:solid 3px white;
+        border-radius:2em;
+
+        @media (max-width: @small_screen_width) {
+            padding:1em;
+        }
+
+        .concept{
+            text-align:center;
+            img{
+                @media (max-width: @medium_screen_width) {
+                    width:70%;
+                    /*margin-left:15%;*/
+                    /*margin-right:auto;*/
+                }
+            }
+        }
     }
 }

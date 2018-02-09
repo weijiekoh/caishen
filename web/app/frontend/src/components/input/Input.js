@@ -52,14 +52,6 @@ export default class Input extends Component{
   }
 
   render() {
-    let inputParentClass = "pure-u-sm-1-1 pure-u-md-3-4";
-    let errorParentClass = "pure-u-sm-1-1 pure-u-md-1-1";
-
-    if (this.props.smallerInput){
-      inputParentClass = "pure-u-sm-1-1 pure-u-md-2-5";
-      errorParentClass = "pure-u-sm-1-1 pure-u-md-3-3";
-    }
-
     const formatFee = fee => {
       let f = fee.toFixed(8);
       while(true) {
@@ -97,6 +89,15 @@ export default class Input extends Component{
         feeLabel = blankFeeLabel;
       }
     }
+
+    let inputParentClass = "pure-u-sm-1-1 pure-u-md-3-4";
+    let errorParentClass = "pure-u-sm-1-1 pure-u-md-1-1";
+
+    if (this.props.smallerInput){
+      inputParentClass = "pure-u-sm-1-1 pure-u-md-2-5";
+      errorParentClass = "pure-u-sm-1-1 pure-u-md-3-3";
+    }
+
 
     return (
       <div class="input_component">
