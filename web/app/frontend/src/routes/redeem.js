@@ -22,8 +22,6 @@ export default class Redeem extends Web3Enabled{
 
             {this.renderAccountInfo()}
 
-            <hr />
-
             <GiftSelect 
               isZh={this.props.isZh}
               renderNoWeb3={this.renderNoWeb3}
