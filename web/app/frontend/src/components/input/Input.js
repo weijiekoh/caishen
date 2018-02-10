@@ -77,13 +77,13 @@ export default class Input extends Component{
           feeLabel = (
             this.props.isZh ?
               <p>
-                手续费： {formatFee(this.fee(this.state.value))} ETH <a target="_blank" href="/about#fees">
-                  （查看费率表）</a>
+                手续费： {formatFee(this.fee(this.state.value))} ETH (<a target="_blank" href="/about#fees">
+                  查看费率表</a>)
               </p>
               :
               <p>
-                Fee: {formatFee(this.fee(this.state.value))} ETH <a target="_blank" href="/about#fees">
-                  (see rates)</a>
+                Fee: {formatFee(this.fee(this.state.value))} ETH (<a target="_blank" href="/about#fees">
+                  see rates</a>)
               </p>
           );
         }
