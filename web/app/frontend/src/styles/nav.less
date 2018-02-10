@@ -10,13 +10,14 @@
     width:100%;
     background:rgba(255, 255, 255, 0);
     height:0;
+    z-index:99999;
 
     .logo {
         float: left;
         display:none;
         z-index:9999;
         a{
-                z-index:9999;
+            z-index:9999;
             img{
                 margin-top:1em;
                 margin-left:1em;
@@ -62,6 +63,7 @@
         }
 
         .mobile{
+            cursor:pointer;
             display:block;
             background:@link_bg;
             float:left;
@@ -73,12 +75,13 @@
             height:25px;
             padding-top:10px;
             padding-bottom:10px;
+
             @media (max-width: @small_screen_width) {
                 height:22px;
                 padding-top:8px;
                 padding-bottom:8px;
             }
-            
+
             a{
                 color:white;
                 margin-left:20px;
@@ -92,6 +95,10 @@
                     font-size:1em;
                 }
             }
+        }
+        
+         .zh a{
+            margin-left:40px;
         }
     }
 }

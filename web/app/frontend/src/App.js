@@ -7,6 +7,7 @@ import Redeem from "./routes/redeem.js";
 import ManualRedeem from "./routes/manual_redeem.js";
 import About from "./routes/about.js";
 import Nav from "./components/Nav.js";
+import ContentBox from "./components/ContentBox.js";
 
 var Web3 = require("web3");
 import contract from 'truffle-contract'
@@ -14,7 +15,7 @@ import CaiShenContract from '../../../../build/contracts/CaiShen.json';
 
 
 export default class App extends Component {
-  web3StatusCodes = { missing: 0, locked: 1, unlocked: 2 }
+  web3StatusCodes = { missing: 0, locked: 1, unlocked: 2, wrongNet: 3 }
 
   constructor(props){
     super(props);
@@ -62,6 +63,10 @@ export default class App extends Component {
         this.caishen = instance;
         window.caishen = instance;
         this.setState({ caishen: instance });
+      }).catch(err => {
+        this.setState({
+          web3Status: this.web3StatusCodes.wrongNet,
+        });
       });
     }
 
@@ -74,9 +79,15 @@ export default class App extends Component {
     const isZh = window.document.getElementsByTagName("html")[0]
                    .getAttribute("lang") === "zh" ||
                  window.location.hash === "#zh";
-    const lang = isZh ? "zh" : "en";
-    this.setState({ lang });
+    let lang = isZh ? "zh" : "en";
 
+    if (typeof sessionStorage !== "undefined" && sessionStorage != null){
+      if (!sessionStorage.getItem("lang") == null){
+        lang = sessionStorage.getItem("lang");
+      }
+    }
+
+    this.setState({ lang });
   }
 
 
@@ -137,31 +148,49 @@ export default class App extends Component {
     }
 	};
 
-  renderNoWeb3 = () => {
-    const isZh = this.state.lang === "zh";
+  renderNoWeb3 = (title, isZh) => {
+    const chromeUrl = "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn";
+    const firefoxUrl = "https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/";
+
     return (
-      <div class="textbox">
-        <div class="textbox_inner">
-          {isZh ?
-              <p>
-                您需要在电脑上使用Chrome或者Firefox浏览器，并安装
-                <a target="_blank" href="https://metamask.io/">
-                  MetaMask digital wallet
-                </a>。
-              </p>
+      <ContentBox isZh={isZh}>
+        {title}
+
+        {isZh ?
+            <p>
+              您需要在电脑上使用Chrome或者Firefox浏览器，并安装
+              <a target="_blank" href="https://metamask.io/">
+                MetaMask digital wallet
+              </a>。
+            </p>
             :
-            <p>Please use Chrome or Firefox on a 
+            <p>
+              Please use Chrome or Firefox on a 
               computer with the <a target="_blank" href="https://metamask.io/">MetaMask
-                digital wallet</a> installed.</p>
-          }
-        </div>
-      </div>
+                digital wallet</a> installed.
+            </p>
+        }
+
+        <p>
+          <a href={chromeUrl} target="_blank">
+            <button class="pure-button button-success">
+              Get MetaMask for Google Chrome
+            </button>
+          </a>
+        </p>
+        <p>
+          <a href={firefoxUrl} target="_blank">
+            <button class="pure-button button-success">
+              Get MetaMask for Mozilla Firefox
+            </button>
+          </a>
+        </p>
+      </ContentBox>
     );
   }
 
 
-  renderLockedWeb3 = () => {
-    const isZh = this.state.lang === "zh";
+  renderLockedWeb3 = (title, isZh) => {
     return (
       <div>
         <Nav 
@@ -169,15 +198,15 @@ export default class App extends Component {
           isZh={isZh}
           isHome={this.state.isHome} />
 
-        <div class="textbox">
-          <div class="textbox_inner">
-            {isZh ?
-              <p>Please unlock MetaMask.</p>
-              :
-              <p>请先打开MetaMask。</p>
-            }
-          </div>
-        </div>
+        <ContentBox isZh={isZh}>
+          {title}
+          {isZh ?
+            <p>请先打开MetaMask。</p>
+            :
+            <p>Please unlock MetaMask.</p>
+          }
+          <img src="/static/images/metamask_unlock.png" />
+        </ContentBox>
       </div>
     );
   }
@@ -185,14 +214,26 @@ export default class App extends Component {
 
   toggleLang = () => {
     let lang = this.state.lang;
+    if (typeof lang === "undefined"){
+      if (sessionStorage.getItem("lang")){
+        lang = sessionStorage.getItem("lang");
+      }
+    }
+
     if (lang === "zh"){
       lang = "en";
     }
     else{
       lang = "zh";
     }
+
+    if (typeof sessionStorage !== "undefined" && sessionStorage != null){
+      sessionStorage.setItem("lang", lang);
+    }
+
     this.setState({ lang });
   }
+
 
   render() {
     let footerTopMargin = 300;
@@ -200,7 +241,11 @@ export default class App extends Component {
       footerTopMargin = window.height - document.body.scrollHeight;
     }
 
-    const isZh = this.state.lang === "zh";
+    let isZh = this.state.lang === "zh";
+
+    if (typeof sessionStorage !== "undefined" && sessionStorage != null){
+      isZh = sessionStorage.getItem("lang") === "zh";
+    }
 
     return (
       <div>
@@ -216,6 +261,8 @@ export default class App extends Component {
 
           <Give 
             isZh={isZh}
+            enTitle="Give a smart red packet"
+            zhTitle="赠送智能红包"
             renderNoWeb3={this.renderNoWeb3}
             renderUnlockedWeb3={this.renderUnlockedWeb3}
             renderLockedWeb3={this.renderLockedWeb3}
@@ -228,6 +275,8 @@ export default class App extends Component {
 
           <Redeem 
             isZh={isZh}
+            enTitle="Redeem your red packets"
+            zhTitle="领取智能红包"
             renderNoWeb3={this.renderNoWeb3}
             renderUnlockedWeb3={this.renderUnlockedWeb3}
             renderLockedWeb3={this.renderLockedWeb3}
@@ -247,8 +296,6 @@ export default class App extends Component {
             path="redeem/manual" />
         </Router>
 
-        {/*
-        */}
       </div>
     );
   }

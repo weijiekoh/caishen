@@ -1,4 +1,5 @@
 import { h, Component } from "preact"
+import ContentBox from "./ContentBox.js";
 
 
 export default class Web3Enabled extends Component{
@@ -26,29 +27,39 @@ export default class Web3Enabled extends Component{
   }
 
 
-  renderPlsConnect = () => {
+  renderPlsConnect = (title, isZh) => {
+    const text = isZh ?
+      <p>请使用MetaMask连接以太坊主网。</p>
+      :
+      <p>Use MetaMask to connect to the main Ethereum network.</p>
+
     return (
-      <div class="textbox">
-        <div class="textbox_inner">
-          <p>Use MetaMask to connect to the main Ethereum network.</p>
-        </div>
-      </div>
+      <ContentBox isZh={isZh}>
+        {title}
+        {text}
+        <img src="/static/images/metamask_mainnet.png" />
+      </ContentBox>
     );
   }
 
 
   render() {
+    const title = this.props.isZh ?
+      <h1>{this.props.zhTitle}</h1>
+      :
+      <h1>{this.props.enTitle}</h1>
+
     if (this.props.web3Status === this.props.web3StatusCodes.missing){
-      return this.props.renderNoWeb3();
+      return this.props.renderNoWeb3(title, this.props.isZh);
     }
     else if (this.props.web3Status === this.props.web3StatusCodes.locked){
-      return this.props.renderLockedWeb3();
+      return this.props.renderLockedWeb3(title, this.props.isZh);
     }
     else if (this.props.web3Status === this.props.web3StatusCodes.unlocked){
       return this.renderUnlockedWeb3();
     }
-    else{
-      return this.renderPlsConnect();
+    else if (this.props.web3Status === this.props.web3StatusCodes.wrongNet){
+      return this.renderPlsConnect(title, this.props.isZh);
     }
   }
 }

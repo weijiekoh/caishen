@@ -2,6 +2,7 @@ import { h, Component } from 'preact'
 
 import { formatDate } from "../dates.js";
 import Web3Enabled from "../components/Web3Enabled.js";
+import ContentBox from "../components/ContentBox.js";
 import EthAmountInput from "../components/input/EthAmountInput.js";
 import ExpiryDateInput from "../components/input/ExpiryDateInput.js";
 import EthAccountInput from "../components/input/EthAccountInput.js";
@@ -232,126 +233,126 @@ export default class Give extends Web3Enabled{
 
     return (
       <div class="give">
-          <div class="textbox">
-            <div class="textbox_inner pure-form pure-form-stacked">
-              {this.props.isZh ?
-                <h1>赠送智能红包</h1>
-                :
-                <h1>Give a smart red packet</h1>
-              }
-              {this.renderAccountInfo()}
+        <ContentBox isZh={this.props.isZh}>
+          <div class="pure-form pure-form-stacked">
+            {this.props.isZh ?
+              <h1>赠送智能红包</h1>
+              :
+              <h1>Give a smart red packet</h1>
+            }
+            {this.renderAccountInfo()}
 
-              <hr />
+            <hr />
 
-              {this.state.transactions && this.state.transactions.length > 0 &&
-                this.renderTransactions(this.state.transactions)}
+            {this.state.transactions && this.state.transactions.length > 0 &&
+              this.renderTransactions(this.state.transactions)}
 
-              {this.state.showForm &&
-                <fieldset>
-                  <EthAmountInput 
-                    isZh={this.props.isZh}
-                    name="amount"
-                    changeCounter={this.state.changeCounter}
-                    label={
-                      this.props.isZh ?
-                      "请输入您要赠出的以太币数额"
+            {this.state.showForm &&
+              <fieldset>
+                <EthAmountInput 
+                  isZh={this.props.isZh}
+                  name="amount"
+                  changeCounter={this.state.changeCounter}
+                  label={
+                    this.props.isZh ?
+                    "请输入您要赠出的以太币数额"
+                    :
+                    "Enter the amount of ETH to give."
+                  }
+                  handleChange={this.handleAmountChange}
+                  showErrorMsgs={this.state.showErrorMsgs}
+                  handleEnterKeyDown={this.handleGiveBtnClick}
+                  maximum={this.props.balance}
+                  showFee={true}
+                  smallerInput={true}
+                />
+
+                <EthAccountInput
+                  isZh={this.props.isZh}
+                  name="recipient"
+                  changeCounter={this.state.changeCounter}
+                  label={
+                    this.props.isZh ?
+                      "请输入接收人以太币地址"
                       :
-                      "Enter the amount of ETH to give."
-                    }
-                    handleChange={this.handleAmountChange}
-                    showErrorMsgs={this.state.showErrorMsgs}
-                    handleEnterKeyDown={this.handleGiveBtnClick}
-                    maximum={this.props.balance}
-                    showFee={true}
-                    smallerInput={true}
-                  />
+                      "Enter the recipient's ETH address."
+                  }
+                  handleChange={this.handleRecipientChange}
+                  handleEnterKeyDown={this.handleGiveBtnClick}
+                  showErrorMsgs={this.state.showErrorMsgs}
+                  notThisAddress={this.props.address}
+                  smallerInput={false}
+                />
 
-                  <EthAccountInput
-                    isZh={this.props.isZh}
-                    name="recipient"
-                    changeCounter={this.state.changeCounter}
-                    label={
-                      this.props.isZh ?
-                        "请输入接收人以太币地址"
-                        :
-                        "Enter the recipient's ETH address."
-                    }
-                    handleChange={this.handleRecipientChange}
-                    handleEnterKeyDown={this.handleGiveBtnClick}
-                    showErrorMsgs={this.state.showErrorMsgs}
-                    notThisAddress={this.props.address}
-                    smallerInput={false}
-                  />
+                <ExpiryDateInput
+                  isZh={this.props.isZh}
+                  name="expiry"
+                  changeCounter={this.state.changeCounter}
+                  label={dateLabel}
+                  handleChange={this.handleExpiryChange}
+                  showErrorMsgs={this.state.showErrorMsgs}
+                />
 
-                  <ExpiryDateInput
-                    isZh={this.props.isZh}
-                    name="expiry"
-                    changeCounter={this.state.changeCounter}
-                    label={dateLabel}
-                    handleChange={this.handleExpiryChange}
-                    showErrorMsgs={this.state.showErrorMsgs}
-                  />
+                <ShortTextInput
+                  isZh={this.props.isZh}
+                  name="giver_name"
+                  changeCounter={this.state.changeCounter}
+                  label={
+                    this.props.isZh ?
+                    "非必填项：请输入您的姓名"
+                    :
+                    "Optional: Enter your name."
+                  }
+                  handleChange={this.handleGiverNameChange}
+                  handleEnterKeyDown={this.handleGiverNameChange}
+                  showErrorMsgs={this.state.showErrorMsgs}
+                  maxLength={60}
+                />
 
-                  <ShortTextInput
-                    isZh={this.props.isZh}
-                    name="giver_name"
-                    changeCounter={this.state.changeCounter}
-                    label={
-                      this.props.isZh ?
-                      "非必填项：请输入您的姓名"
+                <LongTextInput
+                  isZh={this.props.isZh}
+                  name="giver_msg"
+                  changeCounter={this.state.changeCounter}
+                  label={
+                    this.props.isZh ?
+                      "非必填项：请输入您给接收人的留言"
                       :
-                      "Optional: Enter your name."
-                    }
-                    handleChange={this.handleGiverNameChange}
-                    handleEnterKeyDown={this.handleGiverNameChange}
-                    showErrorMsgs={this.state.showErrorMsgs}
-                    maxLength={60}
-                  />
+                      "Optional: Enter a short message for the recipient."
+                  }
+                  handleChange={this.handleMessageChange}
+                  handleEnterKeyDown={this.handleMessageChange}
+                  showErrorMsgs={this.state.showErrorMsgs}
+                  maxLength={140}
+                />
 
-                  <LongTextInput
-                    isZh={this.props.isZh}
-                    name="giver_msg"
-                    changeCounter={this.state.changeCounter}
-                    label={
-                      this.props.isZh ?
-                        "非必填项：请输入您给接收人的留言"
-                        :
-                        "Optional: Enter a short message for the recipient."
-                    }
-                    handleChange={this.handleMessageChange}
-                    handleEnterKeyDown={this.handleMessageChange}
-                    showErrorMsgs={this.state.showErrorMsgs}
-                    maxLength={140}
-                  />
+                <p>
+                  {this.props.isZh ?
+                    <em>
+                      请注意您以上输入的信息将存储于区块链中，为所有人可见。
+                    </em>
+                    :
+                    <em>
+                      Please note that the information you enter above will be stored
+                      on the blockchain and can be seen by anyone.
+                    </em>
+                  }
+                </p>
 
-                  <p>
-                    {this.props.isZh ?
-                      <em>
-                        请注意您以上输入的信息将存储于区块链中，为所有人可见。
-                      </em>
-                      :
-                      <em>
-                        Please note that the information you enter above will be stored
-                        on the blockchain and can be seen by anyone.
-                      </em>
-                    }
-                  </p>
+              </fieldset>
+            }
 
-                </fieldset>
-              }
+            {this.state.btnClicked && <PendingTransaction isZh={this.props.isZh}/> }
 
-              {this.state.btnClicked && <PendingTransaction isZh={this.props.isZh}/> }
+            {this.state.showForm &&
+              <button 
+                onClick={this.handleGiveBtnClick}
+                class="pure-button button-success">
+                {this.props.isZh ? "赠送" : "Give"}
+              </button>
+            }
 
-              {this.state.showForm &&
-                <button 
-                  onClick={this.handleGiveBtnClick}
-                  class="pure-button button-success">
-                  {this.props.isZh ? "赠送" : "Give"}
-                </button>
-              }
-
-            </div>
           </div>
+        </ContentBox>
       </div>
     );
   }

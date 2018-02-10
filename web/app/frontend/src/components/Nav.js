@@ -47,7 +47,7 @@ export default class Nav extends Component{
         </div>
 
         {this.props.isZh ?
-          <div class="links mobile">
+          <div class="links mobile zh">
             <a href="/">
               <strong>财神</strong>
             </a>
