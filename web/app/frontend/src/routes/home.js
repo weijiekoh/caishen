@@ -121,7 +121,7 @@ export default class Home extends Component{
                       Read our <a href="/about" target="_blank">FAQ</a> carefully. We
                       will not be able to help you if you forget your wallet
                       password, send funds to the wrong address, or set a wrong the
-                      withdrawal date as everything takes place on the blockchain.
+                      withdrawal date, as everything takes place on the blockchain.
                     </li>
                   </ul>
                 </p>

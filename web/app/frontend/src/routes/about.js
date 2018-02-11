@@ -63,7 +63,7 @@ export default class About extends Component{
       <div class="about">
         <ContentBox isZh={this.props.isZh}>
           {this.props.isZh ?
-              <h2>财神技术详情</h2>
+            <h2>财神技术详情</h2>
             :
             <h2>The technology behind CaiShen</h2>
           }
