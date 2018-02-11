@@ -27,6 +27,11 @@ body{
 
 .contentbox table{
     background:white;
+    @media (max-width: @small_screen_width) {
+        td{
+            padding:0.5em;
+        }
+    }
 }
 
 h1, h2, h3, h4, h5, h6{
@@ -194,13 +199,13 @@ button{
     @media (min-width: @medium_screen_width) {
         max-width:@medium_screen_width;
         margin:auto;
-        margin-top:3em;
+        margin-top:2em;
     }
 
     @media (max-width: @small_screen_width) {
         padding:0.75em;
         margin:10px;
-        margin-top:3em;
+        margin-top:2em;
     }
 
     .contentbox_inner{

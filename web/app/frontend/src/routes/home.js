@@ -27,7 +27,7 @@ export default class Home extends Component{
           </div>
         </div>
 
-        <a name="main" />
+        <a class="main_anchor" name="main" />
 
         <div class="home_content">
           <ContentBox isZh={this.props.isZh}>
