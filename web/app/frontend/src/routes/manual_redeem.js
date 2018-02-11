@@ -12,12 +12,12 @@ export default class ManualRedeem extends Component{
           <h2>Using MyEtherWallet (easy)</h2>
 
           <p>
-            Navigate to <a href="https://www.myetherwallet.com/#contracts">
-              the contracts tab at MyEtherWallet.com</a>, and enter the 
+            Navigate to <a target="_blank" href="https://www.mycrypto.com/#contracts">
+              the contracts tab at MyCrypto.com</a>, and enter the 
             CaiShen contract address into the Contract Address field.
 
             If you are using the mainnet, use this address:
-            <pre>TBC</pre>
+            <pre>0xe507c467c0f63845eadce5516c9ff5e1a5ebb63a</pre>
 
             If you are using the Ropsten testnet, select "Network Ropsten" from
             the drop-down menu on the top right corner of the page and use this
@@ -41,9 +41,10 @@ export default class ManualRedeem extends Component{
 
           <h2>Get gift IDs</h2>
           <p>
-            Enter the ETH address of the recipient and click the Read button. A list of
-            numbers should appear. These are the IDs of each gift the recipient has been
-            given.
+            Select "getGiftIdsByRecipient" in the dropdown menu, enter the ETH
+            address of the recipient, and click the Read button. A list of
+            numbers should appear. These are the IDs of each gift the recipient
+            has been given.
           </p>
 
           <h2>Claim each gift</h2>
