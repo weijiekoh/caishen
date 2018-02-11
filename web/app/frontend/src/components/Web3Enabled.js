@@ -44,24 +44,24 @@ export default class Web3Enabled extends Component{
 
 
   render() {
-    const title = this.props.isZh ?
+    const title = (this.props.isZh ?
       <h1>{this.props.zhTitle}</h1>
       :
-      <h1>{this.props.enTitle}</h1>
+      <h1>{this.props.enTitle}</h1>);
 
-    if (this.props.web3Status === this.props.web3StatusCodes.missing){
-      return this.props.renderNoWeb3(title, this.props.isZh);
-    }
-    else if (this.props.web3Status === this.props.web3StatusCodes.locked){
-      return this.props.renderLockedWeb3(title, this.props.isZh);
-    }
-    else if (this.props.web3Status === this.props.web3StatusCodes.unlocked){
-      return this.renderUnlockedWeb3();
-    }
-    else if (this.props.web3Status === this.props.web3StatusCodes.wrongNet){
-      return this.renderPlsConnect(title, this.props.isZh);
-    }
-    else{
+    if (this.props.renderReady){
+      if (this.props.web3Status === this.props.web3StatusCodes.missing){
+        return this.props.renderNoWeb3(title, this.props.isZh);
+      }
+      else if (this.props.web3Status === this.props.web3StatusCodes.locked){
+        return this.props.renderLockedWeb3(title, this.props.isZh);
+      }
+      else if (this.props.web3Status === this.props.web3StatusCodes.unlocked){
+        return this.renderUnlockedWeb3();
+      }
+      else if (this.props.web3Status === this.props.web3StatusCodes.wrongNet){
+        return this.renderPlsConnect(title, this.props.isZh);
+      }
     }
   }
 }

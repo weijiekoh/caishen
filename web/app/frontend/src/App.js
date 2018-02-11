@@ -40,11 +40,19 @@ export default class App extends Component {
           }
         }
 
-        this.state = { web3Status: wStatus, isHome: isHome,}
+        this.state = {
+          renderReady: true,
+          web3Status: wStatus,
+          isHome: isHome,
+        }
       });
     }
     else{
-      this.state = { web3Status: wStatus, isHome: isHome,}
+      this.state = {
+        renderReady: true,
+        web3Status: this.web3StatusCodes.missing,
+        isHome: isHome,
+      };
     }
   }
 
@@ -292,6 +300,7 @@ export default class App extends Component {
 
           <Give 
             isZh={isZh}
+            renderReady={this.state.renderReady}
             enTitle="Give a smart red packet"
             zhTitle="赠送智能红包"
             renderNoWeb3={this.renderNoWeb3}
@@ -306,6 +315,7 @@ export default class App extends Component {
 
           <Redeem 
             isZh={isZh}
+            renderReady={this.state.renderReady}
             enTitle="Redeem your red packets"
             zhTitle="领取智能红包"
             renderNoWeb3={this.renderNoWeb3}

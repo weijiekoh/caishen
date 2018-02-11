@@ -137,6 +137,7 @@ class Gift extends Component {
 export default class GiftSelect extends Component {
   state = {
     gifts: [],
+    showResult: false,
   };
 
 
@@ -149,7 +150,7 @@ export default class GiftSelect extends Component {
     let gifts = [];
     this.props.caishen.getGiftIdsByRecipient.call(this.props.address).then(giftIds => {
       if (giftIds.length === 0){
-        this.setState({ gifts: [] });
+        this.setState({ gifts: [], showResult: true });
       }
       else{
         giftIds.forEach(giftId => {
@@ -167,10 +168,11 @@ export default class GiftSelect extends Component {
                 timestamp: gift[9]
               });
 
-              this.setState({ gifts });
+              const showResult = true;
+              this.setState({ gifts, showResult });
             }
           }).catch(err => {
-            this.setState({ gifts: [] });
+            this.setState({ gifts: [], showResult: true });
             console.error(err);
           });
         });
@@ -191,7 +193,7 @@ export default class GiftSelect extends Component {
       return this.props.renderNoWeb3();
     }
 
-    if (this.state.gifts == null){
+    if (this.state.showResult === false){
       return (
         <div>
           {this.props.isZh ?
@@ -204,7 +206,7 @@ export default class GiftSelect extends Component {
     }
 
     let sortedGifts = this.state.gifts;
-    if (this.state.gifts.length === 0){
+    if (this.state.showResult && this.state.gifts.length === 0){
       return (
         <div>
           {this.props.isZh ?
