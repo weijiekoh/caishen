@@ -81,10 +81,15 @@ export default class App extends Component {
                  window.location.hash === "#zh";
     let lang = isZh ? "zh" : "en";
 
-    if (typeof sessionStorage !== "undefined" && sessionStorage != null){
-      if (!sessionStorage.getItem("lang") == null){
-        lang = sessionStorage.getItem("lang");
+    try {
+      if (typeof sessionStorage !== "undefined" && sessionStorage != null){
+        if (!sessionStorage.getItem("lang") == null){
+          lang = sessionStorage.getItem("lang");
+        }
       }
+    }
+    catch (err) {
+      console.error(err);
     }
 
     this.setState({ lang });
@@ -226,8 +231,13 @@ export default class App extends Component {
   toggleLang = () => {
     let lang = this.state.lang;
     if (typeof lang === "undefined"){
-      if (sessionStorage.getItem("lang")){
-        lang = sessionStorage.getItem("lang");
+      try{
+        if (typeof sessionStorage !== "undefined" && sessionStorage.getItem("lang")){
+          lang = sessionStorage.getItem("lang");
+        }
+      }
+      catch (err){
+        console.error(err);
       }
     }
 
@@ -238,8 +248,13 @@ export default class App extends Component {
       lang = "zh";
     }
 
-    if (typeof sessionStorage !== "undefined" && sessionStorage != null){
-      sessionStorage.setItem("lang", lang);
+    try{
+      if (typeof sessionStorage !== "undefined" && sessionStorage != null){
+        sessionStorage.setItem("lang", lang);
+      }
+    }
+    catch (err){
+      console.error(err);
     }
 
     this.setState({ lang });
@@ -254,8 +269,13 @@ export default class App extends Component {
 
     let isZh = this.state.lang === "zh";
 
-    if (typeof sessionStorage !== "undefined" && sessionStorage != null){
-      isZh = sessionStorage.getItem("lang") === "zh";
+    try{
+      if (typeof sessionStorage !== "undefined" && sessionStorage != null){
+        isZh = sessionStorage.getItem("lang") === "zh";
+      }
+    }
+    catch (err) {
+      console.error(err);
     }
 
     return (

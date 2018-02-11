@@ -62,7 +62,7 @@ contract CaiShen is Ownable {
         DirectlyDeposited(msg.sender, msg.value);
     }
 
-    ////// Getter functions:
+    //// Getter functions:
 
     function getGiftIdsByRecipient (address recipient) 
     public view returns (uint[]) {
