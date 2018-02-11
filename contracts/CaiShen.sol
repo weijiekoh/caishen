@@ -27,8 +27,8 @@ contract CaiShen is Ownable {
     // an unused gift ID.
     uint public nextGiftId;
 
-    // Maps each recipient address to a list of giftIDs of
-    // Gifts they have received.
+    // Maps each recipient address to a list of giftIDs of Gifts they have
+    // received.
     mapping (address => uint[]) public recipientToGiftIds;
 
     // Maps each gift ID to its associated gift.

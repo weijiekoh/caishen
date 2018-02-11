@@ -169,19 +169,30 @@ export default class App extends Component {
               computer with the <a target="_blank" href="https://metamask.io/">MetaMask
                 digital wallet</a> installed.
             </p>
+
+        }
+
+        {isZh ?
+            <p>
+            </p>
+            :
+            <p>
+              As Ethereum app ecosystem is still evolving, this website is best experienced
+              on a desktop computer.
+            </p>
         }
 
         <p>
           <a href={chromeUrl} target="_blank">
             <button class="pure-button button-success">
-              Get MetaMask for Google Chrome
+              MetaMask for Google Chrome
             </button>
           </a>
         </p>
         <p>
           <a href={firefoxUrl} target="_blank">
             <button class="pure-button button-success">
-              Get MetaMask for Mozilla Firefox
+              MetaMask for Mozilla Firefox
             </button>
           </a>
         </p>

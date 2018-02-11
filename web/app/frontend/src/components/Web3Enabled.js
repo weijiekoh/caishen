@@ -37,7 +37,7 @@ export default class Web3Enabled extends Component{
       <ContentBox isZh={isZh}>
         {title}
         {text}
-        <img src="/static/images/metamask_mainnet.png" />
+        <img class="fadein" src="/static/images/metamask_mainnet.png" />
       </ContentBox>
     );
   }
@@ -60,6 +60,8 @@ export default class Web3Enabled extends Component{
     }
     else if (this.props.web3Status === this.props.web3StatusCodes.wrongNet){
       return this.renderPlsConnect(title, this.props.isZh);
+    }
+    else{
     }
   }
 }

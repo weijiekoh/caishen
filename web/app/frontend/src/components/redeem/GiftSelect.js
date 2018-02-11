@@ -136,13 +136,14 @@ class Gift extends Component {
 
 export default class GiftSelect extends Component {
   state = {
-    gifts: null,
+    gifts: [],
   };
 
 
   componentWillMount = () => {
     this.retriveGiftInfo();
   }
+
 
   retriveGiftInfo = () => {
     let gifts = [];
@@ -153,7 +154,6 @@ export default class GiftSelect extends Component {
       else{
         giftIds.forEach(giftId => {
           this.props.caishen.giftIdToGift(giftId).then(gift => {
-
             // Only show gifts which exist and have not yet been redeemed
             if (gift[0] && !gift[6]){
 
