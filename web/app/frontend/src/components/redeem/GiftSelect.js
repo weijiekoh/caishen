@@ -150,14 +150,16 @@ export default class GiftSelect extends Component {
     let gifts = [];
     this.props.caishen.getGiftIdsByRecipient.call(this.props.address).then(giftIds => {
       if (giftIds.length === 0){
-        this.setState({ gifts: [], showResult: true });
+        this.setState({ 
+          gifts: [],
+          showResult: true
+        });
       }
       else{
         giftIds.forEach(giftId => {
           this.props.caishen.giftIdToGift(giftId).then(gift => {
             // Only show gifts which exist and have not yet been redeemed
             if (gift[0] && !gift[6]){
-
               gifts.push({
                 id: gift[1].toNumber(),
                 giver: gift[2],
@@ -167,10 +169,10 @@ export default class GiftSelect extends Component {
                 message: gift[8],
                 timestamp: gift[9]
               });
-
-              const showResult = true;
-              this.setState({ gifts, showResult });
             }
+          }).then(() => {
+            const showResult = true;
+            this.setState({ gifts, showResult });
           }).catch(err => {
             this.setState({ gifts: [], showResult: true });
             console.error(err);
@@ -192,6 +194,8 @@ export default class GiftSelect extends Component {
     if (this.state.noWeb3 && this.props.renderNoWeb3){
       return this.props.renderNoWeb3();
     }
+
+    console.log(this.state.showResult);
 
     if (this.state.showResult === false){
       return (
