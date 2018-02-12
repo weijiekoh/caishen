@@ -195,8 +195,6 @@ export default class GiftSelect extends Component {
       return this.props.renderNoWeb3();
     }
 
-    console.log(this.state.showResult);
-
     if (this.state.showResult === false){
       return (
         <div>
