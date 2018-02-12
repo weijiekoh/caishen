@@ -71,15 +71,13 @@ export default class About extends Component{
           {this.props.isZh ?
             <div>
               <p>
-                <strong>财神</strong>
-是基于以太坊智能合约技术的应用。智能合约是在区块链上面运行的计算机执行程序，可以准确执行命令，并不受制于任何权威及平台。
+<strong>财神</strong>是基于以太坊智能合约技术的应用。智能合约是在区块链上面运行的计算机执行程序，可以准确执行命令，并不受制于任何权威及平台。
               </p>
               <p>
-                <strong>财神</strong>
-智能合约规定领取红包金额只能在指定日期之后进行。比如，您将领取日期设定为2020年1月1日，那么，接受人只有在2020年1月1日之后才可以领取收到的金额。
+<strong>财神</strong>智能合约规定领取红包金额只能在指定日期之后进行。比如，您将领取日期设定为2020年1月1日，那么，接受人只有在2020年1月1日之后才可以领取收到的金额。
               </p>
               <p>
-您所看到的网页是一个分布式应用（英文称dApp），这个应用中仅用户界面存在于我们的服务器上。而<strong>财神</strong>最核心的智能合约则存在于区块链技术上面。这就意味着即使财神的网站或团队不复存在，您的红包将依然长存
+                您所看到的网页是一个分布式应用（英文称dApp）。而<strong>财神</strong>最核心的智能合约则存在于区块链技术上面。这就意味着即使财神的网站或团队不复存在，您的红包将依然长存。
               </p>
             </div>
               :
@@ -148,7 +146,9 @@ export default class About extends Component{
           }
 
           {this.props.isZh ?
-            <p></p>
+            <p>
+我们致力于为您提供质优价廉的服务，财神所收取费用仅会用在日常运营和智能合约制订的开销上面。
+            </p>
             :
             <p>
               The fees for using this smart contract are very modest and will be
@@ -335,8 +335,7 @@ export default class About extends Component{
             <p>
               Unfortunately, once the funds are sent they cannot be retrieved.
               You may try to find out who owns that address. We are sorry that we
-              cannot help with that
-              process.
+              cannot help with that process.
             </p>
           }
 

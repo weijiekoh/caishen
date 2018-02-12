@@ -38,7 +38,7 @@ export default class Home extends Component{
             {this.props.isZh ?
               <div class="pure-u-1">
                 <p>
-                  这个农历新年, 用<strong>财神</strong>给您的亲朋好友赠送以太币红包！
+                  这个农历新年,用<strong>财神</strong>给您的亲朋好友赠送以太币红包！
                 </p>
                 <p>
                   财神红包如时间胶囊，接受人只有在指定日期之后才可以领取赠送的以太币金额。
@@ -146,13 +146,13 @@ export default class Home extends Component{
               {this.props.isZh ?
                   <div>
                     <p>
-                      <strong>财神</strong> 科技使用的是以太坊区块链的智能合约技术。用户可以将一定数额的以太币用财神红包的形式赠出，并在指定日期之后领取。
+<strong>财神</strong>科技使用的是以太坊区块链的智能合约技术。用户可以将一定数额的以太币用财神红包的形式赠出，并在指定日期之后领取。
                     </p>
                     <p>
-                      <strong>财神</strong>不是金融机构，亦非支付平台，不能为您保管或处理赠出的财物。
-                    </p>
+<strong>财神</strong>不是金融机构，亦非支付平台，不能为您保管或处理赠出的财物。
+                  </p>
                     <p>
-                      综上，<strong>财神</strong>无法保障您赠出财物之长期合法性以及财产安全。然而，我们可以做到的是为您量身定做智能合约的内容。
+                      <strong>财神</strong>的责任仅限于红包智能合约的设计，其他由以太坊本身的限制或个人操作导致的损失我们概不负责。
                     </p>
                   </div>
                   :

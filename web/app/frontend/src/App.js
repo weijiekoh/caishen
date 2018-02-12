@@ -187,6 +187,7 @@ export default class App extends Component {
 
         {isZh ?
             <p>
+              基于以太坊系统的限制，财神目前还无法在移动系统上拥有最佳体验。
             </p>
             :
             <p>
@@ -198,14 +199,22 @@ export default class App extends Component {
         <p>
           <a href={chromeUrl} target="_blank">
             <button class="pure-button button-success">
-              MetaMask for Google Chrome
+              {isZh ?
+                "请装载谷歌Chrome版MetaMask"
+                :
+                "MetaMask for Google Chrome"
+              }
             </button>
           </a>
         </p>
         <p>
           <a href={firefoxUrl} target="_blank">
             <button class="pure-button button-success">
-              MetaMask for Mozilla Firefox
+              {isZh ?
+                "请装载火狐Firefox版MetaMask"
+                :
+                "MetaMask for Mozilla Firefox"
+              }
             </button>
           </a>
         </p>

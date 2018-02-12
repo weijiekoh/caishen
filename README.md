@@ -70,5 +70,5 @@ Note that `truffle test` is not deterministic. If any tests fail, restart
 Ganache and run each failing test individually. For example:
 
 ```
-truffle test test/test_change_recipient.js
+truffle test test/test_give.js
 ```

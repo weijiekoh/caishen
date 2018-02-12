@@ -62,10 +62,9 @@ export default class ManualRedeem extends Component{
           <h2>Trigger the function manually (advanced)</h2>
 
           <p>
-            Advanced users may choose to use any means they wish to call the
-            following function of the smart contract manually:
+            Advanced users may choose to call the redeem function of the smart
+            contract manually:
 
-            For the Ropsten network:
             <pre>
               Function: redeem(uint256 _value)
             </pre>
