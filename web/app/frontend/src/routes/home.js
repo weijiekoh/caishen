@@ -38,7 +38,7 @@ export default class Home extends Component{
             {this.props.isZh ?
               <div class="pure-u-1">
                 <p>
-                  这个农历新年，使用财神和您的亲朋好友共享财富未来！
+                  这个农历新年，使用<strong>财神</strong>和您的亲朋好友共享财富未来！
                 </p>
                 <p>
                   财神红包如时间胶囊，接受人只有在指定日期之后才可以领取赠送的以太币金额。
