@@ -14,7 +14,7 @@ export default class Home extends Component{
     );
 
     const enqText = this.props.isZh ? 
-      "支持我们， 商务合作，媒体报道 - " 
+      "技术支持， 商务合作，媒体咨询：" 
       : 
       "Support, business, and media enquiries - ";
 
