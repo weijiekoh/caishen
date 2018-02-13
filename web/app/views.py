@@ -6,7 +6,7 @@ from project import settings
 
 # Create your views here.
 
-@login_required
+# @login_required
 def index(request):
     lang = request.META.get('LANGUAGE', request.META.get('LANG'))
 
