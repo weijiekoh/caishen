@@ -103,7 +103,7 @@ export default class Give extends Web3Enabled{
         from: this.state.address
       };
 
-      this.setState({ btnClicked: true, showForm: false, }, () => {
+      this.setState({ btnClicked: true, showForm: false, showErrorMsgs: false }, () => {
         // Estimate gas
         this.props.caishen.give.estimateGas(
           recipientAddress, expiry, giverName, message, {value: amountWei})
@@ -338,6 +338,14 @@ export default class Give extends Web3Enabled{
             }
 
             {this.state.btnClicked && <PendingTransaction isZh={this.props.isZh}/> }
+
+            {this.state.showErrorMsgs && this.props.isZh &&
+              <p class="error">请输入有效的信息。</p>
+            }
+
+            {this.state.showErrorMsgs && !this.props.isZh &&
+              <p class="error">Please provide valid information above.</p>
+            }
 
             {this.state.showForm &&
               <button 
