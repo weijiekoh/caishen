@@ -101,10 +101,10 @@ export default class About extends Component{
               <p>
                 The website you are seeing right now is is a dApp (“distributed
                 application”). Only this user interface lives on our servers.
-                However, the smart contract — the heart of the application — resides
-                on the Ethereum blockchain. This means that the assets and
-                functionality of CaiShen is safe even when this website, or even
-                ourselves, cease to exist.
+                However, the smart contract — the heart of the application —
+                resides on the Ethereum blockchain. This means that even when
+                this website, or ourselves, cease to exist, the assets and
+                functionality of CaiShen will remain safe.
               </p>
             </div>
           }
@@ -331,9 +331,9 @@ export default class About extends Component{
             </p>
             :
             <p>
-              Unfortunately, once the funds are sent they cannot be retrieved.
-              You may try to find out who owns that address. We are sorry that we
-              cannot help with that process.
+              Unfortunately, once the funds are sent, they cannot be retrieved.
+              You may try to find out who owns that address. We are sorry that
+              we cannot help with this process.
             </p>
           }
 
