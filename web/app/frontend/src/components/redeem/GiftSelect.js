@@ -142,50 +142,56 @@ export default class GiftSelect extends Component {
 
 
   componentWillMount = () => {
-    this.retriveGiftInfo();
+    this.retriveGiftInfo(this.props.caishen);
   }
 
 
-  retriveGiftInfo = () => {
+  retriveGiftInfo = caishen => {
     let gifts = [];
-    this.props.caishen.getGiftIdsByRecipient.call(this.props.address).then(giftIds => {
-      if (giftIds.length === 0){
-        this.setState({ 
-          gifts: [],
-          showResult: true
-        });
-      }
-      else{
-        giftIds.forEach(giftId => {
-          this.props.caishen.giftIdToGift(giftId).then(gift => {
-            // Only show gifts which exist and have not yet been redeemed
-            if (gift[0] && !gift[6]){
-              gifts.push({
-                id: gift[1].toNumber(),
-                giver: gift[2],
-                expiry: new Date(gift[4].toNumber()),
-                amount: web3.fromWei(gift[5]).toFixed(8),
-                giverName: gift[7],
-                message: gift[8],
-                timestamp: gift[9]
-              });
-            }
-          }).then(() => {
-            const showResult = true;
-            this.setState({ gifts, showResult });
-          }).catch(err => {
-            this.setState({ gifts: [], showResult: true });
-            console.error(err);
+    if (caishen){
+      caishen.getGiftIdsByRecipient.call(this.props.address).then(giftIds => {
+        if (giftIds.length === 0){
+          this.setState({ 
+            gifts: [],
+            showResult: true
           });
-        });
-      }
-    });
+        }
+        else{
+          giftIds.forEach(giftId => {
+            caishen.giftIdToGift(giftId).then(gift => {
+              // Only show gifts which exist and have not yet been redeemed
+              if (gift[0] && !gift[6]){
+                gifts.push({
+                  id: gift[1].toNumber(),
+                  giver: gift[2],
+                  expiry: new Date(gift[4].toNumber()),
+                  amount: web3.fromWei(gift[5]).toFixed(8),
+                  giverName: gift[7],
+                  message: gift[8],
+                  timestamp: gift[9]
+                });
+              }
+            }).then(() => {
+              const showResult = true;
+              this.setState({ gifts, showResult });
+            }).catch(err => {
+              this.setState({ gifts: [], showResult: true });
+              console.error(err);
+            });
+          });
+        }
+      });
+    }
   }
 
 
   componentWillReceiveProps = newProps => {
     if (this.props.address !== newProps.address){
       this.setState({ gifts: [] }, this.retriveGiftInfo);
+    }
+
+    if (this.props.caishen !== newProps.caishen){
+      this.retriveGiftInfo(newProps.caishen);
     }
   }
 

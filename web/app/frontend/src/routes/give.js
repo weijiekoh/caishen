@@ -217,10 +217,6 @@ export default class Give extends Web3Enabled{
 
 
   renderUnlockedWeb3() {
-    if (!this.props.address || !this.props.caishen){
-      return this.renderPlsConnect();
-    }
-
     const offset = new Date().getTimezoneOffset();
     const minutes = Math.abs(offset);
     const hours = Math.floor(minutes / 60);

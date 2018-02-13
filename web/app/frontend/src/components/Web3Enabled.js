@@ -37,7 +37,7 @@ export default class Web3Enabled extends Component{
       <ContentBox isZh={isZh}>
         {title}
         {text}
-        <img class="fadein" src="/static/images/metamask_mainnet.png" />
+        <img src="/static/images/metamask_mainnet.png" />
       </ContentBox>
     );
   }

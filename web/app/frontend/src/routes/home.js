@@ -53,9 +53,9 @@ export default class Home extends Component{
                   This Lunar New Year, share the future of finance with your loved ones.
                 </p>
                 <p>
-                  Smart red packets can only be opened after a specified
-                  date. Like a time capsule, the recipient can only withdraw
-                  the Ethereum funds after the opening date.
+                  Smart red packets can only be opened after a date you
+                  specify. Like a time capsule, the recipient can only withdraw
+                  the Ethereum funds after this date.
                 </p>
                 <p>
                   For example, if you give a red packet of 1 ETH and set the 

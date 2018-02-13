@@ -7,9 +7,9 @@ var Web3 = require("web3");
 
 export default class Redeem extends Web3Enabled{
   renderUnlockedWeb3() {
-    if (!this.props.address || !this.props.caishen){
-      return this.renderPlsConnect();
-    }
+    //if (!this.props.address || !this.props.caishen){
+      //return this.renderPlsConnect();
+    //}
 
     return (
       <div class="redeem pure-form pure-form-stacked">
@@ -21,6 +21,12 @@ export default class Redeem extends Web3Enabled{
           }
 
           {this.renderAccountInfo()}
+
+          <p>
+            Please note that you will need a tiny amount of ETH (less than
+            0.0001 ETH) to pay the transaction fee to redeem the finds.
+          </p>
+
 
           <GiftSelect 
             isZh={this.props.isZh}
