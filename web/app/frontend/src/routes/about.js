@@ -83,21 +83,19 @@ export default class About extends Component{
               :
             <div>
               <p>
-                CaiShen is based upon the Ethereum smart contract technology. A
-                smart contract is a computer program that runs on the blockchain. A
-                smart contract will execute the instructions encoded precisely,
-                and without censorship, all without requiring a trusted intermediary.
+                CaiShen is based upon Ethereum smart contract technology. A
+                smart contract is a computer program that runs on the
+                blockchain. A smart contract will execute the instructions
+                encoded precisely, and without censorship, all without
+                requiring a trusted intermediary.
               </p>
 
               <p>
-                The CaiShen smart contract will only allow the funds
-                to be withdrawn on or after the opening date, because the contract is
-                coded as such.
-              </p>
-              <p>
-                For example, if you set the opening date to 1st January 2020, the
-                recipient of the red packet can only redeem the funds on or after 1st
-                January 2020.
+                The CaiShen smart contract is programmed to only allow a red
+                packet to be redeemed on or after the opening date.  For
+                example, if you set the opening date to 1st January 2020, the
+                recipient of the red packet can only redeem the funds on or
+                after 1st January 2020.
               </p>
 
               <p>
@@ -118,10 +116,11 @@ export default class About extends Component{
           }
 
           <ul>
-            <li>Kelvin Quee</li>
             <li>Koh Wei Jie</li>
-            <li>Rohan Naidu</li>
+            <li>Kelvin Quee</li>
             <li>Sun Yuanxin</li>
+            <li>Rohan Naidu</li>
+            <li>Muhd Amrullah</li>
           </ul>
 
           {this.props.isZh ?
@@ -176,9 +175,9 @@ export default class About extends Component{
             </p>
             :
             <p>
-              In many Asian cultures, it is customary for elders to give packets of
-              money to unmarried or younger relatives. More information about this
-              tradition can be found <a
+              In some Asian cultures, it is customary on some occasions for
+              elders to give packets of money to unmarried or younger
+              relatives. More information about this tradition can be found <a
                 href="https://en.wikipedia.org/wiki/Red_envelope">on Wikipedia</a>.
             </p>
           }

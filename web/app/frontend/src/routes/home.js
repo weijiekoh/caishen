@@ -159,9 +159,9 @@ export default class Home extends Component{
                   <div>
                     <p>
                       CaiShen is a tool which uses the Ethereum blockchain and smart
-                      contract technology. It enables you to deposit an amount of funds,
-                      denominated in Ethereum, that can only be withdrawn after a certain
-                      time using a specific private key.
+                      contract technology. It enables you to deposit Ethereum
+                      cryptocurrency funds that can only be withdrawn after a
+                      certain time using a specific private key.
                     </p>
 
                     <p>
