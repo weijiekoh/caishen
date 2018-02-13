@@ -12,6 +12,14 @@
     height:0;
     z-index:99999;
 
+    img{
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+    }
+
     .logo {
         float: left;
         display:none;
@@ -51,6 +59,12 @@
                 margin-left:0;
             }
         }
+        img:active{
+            margin-left: 1px;
+            margin-right: -1px;
+            margin-top: 1px;
+            margin-bottom: -1px;
+        }
     }
 
     .mobile{
@@ -87,6 +101,7 @@
                 margin-left:20px;
                 text-decoration:none;
                 font-size:1.2em;
+
                 &:first-of-type{
                     margin-left:0;
                 }

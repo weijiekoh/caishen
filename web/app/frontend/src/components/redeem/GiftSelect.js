@@ -16,21 +16,16 @@ class Gift extends Component {
     this.setState({ 
       btnClicked: true,
     }, () => {
-
-      //this.props.caishen.redeem.estimateGas(this.props.gift.id).then(gas => {
-        //this.props.caishen.redeem(this.props.gift.id, { gas }).then(tx => {
-        
-        this.props.caishen.redeem(this.props.gift.id).then(tx => {
-          this.setState({
-            transaction: { txHash: tx.receipt.transactionHash },
-            hideRedeem: true,
-            btnClicked: false,
-          });
-        }).catch(err => {
-          this.setState({ btnClicked: false });
+      this.props.caishen.redeem(this.props.gift.id).then(tx => {
+        this.setState({
+          transaction: { txHash: tx.receipt.transactionHash },
+          hideRedeem: true,
+          btnClicked: false,
         });
+      }).catch(err => {
+        this.setState({ btnClicked: false });
       });
-    //});
+    });
   }
 
 

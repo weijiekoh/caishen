@@ -109,7 +109,6 @@ export default class Give extends Web3Enabled{
           recipientAddress, expiry, giverName, message, {value: amountWei})
         .then(gas => {
           payload.gas = gas;
-          console.log(expiry);
 
           this.props.caishen.give(
             recipientAddress, expiry, giverName, message, payload).then(tx => {
