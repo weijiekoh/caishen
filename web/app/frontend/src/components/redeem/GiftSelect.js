@@ -227,18 +227,7 @@ export default class GiftSelect extends Component {
       const aGiver = a.giver;
       const bGiver = b.giver;
 
-      if (aExpiry === bExpiry){
-        if (a.giver === b.giver){
-          return a.amount - b.amount;
-        }
-        return b.giver.localeCompare(a.giver);
-      }
-      else{
-        if (a.giver === b.giver){
-          return a.amount - b.amount;
-        }
-        return aExpiry - bExpiry;
-      }
+      return aExpiry - bExpiry || a.amount - b.amount || aGiver || bGiver;
     });
 
     return (
