@@ -118,7 +118,6 @@ export default class About extends Component{
           <ul>
             <li>Koh Wei Jie</li>
             <li>Kelvin Quee</li>
-            <li>Sun Yuanxin</li>
             <li>Rohan Naidu</li>
             <li>Muhd Amrullah</li>
           </ul>
