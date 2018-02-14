@@ -18,10 +18,16 @@ export default class Redeem extends Web3Enabled{
 
           {this.renderAccountInfo()}
 
-          <p>
-            Please note that you will need a tiny amount of ETH (less than
-            0.0001 ETH) to pay the transaction fee to redeem the finds.
-          </p>
+          {this.props.isZh ?
+            <p>
+请注意欲领取红包金额，您只需支付微小数额的以太币手续费（小于0.0001以太币）
+            </p>
+            :
+            <p>
+              Please note that you will need a tiny amount of ETH to pay the
+              transaction fee to redeem the funds (less than 0.0001 ETH ).
+            </p>
+          }
 
 
           <GiftSelect 
