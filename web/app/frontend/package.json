@@ -35,7 +35,7 @@
     "nwb-less": "^0.6.1",
     "preact-router": "^2.6.0"
   },
-  "author": "",
+  "author": "Koh Wei Jie",
   "license": "MIT",
-  "repository": ""
+  "repository": "https://github.com/weijiekoh/caishen"
 }
