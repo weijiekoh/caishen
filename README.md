@@ -2,7 +2,17 @@
 
 This Ethereum smart contract is a time-locked trust fund marketed as smart [red
 packet](https://en.wikipedia.org/wiki/Red_envelope). The contract has been deployed
-to the Ropsten testnet. You can interact with it using any MetaMask-enabled browser.
+to the Ropsten testnet and mainnet. You can interact with it using any
+MetaMask-enabled browser.
+
+## Dependencies
+
+```bash
+sudo apt install git python3 build-essential curl
+```
+
+Next, install Yarn using these instructions: https://yarnpkg.com/en/docs/install
+
 
 ## Web Frontend
 
@@ -36,10 +46,8 @@ then pushes the Django project to Heroku.
 
 ## Smart Contract
 
-You must have Yarn on your system. Install it if you haven't already using the
-instructions [here](https://yarnpkg.com/en/docs/install).
 
-Once you have installed Yarn, install the Truffle Framework.
+Install the Truffle Framework:
 
 ```
 sudo yarn global add truffle
@@ -50,8 +58,8 @@ Finally, install [Ganache](http://truffleframework.com/ganache/).
 ### Clone the repository
 
 ```
-git clone git@gitlab.com:weijiekoh/dajidali.git &&
-cd dajidali &&
+git clone git@gitlab.com:weijiekoh/caishen.git &&
+cd caishen &&
 yarn install
 ```
 
@@ -63,6 +71,18 @@ Launch Ganache and run:
 truffle test
 ```
 
+You may encounter compilation errors if your Solidity compiler is newer than that which was originally used to build this contract:
+
+```
+CaiShen.sol:1:1: SyntaxError: Source file requires different compiler version (current compiler is 0.4.19+commit.c4cbbb05.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version    
+pragma solidity 0.4.18;                    
+^---------------------^                    
+Compilation failed. See above. 
+```
+
+If you see this error, modify the contract code to use the latest version of
+Solidity.
+
 It's a good idea to restart Ganache (Settings -> Restart) before each time you
 run `truffle test`.
 
@@ -72,3 +92,6 @@ Ganache and run each failing test individually. For example:
 ```
 truffle test test/test_give.js
 ```
+
+One solution to this is to use `ganache-cli` instead, as it is much more stable
+than the GUI version.
