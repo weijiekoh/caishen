@@ -19,6 +19,10 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
 import app
+from app import views
+
+handler404 = app.views.index
+handler500 = app.views.index
 
 urlpatterns = [
     path("", include("app.urls")),
